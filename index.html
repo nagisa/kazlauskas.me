@@ -1,19 +1,44 @@
 ---
-title: Home
+title: About me
+published: 2013-01-18
 ---
+<script type="text/javascript">/*<![CDATA[*/
+(function(w, D){
+  var age, el, d = w.document, a = w.attachEvent;
+  d.$ = d.getElementById;
+  (a == null ? w.addEventListener : a)('load', function(){
+    el = d.$('age');
+    d.$('email').href = "mailto:web\x40kazlauskas.me";
+    age = (new D - new D(1995, 2, 11)) / 315576E4;
+    el.innerText = el.textContent = ~~age % 10 ? ~~age / 10 : ~~(age / 10);
+  });
+})(window, Date);
+/*]]>*/</script>
 
-<h2>Welcome</h2>
-
-<img src="/images/haskell-logo.png" style="float: right; margin: 10px;" />
-
-<p>Welcome to my blog!</p>
-
-<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
-
-<h2>Posts</h2>
-
-<ul>
-    $posts$
-</ul>
-
-<p>…or you can find more in the <a href="/archive.html">archives</a>.
+<section id="about">
+    <p>I'm Simonas, <span id="age">17</span> years old open source
+    developer from Vilnius, capital of Lithuania.
+    </p>
+</section>
+<section>
+    <p>I prefer hacking with Python, still I
+    like JavaScript quite a lot too. Also I have experience in
+    writing clean HTML and CSS. When situation calls for it I can to
+    some extent produce some C, Haskell or PHP too.
+    </p>
+    <p>If you are interested in my code, it is available on
+    <a href="https://github.com/simukis" target="_blank">github</a>.
+    </p>
+</section>
+<section id="contact">
+    <p>You can <a id="email">email me</a>
+    <noscript>(JavaScript required to see a link)</noscript>
+    if you have any questions and inquiries.
+    </p>
+</section>
+<section id="recent-posts">
+    <h2 class="rbp">Recent blog posts</h2> (go to <a href="/archive.html">archive</a> for full listing)
+    <ul class="blogposts">
+        $posts$
+    </ul>
+</section>
