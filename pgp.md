@@ -6,7 +6,7 @@ My public PGP key's id is `0xEADB5526`. It's fingerprint is:
 
 ```F639 7A4C 840E AFD7 637F  FB80 F532 32F8 6345 7D26```
 
-and [key itself](data/gpg/key.pub) being as follows:
+and [key itself](data/pgp/key.pub) being as follows:
 
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----

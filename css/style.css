@@ -23,11 +23,24 @@ body {
     text-shadow: rgba(75, 75, 75, .2) 1px 1px;
 }
 
+header {
+    border-bottom: 1px solid #4B4B4B;
+    border-color: rgba(75, 75, 75, .5);
+    font-variant: small-caps;
+}
+
+#title {
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.25em;
+}
+
 nav {
     margin: 0 auto;
     width: auto;
     border-radius: 0 0 5px 5px;
     text-align: right;
+    float: right;
 }
 
 nav>ul {
@@ -40,9 +53,10 @@ nav>ul>li {
 }
 
 nav>ul>li>a {
-    padding: .25em .5em;
+    padding: 0 .5em;
     display: inline-block;
     color: #4B4B4B;
+    line-height: 1.875em;
 }
 
 nav>ul>li>a:hover {
@@ -51,9 +65,10 @@ nav>ul>li>a:hover {
 
 main {
     display: block;
-    margin: -.5em auto 0;
+    margin: -.25em auto 0;
     width: auto;
     padding: .5em;
+    text-align: justify;
 }
 
 main a:link, main a:visited, footer a:link, footer a:visited {
@@ -72,6 +87,7 @@ main h1:empty {
 
 h1, h2, h3, h4 {
     font-variant: small-caps;
+    line-height: 1.25em;
 }
 
 main pre>code {
