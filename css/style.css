@@ -20,7 +20,6 @@ body {
     padding: 0;
     margin: 0 auto;
     max-width: 780px;
-    text-shadow: rgba(75, 75, 75, .2) 1px 1px;
 }
 
 header {
@@ -68,6 +67,7 @@ main {
     margin: -.25em auto 0;
     width: auto;
     padding: .5em;
+    line-height: 1.35em;
     text-align: justify;
 }
 
@@ -88,10 +88,26 @@ main h1:empty {
 h1, h2, h3, h4 {
     font-variant: small-caps;
     line-height: 1.25em;
+    clear: both;
+}
+
+
+main code {
+    background: rgba(150, 150, 150, .1);
+    font-size: .8em;
+    padding: .125em .25em;
 }
 
 main pre>code {
-    font-size: .8em;
+    padding: .25em;
+    border: none;
+    display: block;
+}
+
+main pre {
+    overflow: auto;
+    max-height: 400px;
+    margin: 0;
 }
 
 .rbp {
@@ -104,19 +120,19 @@ main h1 {
     margin: 0;
 }
 
-.blogposts {
+.blogentries {
     width: 100%;
     padding: 0;
     margin: 0;
 }
 
-.blogposts li {
+.blogentries li {
     display: inline-block;
     width: 100%;
     padding: .25em; .5em;
 }
 
-.blogpost-date {
+.blogentry-date {
     padding: 0 .5em 0 0;
 }
 
