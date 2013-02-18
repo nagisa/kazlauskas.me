@@ -1,9 +1,10 @@
 ---
 title: Arranging ducks
 published: 2013-01-19
-updated: 2013-02-09
+updated: 2013-02-18
 tags: python
 ---
+
 Python is, as indicated by [official python tutorial][python_tutorial],
 the first document most Python newbies encounter, a dynamically typed
 language. While developing I learned to not worry about small details and let
@@ -12,13 +13,6 @@ duck typing to do it's thing.
 [python_tutorial]: http://docs.python.org/3/tutorial/index.html
 
 # The problem
-
-With recent releases, most notably Python 3, dynamism was broken in several
-places. `str` and `bytes`, for example, does not follow this convention
-any more. It is, however, understandable as this was done to fix severe
-shortcomings of second version of Python's way of string handling. It is not
-just strings though. For this post lets look at another standard library
-function `range`.
 
 Understanding the purpose of `range` is a simple matter. You give it point at
 which you want your arithmetic progression terminate and
