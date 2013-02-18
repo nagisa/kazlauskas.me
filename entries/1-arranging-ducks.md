@@ -1,5 +1,5 @@
 ---
-title: Aranging ducks
+title: Arranging ducks
 published: 2013-01-19
 updated: 2013-02-09
 tags: python
