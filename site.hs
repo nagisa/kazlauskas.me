@@ -1,12 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
-import           Control.Applicative ((<$>))
-import           Control.Monad       (forM_)
-import           Data.Monoid         (mappend, mconcat)
-import           Hakyll
-import           Text.Hyphenation    (hyphenate, english_GB, hyphenatorRightMin)
-import           Text.Pandoc         (bottomUp, Pandoc)
-import           Text.Pandoc.Definition
-import           Data.List           (intercalate)
+import Control.Applicative    ((<$>))
+import Control.Monad          (forM_, mapM)
+import Data.Binary            (Binary)
+import Data.Typeable          (Typeable)
+import Data.List              (intercalate)
+import Data.Monoid            (mappend, mconcat)
+import Hakyll
+import Text.Hyphenation       (hyphenate, english_GB, hyphenatorRightMin)
+import Text.Pandoc            (bottomUp, Pandoc)
+import Text.Pandoc.Definition
+import Text.Pandoc.Options
 
 
 -- Returns a compiled list of item representations with links
@@ -22,7 +25,7 @@ feedConf = FeedConfiguration
     , feedDescription = "kazlauskas.me blog entries"
     , feedAuthorName  = "Simonas Kazlauskas"
     , feedAuthorEmail = "web@kazlauskas.me"
-    , feedRoot        = "http://kazlauskas.me"
+    , feedRoot        = "http://www.kazlauskas.me"
     }
 
 
@@ -46,6 +49,27 @@ hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
                         hyphInline (Str str) = Str $ hyphWs str
                         hyphInline a = a
 
+siteWriterOptions :: String -> WriterOptions
+siteWriterOptions tpl = defaultHakyllWriterOptions
+    { writerTableOfContents = True
+    , writerHTMLMathMethod = MathML Nothing
+    , writerHtml5 = True
+    , writerSectionDivs = True
+    , writerStandalone = True
+    , writerTemplate = tpl
+    }
+
+entryCompiler (Item _ template) = pandocCompilerWithTransform
+    defaultHakyllReaderOptions (siteWriterOptions template) hyphenatePandoc
+
+setBodyVersion :: (Binary a, Typeable a) => String -> Item a -> Compiler (Item a)
+setBodyVersion version (Item i _) = do
+    body <- loadBody ni
+    return $ Item i body -- Our usecase ;)
+    where ni = setVersion (Just version) i
+
+
+
 main :: IO ()
 main = hakyll $ do
     match "templates/*" $ compile templateCompiler
@@ -62,14 +86,15 @@ main = hakyll $ do
 
     match "entries/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompilerWithTransform defaultHakyllReaderOptions
-                                              defaultHakyllWriterOptions
-                                              hyphenatePandoc
-            >>= saveSnapshot "content"
-            >>= return . fmap demoteHeaders
+        compile $ makeItem ""
             >>= loadAndApplyTemplate "templates/entry.html" (entryCtx tags)
+            >>= entryCompiler
             >>= loadAndApplyTemplate "templates/base.html" (entryCtx tags)
             >>= relativizeUrls
+
+        version "bare" $ do
+            route $ gsubRoute "entries/" (const "/tmp/hakyll-entries/")
+            compile $ makeItem "$body$" >>= entryCompiler
 
     -- Build a page and a separate rss feed for each tag
     tagsRules tags $ \tag pattern -> do
@@ -87,15 +112,16 @@ main = hakyll $ do
             version "rss" $ do
                 route $ setExtension "xml"
                 compile $ do
-                    entries <- loadAllSnapshots pattern "content"
-                    renderAtom feedConf feedCtx (take 25 $ recentFirst entries)
+                   entries <- loadAll $ pattern
+                   bareEntries <- mapM (setBodyVersion "bare") entries
+                   renderAtom feedConf feedCtx (take 25 $ recentFirst bareEntries)
 ------------------------------------------------------------------------------
     create ["entries.html"] $ do
         route idRoute
         compile $ do
             items <- loadAll "entries/*"
             let itemsList = entryListing (entryCtx tags) $ recentFirst items
-            let entriesCtx = mconcat [ constField "title" "Entries"
+            let entriesCtx = mconcat [ constField "title" "Simonas' Entries"
                                      , field "entrylist" $ \_ -> itemsList
                                      , defaultContext
                                      ]
@@ -104,7 +130,7 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-            entries <- loadAllSnapshots "entries/*" "content"
+            entries <- loadAll $ "entries/*" .&&. hasVersion "bare"
             renderAtom feedConf feedCtx (take 25 $ recentFirst entries)
 
     match "index.html" $ do
