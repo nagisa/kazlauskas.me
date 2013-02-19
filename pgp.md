@@ -1,5 +1,5 @@
 ---
-title: PGP
+title: Simonas' PGP
 published: 2012-91-18
 ---
 My public PGP key's id is `0xEADB5526`. It's fingerprint is:
