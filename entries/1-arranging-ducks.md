@@ -25,7 +25,7 @@ every consecutive number in the sequence should increase.
 ```
 
 All is fine and good until you decide you want your sequence to increase in
-steps of ⅒. I shall try it out by simply passing a `0.1` as last argument.
+steps of $\frac{1}{10}$. I shall try it out by simply passing a `0.1` as last argument.
 
 ```python
 >>> range(0, 1, 0.1)

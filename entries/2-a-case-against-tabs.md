@@ -7,8 +7,8 @@ tags: UX, GNOME
 
 A long time (12 years or so) ago certain two browsers were fighting over
 market share and neither of them featured a certain UI element which is
-inseparatable part of today's browser designs. Nor did most other applications
-had it. Then, while being anihilated, Netscape added tabs as a last struggle.
+inseparable part of today's browser designs. Nor did most other applications
+had it. Then, while being annihilated, Netscape added tabs as a last struggle.
 That is where things started going very wrong.
 
 Opera added them just several months later and interestingly enough IE, the
@@ -33,7 +33,7 @@ great solution to handling tab like interface at OS level.
 Likewise you find applications instead of windows as first level citizens in
 OS X, GNOME, Unity and I suspect in most other modern desktop environments.
 Actually working with GTK+, the toolkit used to make GNOME applications,
-the first object you would create is not a window anymore. It's a
+the first object you would create is not a window any more. It's a
 `GtkApplication`.
 
 So in case tabs were created to compensate for a missing layer of separation
@@ -60,7 +60,7 @@ sets of shortcuts in your head for every different application you use.
 
 Tabs seem to be a clear violation of DRY principle as every application
 has it's own implementation of tab functionality. Either that or they use
-toolikt widgets not meant for that. For example `GtkNotebook` was never meant
+toolkit widgets not meant for that. For example `GtkNotebook` was never meant
 to be a contraption of today's tabbed interfaces and was designed with
 different requirements in mind. Still due to it's similarity it is widely used
 as a good enough solution.
@@ -70,8 +70,8 @@ as a good enough solution.
 Tabbed interfaces also introduce more controls. One more close button in
 addition to close button for window is one good example of higher complexity.
 You have to take care to close only those windows that does not have important
-tabs open too and as a consecuence you always get to answer to dialog if you
-really want to close a window.
+tabs open too and as a consequence you always get to answer to alert window if
+you really want to close a window.
 
 # In Conclusion
 
@@ -83,7 +83,7 @@ Tabs:
   there's no guarantee for common functionality, shortcuts, position or even
   look;
 * Not integrated into OS experience;
-* Unneccesary – they were coined to alleviate the problem of missing layer of
+* Unnecessary – they were coined to alleviate the problem of missing layer of
   separation which is fixed now;
 * Introduce additional development overhead.
 
@@ -93,4 +93,4 @@ me that confusing UI is a disaster and tabs as they are now are just that.
 # Also some ¢s from me
 
 Having went tab-less at least half a year ago I can confidently affirm that
-I would not want to go back to using tabs anytime foreseeable.
+I would not want to go back to using tabs any time foreseeable.
