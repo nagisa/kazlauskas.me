@@ -70,7 +70,7 @@ setItemIdentifierVersion :: Maybe String -> Item a -> Item a
 setItemIdentifierVersion version (Item identifier body) =
     Item (setVersion version identifier) body
 -- And convenience function
-setItemIdVersionList v = map $ setItemIdentifierVersion v
+setItemIdVersionList v = map (setItemIdentifierVersion v)
 
 
 
@@ -87,14 +87,14 @@ main = hakyll $ do
         compile compressCssCompiler
 
 
-    tags <- buildTags "entries/*" $ fromCapture "tags/*.html"
+    tags <- buildTags "entries/*" (fromCapture "tags/*.html")
 
     match "entries/*" $ do
         route $ setExtension "html"
         compile $ makeItem ""
-            >>= loadAndApplyTemplate "templates/entry.html" $ entryCtx tags
+            >>= loadAndApplyTemplate "templates/entry.html" (entryCtx tags)
             >>= entryCompiler
-            >>= loadAndApplyTemplate "templates/base.html" $ entryCtx tags
+            >>= loadAndApplyTemplate "templates/base.html" (entryCtx tags)
             >>= relativizeUrls
 
         version "for-atom" $ do
@@ -116,7 +116,7 @@ main = hakyll $ do
             version "rss" $ do
                 route $ setExtension "xml"
                 compile $ do
-                    matches <- map $ setVersion $ Just "for-atom"
+                    matches <- map (setVersion (Just "for-atom"))
                                <$> getMatches pattern
 
                     setItemIdVersionList Nothing . take 25 . recentFirst
@@ -126,7 +126,7 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ setItemIdVersionList Nothing . take 25 . recentFirst
-                  <$> loadAll $ "entries/*" .&&. hasVersion "for-atom"
+                  <$> loadAll ("entries/*" .&&. hasVersion "for-atom")
                   >>= renderAtom feedConf feedCtx
 
     create ["entries.html"] $ do
@@ -144,7 +144,7 @@ main = hakyll $ do
         route idRoute
         compile $ do
             entries <- loadAll $ "entries/*" .&&. hasNoVersion
-            let pList = entryListing (entryCtx tags) $ take 5 $ recentFirst entries
+            let pList = entryListing (entryCtx tags) (take 5 $ recentFirst entries)
             let indexCtx = mconcat [ field "entries" $ \_ -> pList
                                    , defaultContext
                                    ]
