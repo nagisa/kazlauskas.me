@@ -12,6 +12,7 @@ import Text.Pandoc.Definition
 import Text.Pandoc.Options
 
 
+
 -- Returns a compiled list of item representations with links
 entryListing :: Context a -> [Item a] -> Compiler String
 entryListing ctx entry = do
@@ -62,11 +63,14 @@ siteWriterOptions tpl = defaultHakyllWriterOptions
 entryCompiler (Item _ template) = pandocCompilerWithTransform
     defaultHakyllReaderOptions (siteWriterOptions template) hyphenatePandoc
 
-setBodyVersion :: (Binary a, Typeable a) => String -> Item a -> Compiler (Item a)
-setBodyVersion version (Item i _) = do
-    body <- loadBody ni
-    return $ Item i body -- Our usecase ;)
-    where ni = setVersion (Just version) i
+-- Because we do not set route (and we do want it to point to regular version
+-- anyway) we need to set identifier version for `entries (for-atom)` to
+-- Nothing
+setItemIdentifierVersion :: Maybe String -> Item a -> Item a
+setItemIdentifierVersion version (Item identifier body) =
+    Item (setVersion version identifier) body
+-- And convenience function
+setItemIdVersionList v = map (setItemIdentifierVersion v)
 
 
 
@@ -81,7 +85,8 @@ main = hakyll $ do
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
-------------------------------------------------------------------------------
+
+
     tags <- buildTags "entries/*" (fromCapture "tags/*.html")
 
     match "entries/*" $ do
@@ -92,8 +97,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/base.html" (entryCtx tags)
             >>= relativizeUrls
 
-        version "bare" $ do
-            route $ gsubRoute "entries/" (const "/tmp/hakyll-entries/")
+        version "for-atom" $ do
             compile $ makeItem "$body$" >>= entryCompiler
 
     -- Build a page and a separate rss feed for each tag
@@ -112,14 +116,23 @@ main = hakyll $ do
             version "rss" $ do
                 route $ setExtension "xml"
                 compile $ do
-                   entries <- loadAll $ pattern
-                   bareEntries <- mapM (setBodyVersion "bare") entries
-                   renderAtom feedConf feedCtx (take 25 $ recentFirst bareEntries)
+                    matches <- map (setVersion (Just "for-atom"))
+                               <$> getMatches pattern
+
+                    setItemIdVersionList Nothing . take 25 . recentFirst
+                        <$> mapM (\i -> load i) matches -- loadAll
+                    >>= renderAtom feedConf feedCtx
 ------------------------------------------------------------------------------
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ setItemIdVersionList Nothing . take 25 . recentFirst
+                  <$> loadAll ("entries/*" .&&. hasVersion "for-atom")
+                  >>= renderAtom feedConf feedCtx
+
     create ["entries.html"] $ do
         route idRoute
         compile $ do
-            items <- loadAll "entries/*"
+            items <- loadAll $ "entries/*" .&&. hasNoVersion
             let itemsList = entryListing (entryCtx tags) $ recentFirst items
             let entriesCtx = mconcat [ constField "title" "Simonas' Entries"
                                      , field "entrylist" $ \_ -> itemsList
@@ -127,16 +140,10 @@ main = hakyll $ do
                                      ]
             makePostList entriesCtx
 
-    create ["atom.xml"] $ do
-        route idRoute
-        compile $ do
-            entries <- loadAll $ "entries/*" .&&. hasVersion "bare"
-            renderAtom feedConf feedCtx (take 25 $ recentFirst entries)
-
     match "index.html" $ do
         route idRoute
         compile $ do
-            entries <- loadAll "entries/*"
+            entries <- loadAll $ "entries/*" .&&. hasNoVersion
             let pList = entryListing (entryCtx tags) (take 5 $ recentFirst entries)
             let indexCtx = mconcat [ field "entries" $ \_ -> pList
                                    , defaultContext
@@ -150,5 +157,5 @@ main = hakyll $ do
     match "pgp.md" $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/base.html" defaultContext
-            >>= relativizeUrls
+                  >>= loadAndApplyTemplate "templates/base.html" defaultContext
+                  >>= relativizeUrls
