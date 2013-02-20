@@ -192,7 +192,7 @@ main hr {
 .blogentries li {
     display: inline-block;
     width: 100%;
-    padding: .25em; .5em;
+    margin: 0 0 .25em;
 }
 
 .blogentry-date {
