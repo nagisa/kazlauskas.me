@@ -26,6 +26,7 @@ header {
     border-bottom: 1px solid #4B4B4B;
     border-color: rgba(75, 75, 75, .5);
     font-variant: small-caps;
+    overflow: hidden;
 }
 
 #title {
@@ -69,6 +70,7 @@ main {
     padding: .5em;
     line-height: 1.35em;
     text-align: justify;
+    clear: both;
 }
 
 main a:link, main a:visited, footer a:link, footer a:visited {
@@ -134,8 +136,9 @@ h1>a, h2>a, h3>a, h4>a {
 }
 
 #metadata>.metah {
+    margin-top: .25em;
+    display: inline-block;
     font-size: 1.125em;
-    display: block;
     font-weight: bold;
     font-variant: small-caps;
 
@@ -211,6 +214,7 @@ footer {
     text-align: left;
     border-top: 1px solid #4B4B4B;
     border-color: rgba(75, 75, 75, .5);
+    clear: both;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
