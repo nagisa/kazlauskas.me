@@ -1,8 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Applicative    ((<$>))
-import Control.Monad          (forM_, mapM)
-import Data.Binary            (Binary)
-import Data.Typeable          (Typeable)
+import Control.Monad          (mapM)
 import Data.List              (intercalate)
 import Data.Monoid            (mappend, mconcat)
 import Hakyll
@@ -15,11 +13,22 @@ import Text.Pandoc.Options
 
 -- Returns a compiled list of item representations with links
 entryListing :: Context a -> [Item a] -> Compiler String
-entryListing ctx entry = do
-    entryItemTpl <- loadBody "templates/entry-item.html"
-    applyTemplateList entryItemTpl ctx entry
+entryListing ctx i = loadBody "templates/entry-item.html"
+                        >>= (\tpl -> applyTemplateList tpl ctx i)
 
+-- Builds a full featured page which lists entries
+makePostList ctx = makeItem ""
+                        >>= loadAndApplyTemplate "templates/entries.html" ctx
+                        >>= loadAndApplyTemplate "templates/base.html" ctx
+                        >>= relativizeUrls
 
+entryCtx tags = mconcat [ dateField "date" "%Y–%m–%d"
+                        , tagsField "tags" tags
+                        , modificationTimeField "update" "%Y-%m-%d"
+                        , defaultContext
+                        ]
+
+------------------------------------------------------------------------------
 feedConf :: FeedConfiguration
 feedConf = FeedConfiguration
     { feedTitle       = "Simonas Kazlauskas"
@@ -29,19 +38,9 @@ feedConf = FeedConfiguration
     , feedRoot        = "http://www.kazlauskas.me"
     }
 
-
-entryCtx tags = mconcat [ dateField "date" "%Y–%m–%d"
-                        , tagsField "tags" tags
-                        , defaultContext
-                        ]
-
 feedCtx = bodyField "description" `mappend` defaultContext
 
-makePostList ctx = makeItem ""
-                >>= loadAndApplyTemplate "templates/entries.html" ctx
-                >>= loadAndApplyTemplate "templates/base.html" ctx
-                >>= relativizeUrls
-
+------------------------------------------------------------------------------
 hyphenatePandoc :: Pandoc -> Pandoc
 hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
                   where hypher = english_GB { hyphenatorRightMin = 2 }
@@ -49,6 +48,14 @@ hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
                         hyphWs = unwords . map hyphW . words
                         hyphInline (Str str) = Str $ hyphWs str
                         hyphInline a = a
+
+-- Take care to understand that argument is a template for Pandoc. It should
+-- contain at least $body$
+entryCompiler :: Item String -> Compiler (Item String)
+entryCompiler (Item _ template) =
+    pandocCompilerWithTransform defaultHakyllReaderOptions
+                                (siteWriterOptions template)
+                                hyphenatePandoc
 
 siteWriterOptions :: String -> WriterOptions
 siteWriterOptions tpl = defaultHakyllWriterOptions
@@ -60,34 +67,31 @@ siteWriterOptions tpl = defaultHakyllWriterOptions
     , writerTemplate = tpl
     }
 
-entryCompiler (Item _ template) = pandocCompilerWithTransform
-    defaultHakyllReaderOptions (siteWriterOptions template) hyphenatePandoc
-
+------------------------------------------------------------------------------
 -- Because we do not set route (and we do want it to point to regular version
 -- anyway) we need to set identifier version for `entries (for-atom)` to
 -- Nothing
 setItemIdentifierVersion :: Maybe String -> Item a -> Item a
 setItemIdentifierVersion version (Item identifier body) =
     Item (setVersion version identifier) body
--- And convenience function
+-- And… a convenience function
 setItemIdVersionList v = map (setItemIdentifierVersion v)
 
 
 
 main :: IO ()
 main = hakyll $ do
+    tags <- buildTags "entries/*" (fromCapture "tags/*.html")
+
     match "templates/*" $ compile templateCompiler
 
-    forM_ ["data/**", "images/**"] $ \f -> match f $ do
+    match ("data/**" .||. "images/**") $ do
         route   idRoute
         compile copyFileCompiler
 
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
-
-
-    tags <- buildTags "entries/*" (fromCapture "tags/*.html")
 
     match "entries/*" $ do
         route $ setExtension "html"
@@ -100,30 +104,7 @@ main = hakyll $ do
         version "for-atom" $ do
             compile $ makeItem "$body$" >>= entryCompiler
 
-    -- Build a page and a separate rss feed for each tag
-    tagsRules tags $ \tag pattern -> do
-            let title = "Entries tagged ‘" ++ tag ++ "’"
-            route idRoute
-            compile $ do
-                items <- loadAll pattern
-                let itemsList = entryListing (entryCtx tags) $ recentFirst items
-                let tagCtx = mconcat [ constField "title" title
-                                     , field "entrylist" $ \_ -> itemsList
-                                     , defaultContext
-                                     ]
-                makePostList tagCtx
-
-            version "rss" $ do
-                route $ setExtension "xml"
-                compile $ do
-                    matches <- map (setVersion (Just "for-atom"))
-                               <$> getMatches pattern
-
-                    setItemIdVersionList Nothing . take 25 . recentFirst
-                        <$> mapM (\i -> load i) matches -- loadAll
-                    >>= renderAtom feedConf feedCtx
-------------------------------------------------------------------------------
-    create ["atom.xml"] $ do
+    create ["feed.atom"] $ do
         route idRoute
         compile $ setItemIdVersionList Nothing . take 25 . recentFirst
                   <$> loadAll ("entries/*" .&&. hasVersion "for-atom")
@@ -132,30 +113,48 @@ main = hakyll $ do
     create ["entries.html"] $ do
         route idRoute
         compile $ do
-            items <- loadAll $ "entries/*" .&&. hasNoVersion
-            let itemsList = entryListing (entryCtx tags) $ recentFirst items
-            let entriesCtx = mconcat [ constField "title" "Simonas' Entries"
-                                     , field "entrylist" $ \_ -> itemsList
-                                     , defaultContext
-                                     ]
-            makePostList entriesCtx
+            entries <- recentFirst
+                       <$> loadAll ("entries/*" .&&. hasNoVersion)
+                       >>= entryListing (entryCtx tags)
+            makePostList $ constField "title" "Simonas' Entries" `mappend`
+                           constField "entries" entries `mappend`
+                           defaultContext
 
     match "index.html" $ do
         route idRoute
         compile $ do
-            entries <- loadAll $ "entries/*" .&&. hasNoVersion
-            let pList = entryListing (entryCtx tags) (take 5 $ recentFirst entries)
-            let indexCtx = mconcat [ field "entries" $ \_ -> pList
-                                   , defaultContext
-                                   ]
-
+            entries <- take 5 . recentFirst
+                       <$> loadAll ("entries/*" .&&. hasNoVersion)
+                       >>= entryListing (entryCtx tags)
+            let iCtx = constField "entries" entries `mappend` defaultContext
             getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/base.html" indexCtx
-                >>= relativizeUrls
+                 >>= applyAsTemplate iCtx
+                 >>= loadAndApplyTemplate "templates/base.html" iCtx
+                 >>= relativizeUrls
 
     match "pgp.md" $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
                   >>= loadAndApplyTemplate "templates/base.html" defaultContext
                   >>= relativizeUrls
+
+    -- Build a page and a separate atom feed for each tag
+    tagsRules tags $ \tag pattern -> do
+        let title = "Entries about " ++ tag
+        route idRoute
+        compile $ recentFirst
+            <$> loadAll pattern
+            >>= entryListing (entryCtx tags)
+            >>= makePostList . (\e -> constField "entries" e `mappend`
+                                      constField "title" title `mappend`
+                                      defaultContext)
+
+        version "atom" $ do
+            route $ setExtension "atom"
+            compile $ do
+                let fTitle = (feedTitle feedConf) ++ " – " ++ title
+                matches <- map (setVersion (Just "for-atom"))
+                           <$> getMatches pattern
+                setItemIdVersionList Nothing . take 25 . recentFirst
+                    <$> mapM load matches -- loadAll
+                    >>= renderAtom feedConf {feedTitle = fTitle} feedCtx
