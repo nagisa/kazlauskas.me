@@ -1,14 +1,15 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, TupleSections #-}
 import Control.Applicative    ((<$>))
-import Control.Monad          (mapM)
-import Data.List              (intercalate)
+import Control.Monad          (mapM, liftM)
+import Data.List              (intercalate, sortBy)
 import Data.Monoid            (mappend, mconcat)
+import Data.Ord               (comparing)
 import Hakyll
+import System.Locale          (defaultTimeLocale)
 import Text.Hyphenation       (hyphenate, english_GB, hyphenatorRightMin)
 import Text.Pandoc            (bottomUp, Pandoc)
 import Text.Pandoc.Definition
 import Text.Pandoc.Options
-
 
 
 -- Returns a compiled list of item representations with links
@@ -68,6 +69,20 @@ siteWriterOptions tpl = defaultHakyllWriterOptions
     }
 
 ------------------------------------------------------------------------------
+sortOnM :: (Monad m, Ord k) => (a -> m k) -> [a] -> m [a]
+sortOnM f xs = liftM (map fst . sortBy (comparing snd)) $
+                mapM (\x -> liftM (x,) (f x)) xs
+
+chronologicalMeta :: [Item a] -> Compiler [Item a]
+chronologicalMeta = sortOnM $ getItemUTC defaultTimeLocale . itemIdentifier
+
+recentFirstMeta :: [Item a] -> Compiler [Item a]
+recentFirstMeta i = return . reverse =<< chronologicalMeta i
+
+-- loadAllSorted :: Pattern -> Compiler [Item a]
+loadAllSorted p = loadAll p >>= recentFirstMeta
+
+------------------------------------------------------------------------------
 -- Because we do not set route (and we do want it to point to regular version
 -- anyway) we need to set identifier version for `entries (for-atom)` to
 -- Nothing
@@ -106,15 +121,14 @@ main = hakyll $ do
 
     create ["feed.atom"] $ do
         route idRoute
-        compile $ setItemIdVersionList Nothing . take 25 . recentFirst
-                  <$> loadAll ("entries/*" .&&. hasVersion "for-atom")
+        compile $ setItemIdVersionList Nothing . take 25
+                  <$> loadAllSorted ("entries/*" .&&. hasVersion "for-atom")
                   >>= renderAtom feedConf feedCtx
 
     create ["entries.html"] $ do
         route idRoute
         compile $ do
-            entries <- recentFirst
-                       <$> loadAll ("entries/*" .&&. hasNoVersion)
+            entries <- loadAllSorted ("entries/*" .&&. hasNoVersion)
                        >>= entryListing (entryCtx tags)
             makePostList $ constField "title" "Simonas' Entries" `mappend`
                            constField "entries" entries `mappend`
@@ -123,8 +137,8 @@ main = hakyll $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            entries <- take 5 . recentFirst
-                       <$> loadAll ("entries/*" .&&. hasNoVersion)
+            entries <- take 5
+                       <$> loadAllSorted ("entries/*" .&&. hasNoVersion)
                        >>= entryListing (entryCtx tags)
             let iCtx = constField "entries" entries `mappend` defaultContext
             getResourceBody
@@ -142,8 +156,7 @@ main = hakyll $ do
     tagsRules tags $ \tag pattern -> do
         let title = "Entries about " ++ tag
         route idRoute
-        compile $ recentFirst
-            <$> loadAll pattern
+        compile $ loadAllSorted pattern
             >>= entryListing (entryCtx tags)
             >>= makePostList . (\e -> constField "entries" e `mappend`
                                       constField "title" title `mappend`
@@ -155,6 +168,6 @@ main = hakyll $ do
                 let fTitle = (feedTitle feedConf) ++ " – " ++ title
                 matches <- map (setVersion (Just "for-atom"))
                            <$> getMatches pattern
-                setItemIdVersionList Nothing . take 25 . recentFirst
-                    <$> mapM load matches -- loadAll
+                setItemIdVersionList Nothing . take 25
+                    <$> (mapM load matches >>= recentFirstMeta) --loadAllSorted
                     >>= renderAtom feedConf {feedTitle = fTitle} feedCtx
