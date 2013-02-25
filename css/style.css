@@ -33,6 +33,7 @@ header {
     font-size: 1.5em;
     font-weight: bold;
     line-height: 1.25em;
+    z-index: 0;
 }
 
 nav {
@@ -41,6 +42,7 @@ nav {
     border-radius: 0 0 5px 5px;
     text-align: right;
     float: right;
+    z-index: 1;
 }
 
 nav>ul {
@@ -67,7 +69,7 @@ main {
     display: block;
     margin: -.25em auto 0;
     width: auto;
-    padding: .5em;
+    padding: .5em .5em 0;
     line-height: 1.35em;
     text-align: justify;
     clear: both;
@@ -174,6 +176,13 @@ main hr {
     background-color: rgba(127, 127, 127, .25);
 }
 
+main blockquote {
+    background:rgba(127, 127, 127, .1);
+    padding: 0 .5em;
+    margin:0 1em;
+    overflow: hidden;
+}
+
 .footnotes ol {
     margin: 0;
     padding: 0 0 0 2em;
@@ -181,6 +190,10 @@ main hr {
 }
 
 /* Recent blog entries header */
+#recent-entries {
+    text-align: left;
+}
+
 .rbp {
     display: inline;
 }

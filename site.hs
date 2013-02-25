@@ -92,10 +92,16 @@ setItemIdentifierVersion version (Item identifier body) =
 -- And… a convenience function
 setItemIdVersionList v = map (setItemIdentifierVersion v)
 
+------------------------------------------------------------------------------
+hakyllConf = defaultConfiguration
+    { inMemoryCache = True
+    , storeDirectory = "/tmp/hakyll-kazlauskas.me/"
+    , tmpDirectory = "/tmp/hakyll-kazlauskas.me/tmp/"
+    }
 
 
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith hakyllConf $ do
     tags <- buildTags "entries/*" (fromCapture "tags/*.html")
 
     match "templates/*" $ compile templateCompiler

@@ -1,73 +1,77 @@
 ---
-title: Comments are welcome… by mail
+title: Comments are welcome
 published: 2013-02-23 16:00:00
 tags: Meta
 ---
 
-A comment section is an expected feature of modern website and it is hard to
-find a page which does not contain a form to post a comment. I, however, will
-not include a commenting form into my blog and I will explain my reasoning
-in a defensive fashion with this entry.
+A comment section is an expected feature of a modern web site and it is hard
+to find a page which does not contain a form to post a comment. I, however,
+will not include a commenting form into my blog and my reasoning, in a
+defensive fashion, as well as solutions are stated in this entry.
 
 # This blog is static
 
-My blog being static implies that I cannot just write some code and pull a
-switch to make a text field magically appear on the page.
+Blog being static implies that blogger cannot just pull a switch to make a text
+field magically appear on the page. Disregarding that, a static web site has
+its own perks and I deem dynamism to be not necessary for a casual blog.
 
-> But there is so much commenting platforms in the wild! Why don't you use
-> this, that or whatever?
-
-Countering this demands a yet another post, but it mostly can be summed to
-following points[^list]:
+<q>But there is so much commenting platforms out there! Why don't you use
+this, that or whatnot?</q>
+– most readers would ask now. Countering this question demands a yet another
+post, but it mostly can be summed to following points[^list]:
 
 1. Data does not belong to me;
-2. I have never had a pleasant experience posting a comment with commenting
-   platform;
-3. Their comment boxes do too much and JavaScript is way too fat.
+2. I have never had a pleasant experience posting a comment with any
+   commenting platform;
+3. Their text areas do too much and JavaScript is way too fat.
 
 [^list]: Not exhaustive, ordered by descending severity
 
-# Comment boxes are spammed constantly
+# Spam prevention is too hard
 
-There of course are ways to prevent spam appearing on your pages like
-moderating every comment or verifying every comment with [Akismet][akismet]
-and moderating those that did not pass. So making sure no spam comments get
-into your pages involves some manual work, which I would like to avoid as
-much as possible.
+Ways to prevent spam appearing on web pages include moderating every comment
+or moderating only those a service like [Akismet][akismet] marks as a spam.
+Some combinations of such services are possible as well… For example in my
+previous blog I managed my comments with a combination of Akismet and
+[reCaptcha][recaptcha]. If Akismet deemed comment wrong, system presented
+a captcha to solve – solution worked pretty well overall. Either way making
+sure no spam gets into your web pages involves some manual work, which I
+would like to avoid as much as possible.
 
-In my previous blog I secured my comment box with a combination of
-[Akismet][akismet] and [reCaptcha][recaptcha]. If Akismet deemed comment wrong
-a commenter got to solve a captcha. Although solution worked flawlessly I
-would rather spend my time writing more technically involving code.
-
-> But commenting platforms take care of that!
-
-… by making you to submit them your whole CV! Also points stated above still
-apply.
+Sure, commenting platforms might take care of that, but their methods still
+have some limits and spam is bound to make its way through into the database.
 
 [akismet]: https://akismet.com/
 [recaptcha]: http://www.google.com/recaptcha
 
-# Responses do not reach involved people
+# Blogs aren't suited for discussion
 
-Insightful and quality comments posted by visitors often demands for answer.
-Sadly the poster rarely comes back to check if there is an answer and
-discussion fades out before starting. Some commenting systems offer
-functionality to get notified via e-mail when there is a response but who
-actually takes advantage of it?
+In my RSS feed I found [one of my reasons expressed so well][citation-source],
+I am going to even cite it:
+
+> There is a reason why blog posts and comments don’t create the discourse we
+> are used from forums: In forums the initial post is just a spark and all
+> subsequent posts are presented as equals. After a while there is little
+> that sets the initial post apart from following posts.
+>
+> It’s very different with blog posts. The blog post itself almost always
+> dominates the whole discussion, comments are visually set apart and often
+> set in smaller font sizes. Following up on previous comments is awkward, so
+> most comments are focused on the initial blog post, which means the
+> discussion doesn’t go anywhere.
+
+In a rare case an insightful comment generates some discussion and a
+commentator actually gets involved in it… I would consider myself lucky, but
+I am yet to get one of those insightful ones.
+
+[citation-source]: http://abdulkadir.net/2013/02/25/why-blogs-arent-suited-for-discussion/
 
 # Comments are welcome by mail
 
-Therefore, after evaluating all the demerits, I will not put a comment box
-into my blog and offer you to comment on my posts by writing an e-mail.
+Therefore, after evaluating all the alternatives, I will not put a comment box
+into my blog and offer you to comment on my posts by writing an e-mail instead.
+I respond to e-mails anyway and probability my answers will be read is much
+higher. Also I will not have to manage spam as well as get to not use a
+commenting platform I dislike so much.
 
-A summary of reasons follow:
-
-1. I can respond to e-mails and probability they will be read is much higher;
-2. You don't have to submit your personal data if you do not want. If you do
-   not need a response you might as well send an e-mail from anonymous box;
-3. E-Mail service providers already provide protection from spam;
-4. I and you get to not use commenting platforms!
-
-P.S. You can also comment by posting in social network both of us frequent.
-
+**P.S.** Comments are also accepted in social networks I frequent.
