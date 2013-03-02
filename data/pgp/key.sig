@@ -1,14 +1,3 @@
----
-title: Simonas' PGP
-published: 2012-91-18
----
-My public PGP key's id is `0xEADB5526`. It's fingerprint is:
-
-```F639 7A4C 840E AFD7 637F  FB80 F532 32F8 6345 7D26```
-
-and [key itself](data/pgp/key.pub) being as follows:
-
-```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v2.0.19 (GNU/Linux)
 
@@ -61,4 +50,3 @@ BaXu3T2yItyWOzFNabp1TLt/0AeTRErwxe0BxvZQ7+tSrc82wkqc2BDJnlHGNpAn
 2uIGIqv1OESZDPtAFFThAehhv5+X
 =AYmf
 -----END PGP PUBLIC KEY BLOCK-----
-```

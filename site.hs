@@ -23,7 +23,7 @@ makePostList ctx = makeItem ""
                         >>= loadAndApplyTemplate "templates/base.html" ctx
                         >>= relativizeUrls
 
-entryCtx tags = mconcat [ dateField "date" "%Y–%m–%d"
+entryCtx tags = mconcat [ dateField "date" "%Y-%m-%d"
                         , tagsField "tags" tags
                         , modificationTimeField "update" "%Y-%m-%d"
                         , defaultContext
@@ -50,20 +50,32 @@ hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
                         hyphInline (Str str) = Str $ hyphWs str
                         hyphInline a = a
 
+pandocCompilerWithHyph :: ReaderOptions
+                       -> WriterOptions
+                       -> Compiler (Item String)
+pandocCompilerWithHyph ropt wopt =
+    pandocCompilerWithTransform ropt wopt hyphenatePandoc
+
+pandocCompilerHyph :: Compiler (Item String)
+pandocCompilerHyph = pandocCompilerWithHyph defaultHakyllReaderOptions
+                                            siteWriterOptions
+
 -- Take care to understand that argument is a template for Pandoc. It should
 -- contain at least $body$
 entryCompiler :: Item String -> Compiler (Item String)
-entryCompiler (Item _ template) =
-    pandocCompilerWithTransform defaultHakyllReaderOptions
-                                (siteWriterOptions template)
-                                hyphenatePandoc
+entryCompiler (Item _ tpl) =
+    pandocCompilerWithHyph defaultHakyllReaderOptions (entryWriterOptions tpl)
 
-siteWriterOptions :: String -> WriterOptions
-siteWriterOptions tpl = defaultHakyllWriterOptions
-    { writerTableOfContents = True
-    , writerHTMLMathMethod = MathML Nothing
+siteWriterOptions :: WriterOptions
+siteWriterOptions = defaultHakyllWriterOptions
+    { writerHTMLMathMethod = MathML Nothing
     , writerHtml5 = True
     , writerSectionDivs = True
+    }
+
+entryWriterOptions :: String -> WriterOptions
+entryWriterOptions tpl = siteWriterOptions
+    { writerTableOfContents = True
     , writerStandalone = True
     , writerTemplate = tpl
     }
@@ -140,21 +152,24 @@ main = hakyllWith hakyllConf $ do
                            constField "entries" entries `mappend`
                            defaultContext
 
-    match "index.html" $ do
-        route idRoute
+    match "other-content/index.md" $ do
+        route   $ gsubRoute "other-content/" (const "")
+                  `composeRoutes` setExtension "html"
         compile $ do
             entries <- take 5
                        <$> loadAllSorted ("entries/*" .&&. hasNoVersion)
                        >>= entryListing (entryCtx tags)
             let iCtx = constField "entries" entries `mappend` defaultContext
-            getResourceBody
-                 >>= applyAsTemplate iCtx
-                 >>= loadAndApplyTemplate "templates/base.html" iCtx
-                 >>= relativizeUrls
 
-    match "pgp.md" $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
+            pandocCompilerHyph
+                >>= loadAndApplyTemplate "templates/index.html" iCtx
+                >>= loadAndApplyTemplate "templates/base.html" defaultContext
+                >>= relativizeUrls
+
+    match "other-content/pgp.md" $ do
+        route   $ gsubRoute "other-content/" (const "")
+                  `composeRoutes` setExtension "html"
+        compile $ pandocCompilerHyph
                   >>= loadAndApplyTemplate "templates/base.html" defaultContext
                   >>= relativizeUrls
 
