@@ -58,8 +58,8 @@ not feasible yet and insertion of soft hyphens is the only reasonable solution. 
 [hyphenation algorithms][hyphen-algorithms] as well as convenient libraries
 that implement the algorithms exist. Probably every programming language
 including [Python][python-hyphen], [Haskell][haskell-hyphen] and even a client
-side [JavaScript][js-hyphen] a library to either hyphenate the words or inject
-soft hyphens into the words for you!
+side [JavaScript][js-hyphen] has a library to either hyphenate the words or
+inject soft hyphens into the words for you!
 
 [^soft-hyphen]: Code point of soft hyphen is `U+00AD`. In HTML it also can be
                 used with `&shy;` escape
