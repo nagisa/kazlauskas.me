@@ -81,18 +81,9 @@ entryWriterOptions tpl = siteWriterOptions
     }
 
 ------------------------------------------------------------------------------
-sortOnM :: (Monad m, Ord k) => (a -> m k) -> [a] -> m [a]
-sortOnM f xs = liftM (map fst . sortBy (comparing snd)) $
-                mapM (\x -> liftM (x,) (f x)) xs
-
-chronologicalMeta :: [Item a] -> Compiler [Item a]
-chronologicalMeta = sortOnM $ getItemUTC defaultTimeLocale . itemIdentifier
-
-recentFirstMeta :: [Item a] -> Compiler [Item a]
-recentFirstMeta i = return . reverse =<< chronologicalMeta i
 
 -- loadAllSorted :: Pattern -> Compiler [Item a]
-loadAllSorted p = loadAll p >>= recentFirstMeta
+loadAllSorted p = loadAll p >>= recentFirst
 
 ------------------------------------------------------------------------------
 -- Because we do not set route (and we do want it to point to regular version
@@ -190,5 +181,5 @@ main = hakyllWith hakyllConf $ do
                 matches <- map (setVersion (Just "for-atom"))
                            <$> getMatches pattern
                 setItemIdVersionList Nothing . take 25
-                    <$> (mapM load matches >>= recentFirstMeta) --loadAllSorted
+                    <$> (mapM load matches >>= recentFirst) --loadAllSorted
                     >>= renderAtom feedConf {feedTitle = fTitle} feedCtx
