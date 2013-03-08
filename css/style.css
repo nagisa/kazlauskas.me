@@ -234,7 +234,7 @@ footer {
        only screen and (min-resolution: 1.5dppx) {
 
     body {
-        background-image: url('../data/background@2X.png');
+        background-image: url('../data/background@2x.png');
     }
 
 }
