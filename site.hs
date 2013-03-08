@@ -152,8 +152,8 @@ main = hakyllWith hakyllConf $ do
                            constField "entries" entries `mappend`
                            defaultContext
 
-    match "other-content/index.md" $ do
-        route   $ gsubRoute "other-content/" (const "")
+    match "pages/index.md" $ do
+        route   $ gsubRoute "pages/" (const "")
                   `composeRoutes` setExtension "html"
         compile $ do
             entries <- take 5
@@ -166,8 +166,8 @@ main = hakyllWith hakyllConf $ do
                 >>= loadAndApplyTemplate "templates/base.html" defaultContext
                 >>= relativizeUrls
 
-    match "other-content/pgp.md" $ do
-        route   $ gsubRoute "other-content/" (const "")
+    match "pages/pgp.md" $ do
+        route   $ gsubRoute "pages/" (const "")
                   `composeRoutes` setExtension "html"
         compile $ pandocCompilerHyph
                   >>= loadAndApplyTemplate "templates/base.html" defaultContext
