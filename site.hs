@@ -44,7 +44,7 @@ feedCtx = bodyField "description" `mappend` defaultContext
 ------------------------------------------------------------------------------
 hyphenatePandoc :: Pandoc -> Pandoc
 hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
-                  where hypher = english_GB { hyphenatorRightMin = 2 }
+                  where hypher = english_GB
                         hyphW = intercalate "\x00AD" . hyphenate hypher
                         hyphWs = unwords . map hyphW . words
                         hyphInline (Str str) = Str $ hyphWs str

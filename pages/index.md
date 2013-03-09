@@ -2,18 +2,13 @@
 title: About Simonas Kazlauskas
 ---
 
-<script type="text/javascript">/*<![CDATA[*/
-(function(w, D){
-  var age, el, d = w.document, a = w.attachEvent;
-  d.$ = d.getElementById;
-  (a == null ? w.addEventListener : a)('load', function(){
-    el = d.$('age');
-    d.$('email').href = "\x6d\x61\x69\x6cto:\x77\x65\x62\x40kazlauskas.me";
-    age = (~~(new D / 864E5) - 9200) / 36.525;
-    el.innerText = el.textContent = ~~age % 10 ? ~~age / 10 : ~~(age / 10);
-  });
-})(window, Date);
-/*]]>*/</script>
+<script type="text/javascript">/*<![CDATA[*/(function(w, D){
+    (w.addEventListener || w.attachEvent)('load', function(){
+        var age = (~~(new D / 864E5) - 9200) / 36.525,
+            e = document.getElementById('age');
+        e.innerText = e.textContent = ~~age % 10 ? ~~age / 10 : ~~(age / 10);
+    });
+})(window, Date);/*]]>*/</script>
 
 <section id="name-age-loc">
 
