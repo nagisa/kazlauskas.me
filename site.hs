@@ -125,8 +125,7 @@ main = hakyllWith hakyllConf $ do
             >>= loadAndApplyTemplate "templates/base.html" (entryCtx tags)
             >>= relativizeUrls
 
-        version "for-atom" $ do
-            compile $ makeItem "$body$" >>= entryCompiler
+        version "for-atom" $ compile $ makeItem "$body$" >>= entryCompiler
 
     create ["feed.atom"] $ do
         route idRoute
@@ -177,7 +176,7 @@ main = hakyllWith hakyllConf $ do
         version "atom" $ do
             route $ setExtension "atom"
             compile $ do
-                let fTitle = (feedTitle feedConf) ++ " – " ++ title
+                let fTitle = feedTitle feedConf ++ " – " ++ title
                 matches <- map (setVersion (Just "for-atom"))
                            <$> getMatches pattern
                 setItemIdVersionList Nothing . take 25
