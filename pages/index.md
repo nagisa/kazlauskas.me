@@ -31,7 +31,7 @@ I have been producing some *C* (for competitions) and *Haskell*
 
 Another thing I adore is a country called Japan, its culture and people.
 Since childhood I was exposed to media about Japan quite often and
-before I knew, Japan, Japanese language, anime and various other things of
+before I knew Japan, Japanese language, anime and various other things of
 Japanese origin became a subset of the things I like a lot.
 
 </section>

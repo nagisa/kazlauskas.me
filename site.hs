@@ -166,6 +166,7 @@ main = hakyllWith hakyllConf $ do
     -- Build a page and a separate atom feed for each tag
     tagsRules tags $ \tag pattern -> do
         let title = "Entries about " ++ tag
+        let fTitle = feedTitle feedConf ++ " – " ++ title
         route idRoute
         compile $ loadAllSorted pattern
             >>= entryListing (entryCtx tags)
@@ -176,7 +177,6 @@ main = hakyllWith hakyllConf $ do
         version "atom" $ do
             route $ setExtension "atom"
             compile $ do
-                let fTitle = feedTitle feedConf ++ " – " ++ title
                 matches <- map (setVersion (Just "for-atom"))
                            <$> getMatches pattern
                 setItemIdVersionList Nothing . take 25
