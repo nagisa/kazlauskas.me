@@ -25,11 +25,12 @@ main = hakyllWith hakyllConfiguration $ do
         compile compressCssCompiler
 
     match "entries/*" $ do
+        let entryTemplates = [ "templates/entry.html"
+                             , "templates/entry-no-toc.html"]
         route $ setExtension "html"
-        compile $ makeItem ""
-            >>= loadAndApplyTemplate "templates/entry.html" (entryCtx tags)
-            >>= entryCompiler
-            >>= loadAndApplyTemplate "templates/base.html" (entryCtx tags)
+        compile $ entryCompiler
+            >>= loadAndTryApplyTemplates entryTemplates (entryContext tags)
+            >>= loadAndApplyTemplate "templates/base.html" (entryContext tags)
             >>= relativizeUrls
 
         version "for-atom" $ compile $ entryCompiler
