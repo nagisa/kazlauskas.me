@@ -40,4 +40,4 @@ notEmptyField (Context a) = Context $ \k i -> do
     case value of
         []        -> fail $ "Empty field "++ k ++" in context for item "
                             ++ show (itemIdentifier i)
-        otherwise -> a k i
+        _ -> return value

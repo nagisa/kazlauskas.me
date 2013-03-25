@@ -41,5 +41,7 @@ loadAndTryApplyTemplates :: [Identifier]
                          -> Context a
                          -> Item a
                          -> Compiler (Item String)
+loadAndTryApplyTemplates [t] c i =
+    loadAndApplyTemplate t c i
 loadAndTryApplyTemplates (t:ts) c i =
     loadAndApplyTemplate t c i <|> loadAndTryApplyTemplates ts c i
