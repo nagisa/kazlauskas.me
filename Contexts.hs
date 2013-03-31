@@ -24,15 +24,15 @@ indexContext entries = constField "entries" entries `mappend` defaultContext
 
 
 tocField :: String -> Context a
-tocField name = field name tocCompiler
+tocField name = field name (const $ fmap itemBody comp)
   where
-    tocCompiler _ = do
-        i <- pandocCompilerWith defaultHakyllReaderOptions opt
-        return $ itemBody i
-    opt = defaultHakyllWriterOptions { writerTableOfContents = True
-                                     , writerStandalone = True
-                                     , writerTemplate = "$toc$"
-                                     }
+    comp = fmap (writePandocWith wopt . readPandocWith ropt) getResourceBody
+    ropt = defaultHakyllReaderOptions
+    wopt = defaultHakyllWriterOptions { writerTableOfContents = True
+                                      , writerStandalone = True
+                                      , writerTemplate = "$toc$"
+                                      }
+
 
 notEmptyField :: Context a -> Context a
 notEmptyField (Context a) = Context $ \k i -> do
