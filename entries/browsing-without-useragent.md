@@ -61,3 +61,7 @@ There's some that fail more gracefully:
 All in all, if you care about privacy and use something else than Google,
 browsing without sending `User-Agent` is feasible. In case you prefer
 Google, then it's not like you care about your privacy after all, do you?
+
+An updated list of websites not working:
+
+* http://tools.ietf.org/
