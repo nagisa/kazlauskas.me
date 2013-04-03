@@ -64,4 +64,5 @@ Google, then it's not like you care about your privacy after all, do you?
 
 An updated list of websites not working:
 
-* http://tools.ietf.org/
+* [tools.ietf.org](https://tools.ietf.org/)
+* [git.gnome.org](https://git.gnome.org/)
