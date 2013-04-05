@@ -24,7 +24,7 @@ main = hakyllWith hakyllConfiguration $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "entries/*.md" $ do
+    match "entries/**.md" $ do
         let entryTemplates = [ "templates/entry.html"
                              , "templates/entry-no-toc.html"]
         route $ setExtension "html"

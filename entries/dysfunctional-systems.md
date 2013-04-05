@@ -1,0 +1,51 @@
+---
+title: Dysfunctional systems and small miscalculations
+published: 2013-04-05 18:00:00+0200
+tags: Natural Sciences, Otaku Jinsei
+---
+
+A few days ago I got to play a recently released [Dischan][dischan] visual
+novel called [Dysfunctional Systems][dyssys]. The experience playing it was as
+good as I expect from any game I devote time to, however I found it a bit
+lacking in research. If you're in for numbers and physics rather than gaming,
+you may [skip to the second part][cont].
+
+[dischan]: https://dischan.org/
+[dyssys]: https://dischan.org/store/product.php?productID=8
+
+As can be deduced from books I've read, stories set in the future and stories
+where highly advanced technology is common, people create stars purely for
+entertainment are my favourite. In short I like Science Fiction a lot.
+
+When I first saw that Dysfunctional Systems' story is based on Science Fiction
+I was rather sceptical about the prospects of it. You rarely see a Visual Novel
+and SF in a game at the same time, which is also a reason it is hard to imagine
+what kind of game could be produced by mixing these two ingredients. I have to
+say that people at Dischan squeezed the full potential of this mix and made a
+great game which exceeded my expectations by, like, a lot.
+
+The blood of any game, art, is beautiful and polished – I don't have any
+objurgations regarding it. As far as character art goes I find Waverly to have
+the best (cutest) one – Winter's design simply didn't fit my taste. Bundled
+extras are worth a look as well, but while tinkering with the source files
+I found an awesome image that people at Dischan apparently [forgot to
+include][forgotten_image]. The mistake seems to be fixed in the current build
+though.
+
+The [soundtrack][strack] – a pack of awesome music by CombatPlayer worth at
+least as much as you pay for whole game is also included into the deal. It's
+available in MP3 as well as in FLAC, which I really appreciate.
+
+The short playtime might be the biggest one of the few quirks Dysfunctional
+Systems has. We are promised up to 5 episodes though, so both the shortness and
+rather abrupt ending can be overlooked. Other than that, this game is worth all
+the teas and beers the person, who was kind enough to present me this game,
+owed. Thanks!
+
+**The next part** of this article contains spoilers so I split it up into two
+distinct articles. If you either already experienced the game or just don't
+care, you may [**continue reading**][cont].
+
+[cont]: /entries/h/dysfunctional-systems-2.html
+[strack]: https://musicbrainz.org/release/e03cb80f-d4ae-4a1d-8f72-e5715231aafe
+[forgotten_image]: http://dischan.org/forum/viewforum.php?c=3&f=8&t=1690
