@@ -11,7 +11,7 @@ import Text.Pandoc.Options
 
 entryContext tags = mconcat [ dateField "date" "%Y-%m-%d"
                             , tagsField "tags" tags
-                            , modificationTimeField "update" "%Y-%m-%d"
+                            , modificationTimeField "updated" "%Y-%m-%d"
                             , notEmptyField $ tocField "toc"
                             , defaultContext
                             ]

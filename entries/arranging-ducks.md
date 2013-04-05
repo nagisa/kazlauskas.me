@@ -1,7 +1,6 @@
 ---
 title: Arranging ducks
 published: 2013-01-19
-updated: 2013-02-18
 tags: Python
 ---
 

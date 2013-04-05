@@ -1,7 +1,6 @@
 ---
 title: Hyphenation hints and justification
 published: 2013-02-18
-updated: 2013-02-19
 tags: UX, Web
 ---
 

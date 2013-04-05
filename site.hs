@@ -24,7 +24,7 @@ main = hakyllWith hakyllConfiguration $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "entries/*" $ do
+    match "entries/*.md" $ do
         let entryTemplates = [ "templates/entry.html"
                              , "templates/entry-no-toc.html"]
         route $ setExtension "html"
@@ -83,11 +83,11 @@ main = hakyllWith hakyllConfiguration $ do
                                       constField "title" title `mappend`
                                       defaultContext)
 
-        version "atom" $ do
-            route $ setExtension "atom"
-            compile $ do
-                matches <- map (setVersion (Just "for-atom"))
-                           <$> getMatches pattern
-                setItemsIdVersions Nothing . take 25
-                    <$> (mapM load matches >>= recentFirst) --loadAllSorted
-                    >>= renderAtom fConf feedContext
+        -- version "atom" $ do
+        --     route $ setExtension "atom"
+        --     compile $ do
+        --         matches <- map (setVersion (Just "for-atom"))
+        --                    <$> getMatches pattern
+        --         setItemsIdVersions Nothing . take 25
+        --             <$> (mapM load matches >>= recentFirst) --loadAllSorted
+        --             >>= renderAtom fConf feedContext
