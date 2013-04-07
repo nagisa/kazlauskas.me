@@ -67,3 +67,5 @@ A continiously updated list of websites failing this experiment:
 * [tools.ietf.org](https://tools.ietf.org/)
 * [git.gnome.org](https://git.gnome.org/)
 * facebook.com (Don't feel generous enough to link this one for them)
+* [arxiv.org](http://arxiv.org) (The only one to give a proper explanation on
+  error page so far)
