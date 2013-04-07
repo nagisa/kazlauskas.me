@@ -7,13 +7,7 @@
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <link rel="alternate" type="application/atom+xml"
               title="Simonas Kazlauskas" href="/feed.atom" />
-        <script type="text/javascript">/*<![CDATA[*/(function(w){
-            (w.addEventListener || w.attachEvent)('load', function(){
-                var e = document.getElementById('email');
-                if(e)
-                  e.href = '\x6d\x61\x69\x6cto:\x77\x65\x62\x40kazlauskas.me';
-            });
-        })(window);/*]]>*/</script>
+        <script async type="text/javascript" src="/data/site.js"></script>
     </head>
     <body>
         <header>
@@ -26,21 +20,25 @@
                     <a href="/pgp.html">PGP</a>
                 </li></ul>
             </nav>
-            <span id="title">$title$</span>
+
+            <div id="title-box">
+                <div id="intro">Simonas about</div>
+                <div id="title">$title$</div>
+            </div>
         </header>
         <main role="main">
-            <article>
             $body$
-            </article>
         </main>
         <footer>
+        <div id="generator">
+        Proudly <a class="hakyll" href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
         The con&shy;tent in this doc&shy;u&shy;ment is li&shy;cen&shy;sed
         un&shy;der a
         <a href="http://creativecommons.org/licenses/by/3.0/deed.en_GB"
         rel="license" title="Creative Commons Attribution 3.0 Unported">
         CC BY 3.0 Li&shy;cen&shy;se</a> un&shy;less ex&shy;plic&shy;itly stated
-        oth&shy;er&shy;wise.<br>
-        Proudly <a class="hakyll" href="http://jaspervdj.be/hakyll">Hakyll</a>.
+        oth&shy;er&shy;wise.
         </footer>
     </body>
 </html>

@@ -1,5 +1,5 @@
 ---
-title: Simonas' PGP
+title: PGP
 published: 2012-91-18
 ---
 

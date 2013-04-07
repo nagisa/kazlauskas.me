@@ -1,14 +1,6 @@
 ---
-title: About Simonas Kazlauskas
+title: Simonas Kazlauskas
 ---
-
-<script type="text/javascript">/*<![CDATA[*/(function(w, D){
-    (w.addEventListener || w.attachEvent)('load', function(){
-        var age = (~~(new D / 864E5) - 9200) / 36.525,
-            e = document.getElementById('age');
-        e.innerText = e.textContent = ~~age % 10 ? ~~age / 10 : ~~(age / 10);
-    });
-})(window, Date);/*]]>*/</script>
 
 <section id="name-age-loc">
 
@@ -53,6 +45,7 @@ My explorations tend to be theoretical rather than experimental though.
 * Music is scrobbled to [last.fm][lastfm];
 * Books I've read are at [goodreads][goodreads];
 * Anime I've seen is at [MAL][mal].
+
 
 [github]: https://github.com/simukis/
 [twitter]: https://twitter.com/simukis/
