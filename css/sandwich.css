@@ -212,6 +212,11 @@ main article p {
     text-align: justify;
 }
 
+main ul, main ol {
+    list-style-position: inside;
+    padding-left: 1em;
+}
+
 h1, h2, h3, h4 {
     font-variant: small-caps;
     line-height: 1.35em;
