@@ -4,8 +4,8 @@ published: 2013-04-05
 tags: Natural Sciences, Otaku Jinsei
 ---
 
-This article spoils the game I've
-[reviewed here](/entries/dysfunctional-systems.html).
+**This article spoils the game I've
+[reviewed here](/entries/dysfunctional-systems.html).**
 
 # Miscalculations
 
