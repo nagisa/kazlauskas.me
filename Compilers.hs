@@ -2,12 +2,15 @@ module Compilers
     ( pandocCompilerWithHyph
     , pandocCompilerHyph
     , entryCompiler
+    , jsCompiler
     ) where
 
 import Configuration
+import Data.ByteString.Lazy   (ByteString)
 import Data.List              (intercalate)
 import Hakyll
 import Text.Hyphenation       (hyphenate, english_GB, hyphenatorRightMin)
+import Text.Jasmine           (minify)
 import Text.Pandoc            (bottomUp, Pandoc)
 import Text.Pandoc.Definition (Inline (Str))
 import Text.Pandoc.Options
@@ -33,3 +36,7 @@ pandocCompilerHyph =
 entryCompiler :: Compiler (Item String)
 entryCompiler =
     pandocCompilerWithHyph defaultHakyllReaderOptions siteWriterOptions
+
+
+jsCompiler :: Compiler (Item ByteString)
+jsCompiler = getResourceLBS >>= withItemBody (return . minify)

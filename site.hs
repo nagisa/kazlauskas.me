@@ -16,13 +16,19 @@ main = hakyllWith hakyllConfiguration $ do
 
     match "templates/*" $ compile templateCompiler
 
-    match ("data/**" .||. "images/**") $ do
+    match ( "images/**"
+            .||. "data/**"
+            .&&. (complement $ fromRegex "(js|css)$")) $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*" $ do
+    match "data/**.css" $ do
         route   idRoute
         compile compressCssCompiler
+
+    match "data/**.js" $ do
+        route   idRoute
+        compile jsCompiler
 
     match "entries/**.md" $ do
         let entryTemplates = [ "templates/entry.html"
