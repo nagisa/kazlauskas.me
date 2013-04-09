@@ -69,3 +69,5 @@ A continiously updated list of websites failing this experiment:
 * facebook.com (Don't feel generous enough to link this one for them)
 * [arxiv.org](http://arxiv.org) (The only one to give a proper explanation on
   error page so far)
+* [code.google.com/p/chromium/](https://code.google.com/p/chromium/issues)
+  (Issue reporting button does not work. Specific to chromium project)
