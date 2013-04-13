@@ -79,6 +79,33 @@ break the Sule apart.
 [effects_table]: https://en.wikipedia.org/wiki/Radiation_poisoning#Signs_and_symptoms
 [sqinv-law]: https://en.wikipedia.org/wiki/Inverse-square_law
 
+# Amendments
+
+Discussion at [Dischan forums][discussion] pointed out that all my calculations
+are completely dependent on the first assumption. Indeed they do, so I'll write
+how I came to conclusion this assumption is safe enough to be depended on. If
+the Sule is bigger than the Earth, the story of irradiation is even more
+unlikely as the distance between Gabrea and Brighton is even larger. On the
+other hand the planet can't get much smaller (or more accurately, easier[^3])
+and still be cabable of having an atmosphere.
+
+CombatPlayer pointed out that the game could be set in a different universe
+following different physics altogether. Indeed, that also could be a case, but
+I highly doubt it's reasonable thing to do. Of course I won't stop anybody
+trying to create new rules for fictional universe, but it would involve long
+years of hard work to make everything at least a bit realistic. That would
+include ensuring new rules allow creation of stars, planets, stable chemical
+elements.  After that ensuring those elements would be able to participate in a
+process of creating other highly complex elements we call organic matter and so
+on and on.
+
+[discussion]: http://dischan.org/forum/viewforum.php?c=1&f=12&t=1746
+
+[^3]: In order for body to have it's own atmosphere body's gravitation should
+be large enough so it could hold down gases of which atmosphere consists.
+Gravitation is proportional to the mass of the body rather than size.
+Assumption #1, however, includes similar density to Earth, thus I can use size
+and mass in such comparisons interchangeably.
 
 # Final words
 
