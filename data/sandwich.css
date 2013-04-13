@@ -7,7 +7,7 @@
 html {
     background: #1A1F1E url("/data/background.png") repeat;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     min-height: 100%;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -33,12 +33,13 @@ nav {
 nav ul {
     list-style: none;
     margin: 0;
-    padding: .25em .5em;
+    padding: 0;
 }
 
 nav li {
     padding: .25em .5em;
     text-align: center;
+    display: inline-block;
 }
 
 #title-box {
@@ -47,7 +48,7 @@ nav li {
 
 #title {
     display: block;
-    font-size: 2.5em;
+    font-size: 2em;
     font-variant: small-caps;
     text-indent: .5em;
 }
@@ -88,11 +89,8 @@ main {
 
 #metadata {
     background: rgba(26, 31, 30, .1);
-    float: left;
     font-size: .85em;
     line-height: normal;
-    margin: 0 .5em 0 0;
-    max-width: 225px;
     overflow: hidden;
     padding: .5em;
     text-align: left;
@@ -134,24 +132,6 @@ article {
     -webkit-column-gap: 1em;
 }
 
-@media screen and (min-width: 60em) {
-    article {
-        column-count: 2;
-        max-width: 80em;
-        -moz-column-count: 2;
-        -webkit-column-count: 2;
-    }
-}
-
-@media screen and (min-width: 90em) {
-    article {
-        column-count: 3;
-        max-width: 120em;
-        -moz-column-count: 3;
-        -webkit-column-count: 3;
-    }
-}
-
 main code {
     background: rgba(26, 31, 30, .1);
     font-size: 1em;
@@ -180,7 +160,8 @@ main figure {
     margin: 0;
     max-width: 100%;
     width: -moz-min-content;
-    width: -webkit-min-content;
+    /* Chrome handles this incorrectly, see https://code.google.com/p/chromium/issues/detail?id=229462
+     * width: -webkit-min-content;*/
     width: min-content;
 }
 
@@ -281,3 +262,44 @@ pre.sourceCode span.er { color: red; font-weight: bold; }
     margin: 0;
     padding: 0 0 0 1.5em;
 }
+
+@media screen and (min-width: 60em) {
+    html {
+        font-size: 18px;
+    }
+
+    #title {
+        font-size: 2.5em;
+    }
+
+    nav ul {
+        padding: .25em .5em;
+    }
+
+    nav li {
+        display: list-item;
+    }
+
+    article {
+        column-count: 2;
+        max-width: 80em;
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+    }
+
+    #metadata {
+        float: left;
+        max-width: 12.5em;
+        margin-right: .5em;
+    }
+}
+
+@media screen and (min-width: 90em) {
+    article {
+        column-count: 3;
+        max-width: 120em;
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+    }
+}
+
