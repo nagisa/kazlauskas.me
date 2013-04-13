@@ -72,3 +72,4 @@ A continiously updated list of websites failing this experiment:
 * [code.google.com/p/chromium/](https://code.google.com/p/chromium/issues)
   (Issue reporting button does not work. Specific to chromium project)
 * [booklog.jp](http://booklog.jp/)
+* Google Charts – “Your browser does not support charts”
