@@ -37,9 +37,9 @@ nav ul {
 }
 
 nav li {
+    display: inline-block;
     padding: .25em .5em;
     text-align: center;
-    display: inline-block;
 }
 
 #title-box {
@@ -53,7 +53,6 @@ nav li {
     text-indent: .5em;
 }
 
-
 footer {
     font-size: .889em;
     padding: .5em;
@@ -66,6 +65,7 @@ footer {
 
 main {
     color: #1A1F1E;
+    display: block;
     padding: .5em 1em;
 }
 
@@ -108,9 +108,6 @@ main {
     margin: 0;
     padding: 0 0 0 1em;
 }
-
-
-/* content styles */
 
 a:link, a:visited {
     color: #987C32;
@@ -159,10 +156,12 @@ main figure {
     background-color: rgba(26, 31, 30, .1);
     margin: 0;
     max-width: 100%;
-    width: -moz-min-content;
-    /* Chrome handles this incorrectly, see https://code.google.com/p/chromium/issues/detail?id=229462
-     * width: -webkit-min-content;*/
     width: min-content;
+    width: -moz-min-content;
+    /* Chrome handles this incorrectly, see
+     * https://code.google.com/p/chromium/issues/detail?id=229462
+     * width: -webkit-min-content;
+     */
 }
 
 main hr {
@@ -229,7 +228,6 @@ h6 {
     font-size: 1em;
 }
 
-
 pre.sourceCode span.kw { color: #007020; font-weight: bold; }
 pre.sourceCode span.dt { color: #902000; }
 pre.sourceCode span.dv { color: #40a070; }
@@ -239,9 +237,9 @@ pre.sourceCode span.ch { color: #4070a0; }
 pre.sourceCode span.st { color: #4070a0; }
 pre.sourceCode span.co { color: #60a0b0; font-style: italic; }
 pre.sourceCode span.ot { color: #007020; }
-pre.sourceCode span.al { color: red; font-weight: bold; }
+pre.sourceCode span.al { color: #ff0000; font-weight: bold; }
 pre.sourceCode span.fu { color: #06287e; }
-pre.sourceCode span.er { color: red; font-weight: bold; }
+pre.sourceCode span.er { color: #ff0000; font-weight: bold; }
 
 /* page specific styles */
 
@@ -289,8 +287,8 @@ pre.sourceCode span.er { color: red; font-weight: bold; }
 
     #metadata {
         float: left;
-        max-width: 12.5em;
         margin-right: .5em;
+        max-width: 12.5em;
     }
 }
 
@@ -302,4 +300,3 @@ pre.sourceCode span.er { color: red; font-weight: bold; }
         -webkit-column-count: 3;
     }
 }
-
