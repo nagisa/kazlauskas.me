@@ -63,6 +63,10 @@ footer {
     margin-left: 1em;
 }
 
+#copy::before {
+    content: '© ';
+}
+
 main {
     color: #1A1F1E;
     display: block;
@@ -289,6 +293,14 @@ pre.sourceCode span.er { color: #ff0000; font-weight: bold; }
         float: left;
         margin-right: .5em;
         max-width: 12.5em;
+    }
+
+    #copy::before {
+        content: 'The content in this document is licenced under the ';
+    }
+
+    #copy::after {
+        content: '.';
     }
 }
 
