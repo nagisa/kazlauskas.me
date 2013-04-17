@@ -2,6 +2,7 @@ module Contexts
     ( entryContext
     , feedContext
     , indexContext
+    , baseContext
     ) where
 
 import Hakyll
@@ -21,6 +22,9 @@ feedContext = bodyField "description" `mappend` defaultContext
 
 
 indexContext entries = constField "entries" entries `mappend` defaultContext
+
+
+baseContext = defaultContext
 
 
 tocField :: String -> Context a

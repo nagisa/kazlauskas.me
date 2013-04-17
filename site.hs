@@ -16,9 +16,8 @@ main = hakyllWith hakyllConfiguration $ do
 
     match "templates/*" $ compile templateCompiler
 
-    match ( "images/**"
-            .||. "data/**"
-            .&&. (complement $ fromRegex "(js|css)$")) $ do
+    match ( "images/**" .||. "data/**"
+                        .&&. (complement $ fromRegex "(js|css)$")) $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -36,7 +35,7 @@ main = hakyllWith hakyllConfiguration $ do
         route $ setExtension "html"
         compile $ entryCompiler
             >>= loadAndTryApplyTemplates entryTemplates (entryContext tags)
-            >>= loadAndApplyTemplate "templates/base.html" (entryContext tags)
+            >>= loadAndApplyTemplate "templates/base.html" baseContext
             >>= relativizeUrls
 
         version "for-atom" $ compile $ entryCompiler
@@ -49,12 +48,14 @@ main = hakyllWith hakyllConfiguration $ do
 
     create ["entries.html"] $ do
         route idRoute
-        compile $ do
-            entries <- loadAllSorted ("entries/*" .&&. hasNoVersion)
-                       >>= entryListing (entryContext tags)
-            makePostList $ constField "title" "Simonas' Entries" `mappend`
-                           constField "entries" entries `mappend`
-                           defaultContext
+        compile $
+            loadAllSorted ("entries/*" .&&. hasNoVersion)
+            >>= entryListing (entryContext tags)
+            >>= entryListCompiler
+            >>= loadAndApplyTemplate "templates/base.html"
+                (constField "title" "Simonas' Entries" `mappend` baseContext)
+            >>= relativizeUrls
+
 
     match "pages/index.md" $ do
         route   $ gsubRoute "pages/" (const "")
@@ -66,14 +67,14 @@ main = hakyllWith hakyllConfiguration $ do
 
             pandocCompilerHyph
                 >>= loadAndApplyTemplate "templates/index.html" (indexContext entries)
-                >>= loadAndApplyTemplate "templates/base.html" defaultContext
+                >>= loadAndApplyTemplate "templates/base.html" baseContext
                 >>= relativizeUrls
 
     match "pages/pgp.md" $ do
         route   $ gsubRoute "pages/" (const "")
                   `composeRoutes` setExtension "html"
         compile $ pandocCompilerHyph
-                  >>= loadAndApplyTemplate "templates/base.html" defaultContext
+                  >>= loadAndApplyTemplate "templates/base.html" baseContext
                   >>= relativizeUrls
 
     -- Build a page and a separate atom feed for each tag
@@ -83,11 +84,13 @@ main = hakyllWith hakyllConfiguration $ do
             t = feedTitle feedConfiguration ++ " – " ++ title
 
         route idRoute
-        compile $ loadAllSorted pattern
+        compile $
+            loadAllSorted pattern
             >>= entryListing (entryContext tags)
-            >>= makePostList . (\e -> constField "entries" e `mappend`
-                                      constField "title" title `mappend`
-                                      defaultContext)
+            >>= entryListCompiler
+            >>= loadAndApplyTemplate "templates/base.html"
+                (constField "title" title `mappend` baseContext)
+            >>= relativizeUrls
 
         -- version "atom" $ do
         --     route $ setExtension "atom"

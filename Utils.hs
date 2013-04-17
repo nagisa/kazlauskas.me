@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Utils
     ( entryListing
-    , makePostList
+    , entryListCompiler
     , loadAllSorted
     , setItemIdVersion
     , setItemsIdVersions
@@ -9,22 +9,22 @@ module Utils
     ) where
 
 import Configuration
-import Hakyll
 import Control.Applicative    ((<|>))
 import Data.Binary            (Binary)
+import Data.Monoid            (mappend)
 import Data.Typeable          (Typeable)
+import Hakyll
 
 
 entryListing :: Context a -> [Item a] -> Compiler String
 entryListing ctx i = loadBody "templates/entry-item.html"
                         >>= (\tpl -> applyTemplateList tpl ctx i)
 
-
-makePostList ctx = makeItem ""
-                        >>= loadAndApplyTemplate "templates/entries.html" ctx
-                        >>= loadAndApplyTemplate "templates/base.html" ctx
-                        >>= relativizeUrls
-
+entryListCompiler :: String -> Compiler (Item String)
+entryListCompiler items =
+    makeItem "" >>= loadAndApplyTemplate "templates/entries.html" ctx
+  where
+    ctx = constField "entries" items `mappend` defaultContext
 
 loadAllSorted :: (Binary a, Typeable a) => Pattern -> Compiler [Item a]
 loadAllSorted p = loadAll p >>= recentFirst
