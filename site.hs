@@ -8,6 +8,7 @@ import Utils
 import Configuration
 import Compilers
 import Contexts
+import qualified Templates as T
 
 
 main :: IO ()
@@ -50,8 +51,7 @@ main = hakyllWith hakyllConfiguration $ do
         route idRoute
         compile $
             loadAllSorted ("entries/*" .&&. hasNoVersion)
-            >>= entryListing (entryContext tags)
-            >>= entryListCompiler
+            >>= entryListCompiler (entryContext tags)
             >>= loadAndApplyTemplate "templates/base.html"
                 (constField "title" "Simonas' Entries" `mappend` baseContext)
             >>= relativizeUrls
@@ -63,10 +63,11 @@ main = hakyllWith hakyllConfiguration $ do
         compile $ do
             entries <- take 5
                        <$> loadAllSorted ("entries/*" .&&. hasNoVersion)
-                       >>= entryListing (entryContext tags)
+                       >>= entryListCompiler (entryContext tags)
 
             pandocCompilerHyph
-                >>= loadAndApplyTemplate "templates/index.html" (indexContext entries)
+                >>= loadAndApplyTemplate "templates/index.html"
+                    (indexContext $ itemBody entries)
                 >>= loadAndApplyTemplate "templates/base.html" baseContext
                 >>= relativizeUrls
 
@@ -86,8 +87,7 @@ main = hakyllWith hakyllConfiguration $ do
         route idRoute
         compile $
             loadAllSorted pattern
-            >>= entryListing (entryContext tags)
-            >>= entryListCompiler
+            >>= entryListCompiler (entryContext tags)
             >>= loadAndApplyTemplate "templates/base.html"
                 (constField "title" title `mappend` baseContext)
             >>= relativizeUrls
