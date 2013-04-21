@@ -1,56 +1,26 @@
 {-# LANGUAGE OverloadedStrings #-}
+module Templates (indexTpl, module Tpls) where
 
-module Templates
-    ( entryItemTpl
-    , applyTemplate
-    , applyTemplateList
-    ) where
+import Templates.Internal as Tpls
+import Templates.Base     as Tpls
+import Templates.Entry    as Tpls
 
-import Data.Monoid                  (mappend)
-import Hakyll                       (Context(..), Item, Compiler, itemSetBody, missingField, itemBody)
-import Control.Applicative          ((<$>), liftA2, (<*>))
-import Data.List                    (intersperse)
-
-import Text.Blaze
-import Text.Blaze.Html5 hiding (map)
-import Text.Blaze.Html5.Attributes
-import Text.Blaze.Html.Renderer.String
-
-type Template m a = (String -> Item a -> m a) -> Item a -> m a
-
-html <!> attr = (liftA2 (!)) html attr
-html <<!>> attr = (return html) <!> (return attr)
-html <<!> attr = (return html) <!> attr
+import Hakyll                                (MonadMetadata, itemBody)
+import Text.Blaze                            ((!))
+import qualified Text.Blaze.Html5            as H
+import qualified Text.Blaze.Html5.Attributes as A
+import Text.Blaze.Html.Renderer.String       (renderHtml)
 
 
-applyTemplate :: Template Compiler String
-              -> Context String -> Item String -> Compiler (Item String)
-applyTemplate tpl ctx item =
-    tpl ctx' item >>= \body ->
-        return $ itemSetBody body item
-  where
-    ctx' :: String -> Item String -> Compiler String
-    ctx' key item = unContext (ctx `mappend` missingField) key item
-
-
-applyTemplateListWith :: String
-                      -> Template Compiler String -> Context String
-                      -> [Item String] -> Compiler String
-applyTemplateListWith delimiter tpl ctx items =
-    mapM (applyTemplate tpl ctx) items >>= \items' ->
-       return $ concat $ intersperse delimiter $ map itemBody items'
-applyTemplateList = applyTemplateListWith ""
-
-
-entryItemTpl :: Template Compiler String
-entryItemTpl context item = do
-    date <- toHtml <$> context "date" item
-    title <- toHtml <$> context "title" item
-    url <- href <$> toValue <$> context "url" item
-
+indexTpl :: MonadMetadata m => Template m String
+indexTpl context item = do
+    entries <- entriesTpl context item
     return $ renderHtml $
-        li $ do
-            time ! class_ "blogentry-date" $ date
-            a ! url $ title
-
-
+        H.article ! A.id "index" $ do
+            H.preEscapedToHtml $ itemBody item
+            H.section ! A.id "recent-entries" $ do
+                H.h1 ! A.id "rbp" $ toHtml "Recent blog entries"
+                toHtml "(a "
+                H.a ! A.href "/entries.html" $ toHtml "complete list"
+                toHtml ")"
+                H.preEscapedToHtml entries

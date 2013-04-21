@@ -104,7 +104,7 @@ main {
     font-size: 1.125em;
     font-variant: small-caps;
     font-weight: bold;
-    margin-top: .25em;
+    margin: .25em .25em 0 0;
 }
 
 #metadata ul {

@@ -15,10 +15,8 @@ main :: IO ()
 main = hakyllWith hakyllConfiguration $ do
     tags <- buildTags "entries/*" (fromCapture "tags/*.html")
 
-    match "templates/*" $ compile templateCompiler
-
-    match ( "images/**" .||. "data/**"
-                        .&&. (complement $ fromRegex "(js|css)$")) $ do
+    match ("images/**" .||. "data/**"
+                       .&&. complement (fromRegex "(js|css)$")) $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -31,15 +29,12 @@ main = hakyllWith hakyllConfiguration $ do
         compile jsCompiler
 
     match "entries/**.md" $ do
-        let entryTemplates = [ "templates/entry.html"
-                             , "templates/entry-no-toc.html"]
         route $ setExtension "html"
         compile $ entryCompiler
-            >>= loadAndTryApplyTemplates entryTemplates (entryContext tags)
-            >>= loadAndApplyTemplate "templates/base.html" baseContext
+            >>= T.applyTemplate T.entryTpl (entryContext tags)
+            >>= T.applyTemplate T.baseTpl baseContext
             >>= relativizeUrls
-
-        version "for-atom" $ compile $ entryCompiler
+        version "for-atom" $ compile entryCompiler
 
     create ["feed.atom"] $ do
         route idRoute
@@ -52,9 +47,10 @@ main = hakyllWith hakyllConfiguration $ do
         compile $
             loadAllSorted ("entries/*" .&&. hasNoVersion)
             >>= entryListCompiler (entryContext tags)
-            >>= loadAndApplyTemplate "templates/base.html"
+            >>= T.applyTemplate T.baseTpl
                 (constField "title" "Simonas' Entries" `mappend` baseContext)
             >>= relativizeUrls
+
 
 
     match "pages/index.md" $ do
@@ -66,29 +62,30 @@ main = hakyllWith hakyllConfiguration $ do
                        >>= entryListCompiler (entryContext tags)
 
             pandocCompilerHyph
-                >>= loadAndApplyTemplate "templates/index.html"
+                >>= T.applyTemplate T.indexTpl
                     (indexContext $ itemBody entries)
-                >>= loadAndApplyTemplate "templates/base.html" baseContext
+                >>= T.applyTemplate T.baseTpl baseContext
                 >>= relativizeUrls
 
     match "pages/pgp.md" $ do
         route   $ gsubRoute "pages/" (const "")
                   `composeRoutes` setExtension "html"
         compile $ pandocCompilerHyph
-                  >>= loadAndApplyTemplate "templates/base.html" baseContext
+                  >>= T.applyTemplate T.baseTpl baseContext
                   >>= relativizeUrls
 
     -- Build a page and a separate atom feed for each tag
     tagsRules tags $ \tag pattern -> do
         let title = "Entries about " ++ tag
-        let fConf = feedConfiguration { feedTitle = t } where
-            t = feedTitle feedConfiguration ++ " – " ++ title
+        -- let fConf = feedConfiguration {
+        --     feedTitle = feedTitle feedConfiguration ++ " – " ++ title
+        -- }
 
         route idRoute
         compile $
             loadAllSorted pattern
             >>= entryListCompiler (entryContext tags)
-            >>= loadAndApplyTemplate "templates/base.html"
+            >>= T.applyTemplate T.baseTpl
                 (constField "title" title `mappend` baseContext)
             >>= relativizeUrls
 

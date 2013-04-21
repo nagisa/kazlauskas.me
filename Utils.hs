@@ -4,7 +4,6 @@ module Utils
     , loadAllSorted
     , setItemIdVersion
     , setItemsIdVersions
-    , loadAndTryApplyTemplates
     ) where
 
 import Configuration
@@ -12,14 +11,13 @@ import Control.Applicative    ((<|>))
 import Data.Binary            (Binary)
 import Data.Monoid            (mappend)
 import Data.Typeable          (Typeable)
-import Hakyll       hiding    (applyTemplateList)
+import Hakyll       hiding    (applyTemplateList, applyTemplate)
 
 import Templates
 
 entryListCompiler :: Context String -> [Item String] -> Compiler (Item String)
-entryListCompiler ctx items = do
-    applyTemplateList entryItemTpl ctx items >>= \is ->
-        makeItem "" >>= loadAndApplyTemplate "templates/entries.html" (ctx' is)
+entryListCompiler ctx items = applyTemplateList entryItemTpl ctx items >>=
+    \is -> makeItem "" >>= applyTemplate entriesTpl (ctx' is)
   where
     ctx' is = constField "entries" is `mappend` defaultContext
 
@@ -33,13 +31,3 @@ setItemIdVersion version (Item identifier body) =
     Item (setVersion version identifier) body
 -- And… a convenience function
 setItemsIdVersions v = map (setItemIdVersion v)
-
-
-loadAndTryApplyTemplates :: [Identifier]
-                         -> Context a
-                         -> Item a
-                         -> Compiler (Item String)
-loadAndTryApplyTemplates [t] c i =
-    loadAndApplyTemplate t c i
-loadAndTryApplyTemplates (t:ts) c i =
-    loadAndApplyTemplate t c i <|> loadAndTryApplyTemplates ts c i
