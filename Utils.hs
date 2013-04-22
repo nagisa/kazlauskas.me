@@ -6,13 +6,13 @@ module Utils
     , setItemsIdVersions
     ) where
 
-import Configuration
 import Control.Applicative    ((<|>))
 import Data.Binary            (Binary)
 import Data.Monoid            (mappend)
 import Data.Typeable          (Typeable)
-import Hakyll       hiding    (applyTemplateList, applyTemplate)
+import Hakyll       hiding    (applyTemplateList, applyTemplate, renderTags)
 
+import Configuration
 import Templates
 
 entryListCompiler :: Context String -> [Item String] -> Compiler (Item String)
