@@ -51,7 +51,7 @@ baseTpl context item = do
                 H.meta ! A.name "viewport" ! A.content viewport
                 H.title $ toHtml $ "Simonas Kazlauskas about " ++ title
                 H.link ! A.rel "stylesheet" ! A.type_ "text/css"
-                       ! A.href "/data/sandwich.2.css"
+                       ! A.href "/data/sandwich.3.css"
                 H.link ! A.rel "alternate" ! A.type_ "application/atom+xml"
                        ! A.href "/feed.atom"
                 H.script ! A.async "" ! A.type_ "text/javascript"
