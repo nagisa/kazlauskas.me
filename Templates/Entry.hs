@@ -45,7 +45,8 @@ entryTpl context item = do
                 H.span ! A.class_ "metah" $ toHtml "Table of contents"
                 H.preEscapedToHtml toc
         H.article ! A.id "entry" $ H.preEscapedToHtml body
-        if fnotes == Nothing then mempty else H.aside ! A.class_ "footnotes" $
+        if fnotes == Nothing then mempty else H.aside ! A.id "footnotes" $ do
+            H.h1 $ toHtml "Footnotes"
             H.preEscapedToHtml $ fromJust fnotes
 
 entriesTpl context item = do

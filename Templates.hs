@@ -19,8 +19,7 @@ indexTpl context item = do
         H.article ! A.id "index" $ do
             H.preEscapedToHtml $ itemBody item
             H.section ! A.id "recent-entries" $ do
-                H.h1 ! A.id "rbp" $ toHtml "Recent blog entries"
-                toHtml "(a "
-                H.a ! A.href "/entries.html" $ toHtml "complete list"
-                toHtml ")"
+                H.h1 $ toHtml "Recent blog entries"
+                H.span ! A.id "rbp-sub" $
+                    H.a ! A.href "/entries.html" $ toHtml "full listing"
                 H.preEscapedToHtml entries

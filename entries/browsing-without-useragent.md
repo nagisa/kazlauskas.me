@@ -30,9 +30,7 @@ me quite a bit. I visit Youtube and Picasa Web considerably more often than any
 other Google service and they dealt with missing `User-Agent` fine, so I
 assumed other Google's services would too. Another interesting finding was that
 Google seems to save browser version or some related data in cookies so their
-services started failing only after a browser restart[^cookies].
-
-[^cookies]: My browser clears cookies when the browser is closed
+services started failing only after a browser restart.
 
 After discovering that *Mail* fails, I started checking all other
 Google services to see if they failed too – mostly with saddening results.

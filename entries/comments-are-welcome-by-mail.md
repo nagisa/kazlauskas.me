@@ -18,14 +18,12 @@ its own perks and I deem dynamism to be not necessary for a casual blog.
 <q>But there is so much commenting platforms out there! Why don't you use
 this, that or whatnot?</q>
 – most readers would ask now. Countering this question demands a yet another
-post, but it mostly can be summed to following points[^list]:
+post, but it mostly can be summed to following points:
 
 1. Data does not belong to me;
 2. I have never had a pleasant experience posting a comment with any
    commenting platform;
 3. Their text areas do too much and JavaScript is way too fat.
-
-[^list]: Not exhaustive, ordered by descending severity
 
 # Spam prevention is too hard
 

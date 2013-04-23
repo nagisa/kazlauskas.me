@@ -11,14 +11,11 @@ I'm yet to see a post which would be a fitting representation of my view of
 this situation, hence this post.
 
 First of all, a disclaimer – I have to point out that I've been using Google
-Reader for my personal reading needs and its API for my open-source
-project[^1]. I'd say I have a right to be more angry than most of "just
+Reader for my personal reading needs and its API for [my open-source
+project][feeds]. I'd say I have a right to be more angry than most of "just
 consumers". My project is loosing its basis after all!
 
 [feeds]: https://github.com/simukis/Feeds
-
-[^1]: [Feeds][feeds], a GNOME application for Google Reader. I'm probably its
-      only user.
 
 Problem is that no one actually has a right to complain about decisions
 Google recently made. When people sign up for Google's services

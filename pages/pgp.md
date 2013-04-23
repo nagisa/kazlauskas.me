@@ -2,6 +2,7 @@
 title: PGP
 published: 2012-91-18
 ---
+<article>
 
 * ID – `0x63457D26`
 * Fingerprint – `F639 7A4C 840E AFD7 637F  FB80 F532 32F8 6345 7D26`
@@ -63,3 +64,5 @@ BaXu3T2yItyWOzFNabp1TLt/0AeTRErwxe0BxvZQ7+tSrc82wkqc2BDJnlHGNpAn
 =AYmf
 -----END PGP PUBLIC KEY BLOCK-----
 ```
+
+</article>
