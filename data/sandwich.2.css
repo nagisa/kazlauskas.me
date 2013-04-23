@@ -69,12 +69,11 @@ footer {
 main {
     color: #1A1F1E;
     display: block;
-    padding: .5em 1em;
 }
 
 .blogentries {
     display: block;
-    margin: 0 .5em;
+    margin: 1em;
     overflow: hidden;
     padding: 0;
     text-align: left;
@@ -91,7 +90,9 @@ main {
 }
 
 #metadata {
-    background: rgba(26, 31, 30, .1);
+    display: none;
+}
+/*    background: rgba(26, 31, 30, .1);
     font-size: .85em;
     line-height: normal;
     overflow: hidden;
@@ -99,7 +100,7 @@ main {
     text-align: left;
 }
 
-#metadata>.metah {
+.metah {
     display: inline-block;
     font-size: 1.125em;
     font-variant: small-caps;
@@ -111,6 +112,7 @@ main {
     margin: 0;
     padding: 0 0 0 1em;
 }
+*/
 
 a:link, a:visited {
     color: #987C32;

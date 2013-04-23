@@ -34,20 +34,21 @@ entryTpl context item = do
     tags <- context "tags" item
     toc <- context "toc" item
     return $ renderHtml $ do
-        H.aside ! A.id "metadata" $ do
-            H.span ! A.class_ "metah" $ toHtml "Post date"
-            H.time ! A.pubdate "" $ toHtml date
-            H.span ! A.class_ "metah" $ toHtml "Last update"
-            H.time $ toHtml update
-            H.span ! A.class_ "metah" $ toHtml "Tags"
-            H.preEscapedToHtml tags
-            if toc == "" then mempty else do
-                H.span ! A.class_ "metah" $ toHtml "Table of contents"
-                H.preEscapedToHtml toc
         H.article ! A.id "entry" $ H.preEscapedToHtml body
         if fnotes == Nothing then mempty else H.aside ! A.id "footnotes" $ do
             H.h1 $ toHtml "Footnotes"
             H.preEscapedToHtml $ fromJust fnotes
+        H.aside ! A.id "metadata" $ do
+            metadataElement "Created" $ H.time ! A.pubdate "" $ toHtml date
+            metadataElement "Updated" $ H.time $ toHtml update
+            metadataElement "Tags"    $ H.preEscapedToHtml tags
+            if toc == "" then mempty else
+                metadataElement "Table of Contents" $ H.preEscapedToHtml toc
+  where
+    metadataElement title friends = H.div ! A.class_ "metab" $ do
+            H.span ! A.class_ "metah" $ toHtml title
+            friends
+
 
 entriesTpl context item = do
     entries <- context "entries" item
