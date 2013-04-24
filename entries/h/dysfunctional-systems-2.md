@@ -53,26 +53,29 @@ actually is after which  they finally teleport out. Given length of the
 explanation I rate it at (*at most*) 5 minutes. Teleportation, as can be seen
 earlier in game, takes only 5 seconds to complete, which puts Winter at exactly
 $8.7\mathrm{min} + 5\mathrm{min} + 5\mathrm{sec} = 826$ seconds of exposure to
-radiation.
+γ radiation.
 
-826 seconds only and strictly only if there was any other radiation besides
+826 seconds only and strictly only if there was any noticeable change in
 background radiation in the first place! The strength of radiation is inversely
 proportional to the distance from the explosion centre[^sqinv], thus even at
 relatively short distances from the explosion centre the radiation decreases to
 negligible levels. For comparison one cannot even measure the change of
-radiation background 200 kilometres away from the explosion of 20Mt nuke[^2].
+radiation background 200 kilometres away from the explosion of 20Mt
+nuke[^2][^strength].
 
 Looking at the [effects table][effects_table] to experience the same symptoms
 Winter had (vomiting and diarrhoea to be exact), her body had to absorb from 2
-to 6 Gy of ionising radiation. Given 826 seconds of exposure the dose rate had
-to be anything between $8.717\frac{\mathrm{Gy}}{\mathrm{h}}$ and
+to 6 grays of ionising radiation. Given 826 seconds of exposure the dose rate
+had to be anything between $8.717\frac{\mathrm{Gy}}{\mathrm{h}}$ and
 $26.15\frac{\mathrm{Gy}}{\mathrm{h}}$. I'm not sure I need to point out I'm
 having a hard time thinking up specifications of a bomb which would induce such
 strong radiation 4168 kilometres away from it's explosion location and not
 break the Sule apart.
 
-[^2]: At least until fallout arrives. [Source][nuke]. Oh, and the bomb used in
-      the game was a lot stronger.
+[^2]: At least until fallout arrives. [Source][nuke].
+[^strength]: The bomb used in game clearly was much stronger, but regardless of
+that, it's explosion strength (however strong it was) still pales in comparison
+to various laws, that don't favour game's scenario.
 [^sqinv]: See [inverse-square law][sqinv-law].
 
 [nuke]: http://kitsune.addr.com/Rifts/Rifts-Missiles/nuke.htm
@@ -87,7 +90,7 @@ how I came to conclusion this assumption is safe enough to be depended on. If
 the Sule is bigger than the Earth, the story of irradiation is even more
 unlikely as the distance between Gabrea and Brighton is even larger. On the
 other hand the planet can't get much smaller (or more accurately, easier[^3])
-and still be cabable of having an atmosphere.
+and still be capable of having an atmosphere.
 
 CombatPlayer pointed out that the game could be set in a different universe
 following different physics altogether. Indeed, that also could be a case, but
