@@ -7,6 +7,7 @@ module Templates.Entry
 
 import           Data.Maybe (fromJust, fromMaybe)
 import           Data.Monoid (mempty)
+import           Data.List   (partition)
 import           Hakyll (MonadMetadata, itemBody, Item(..))
 import           Text.Blaze
 import qualified Text.Blaze.Html5 as H
@@ -59,11 +60,12 @@ entriesTpl context item = do
 -- Splits footnotes from Pandoc generated content and modifies it a bit
 -- Modifications include removing parent with .footnotes as well as <hr/>
 splitFootnotes :: Item String -> (String, Maybe String)
-splitFootnotes item = (content, if fns /= "" then Just fns else Nothing)
+splitFootnotes = unparse . partition isFns . parse
   where
-    tree = onlyElems . parseXML . itemBody $ item
-    isFootnotes = ("footnotes" ==) . fromMaybe "" . findAttr classAttr
     classAttr = blank_name { qName = "class" }
-    content = concat . map showElement . filter (not . isFootnotes) $ tree
-    fns = concat . map fixFns . filter isFootnotes $ tree
-    fixFns = concat . map showElement . filterChildrenName ( ("hr" /=) . qName )
+    isFns = (==) "footnotes" . fromMaybe "" . findAttr classAttr
+    parse = onlyElems . parseXML . itemBody
+    unparse ([]  , cEls) = (unparseC cEls, Nothing)
+    unparse (fEls, cEls) = (unparseC cEls, Just $ unparseF fEls)
+    unparseC = concat . map showElement
+    unparseF = concat . map (unparseC . filterChildrenName ((/=) "hr" . qName))
