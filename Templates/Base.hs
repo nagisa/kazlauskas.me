@@ -1,15 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Templates.Base (baseTpl) where
 
-import Hakyll                                (MonadMetadata, itemBody)
+import Hakyll                                (Compiler, itemBody)
+import Hakyll.Web.Template.Blaze
 import Text.Blaze                            ((!), AttributeValue, Markup)
 import Text.Blaze.Internal
 import qualified Text.Blaze.Html5            as H
 import qualified Text.Blaze.Html5.Attributes as A
-import Text.Blaze.Html.Renderer.String       (renderHtml)
 import qualified Data.Map                    as M
-
-import Templates.Internal
 
 
 menuList :: Markup
@@ -38,11 +36,11 @@ main = customParent "main"
 role = customAttribute "role"
 
 
-baseTpl :: (MonadMetadata m, Functor m) => Template m String
+baseTpl :: Template Compiler String
 baseTpl context item = do
-    title <- context "title" item
-    copy <- context "copy" item
-    return $ renderHtml $
+    title <- context "title"
+    copy <- context "copy"
+    return $
         H.docTypeHtml ! A.lang "en-gb" $ do
 
             H.head $ do
@@ -63,7 +61,7 @@ baseTpl context item = do
                     H.div ! A.id "title-box" $ do
                         H.div ! A.id "intro" $ toHtml "Simonas about"
                         H.div ! A.id "title" $ toHtml title
-                main ! role "main" $ H.preEscapedToHtml $ itemBody item
+                main ! role "main" $ safeToHtml $ itemBody item
                 H.footer $ do
                     H.div ! A.id "generator" $ do
                         toHtml "Proudly "

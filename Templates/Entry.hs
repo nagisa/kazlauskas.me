@@ -8,43 +8,44 @@ module Templates.Entry
 import           Data.Maybe (fromJust, fromMaybe)
 import           Data.Monoid (mempty)
 import           Data.List   (partition)
-import           Hakyll (MonadMetadata, itemBody, Item(..))
+import           Hakyll (Compiler, itemBody, Item(..))
+import           Hakyll.Web.Template.Blaze
+
 import           Text.Blaze
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 import           Text.Blaze.Html.Renderer.String
 import           Text.XML.Light
 
-import           Templates.Internal
 
-entryItemTpl, entryTpl, entriesTpl  :: MonadMetadata m => Template m String
+entryItemTpl, entryTpl, entriesTpl  :: Template Compiler String
 
 entryItemTpl context item = do
-    date <- context "date" item
-    title <- context "title" item
-    url <- context "url" item
-    return $ renderHtml $
+    date <- context "date"
+    title <- context "title"
+    url <- context "url"
+    return $
         H.li $ do
             H.time ! A.class_ "blogentry-date" $ toHtml date
             H.a ! A.href (toValue url) $ toHtml title
 
 entryTpl context item = do
     let (body, fnotes) = splitFootnotes item
-    date <- context "date" item
-    update <- context "updated" item
-    tags <- context "tags" item
-    toc <- context "toc" item
-    return $ renderHtml $ do
-        H.article ! A.id "entry" $ H.preEscapedToHtml body
+    date <- context "date"
+    update <- context "updated"
+    tags <- context "tags"
+    toc <- context "toc"
+    return $ do
+        H.article ! A.id "entry" $ safeToHtml body
         if fnotes == Nothing then mempty else H.aside ! A.id "footnotes" $ do
             H.h1 $ toHtml "Footnotes"
-            H.preEscapedToHtml $ fromJust fnotes
+            safeToHtml $ fromJust fnotes
         H.aside ! A.id "metadata" $ do
             metadataElement "Created" $ H.time ! A.pubdate "" $ toHtml date
             metadataElement "Updated" $ H.time $ toHtml update
-            metadataElement "Tags"    $ H.preEscapedToHtml tags
+            metadataElement "Tags"    $ safeToHtml tags
             if toc == "" then mempty else
-                metadataElement "Table of Contents" $ H.preEscapedToHtml toc
+                metadataElement "Table of Contents" $ safeToHtml toc
   where
     metadataElement title friends = H.div ! A.class_ "metab" $ do
             H.span ! A.class_ "metah" $ toHtml title
@@ -52,9 +53,8 @@ entryTpl context item = do
 
 
 entriesTpl context item = do
-    entries <- context "entries" item
-    return $ renderHtml $
-        H.ul ! A.class_ "blogentries" $ H.preEscapedToHtml entries
+    entries <- context "entries"
+    return $ H.ul ! A.class_ "blogentries" $ safeToHtml entries
 
 
 -- Splits footnotes from Pandoc generated content and modifies it a bit

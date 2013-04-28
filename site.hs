@@ -3,12 +3,14 @@
 import Control.Applicative    ((<$>), (<|>))
 import Data.Monoid            (mappend)
 
-import Hakyll
+import Hakyll hiding (applyTemplate)
+import Hakyll.Web.Template.Blaze
 import Utils
 import Configuration
 import Compilers
 import Contexts
-import qualified Templates as T
+
+import Templates
 
 
 main :: IO ()
@@ -31,8 +33,8 @@ main = hakyllWith hakyllConfiguration $ do
     match "entries/**.md" $ do
         route $ setExtension "html"
         compile $ entryCompiler
-            >>= T.applyTemplate T.entryTpl (entryContext tags)
-            >>= T.applyTemplate T.baseTpl baseContext
+            >>= applyTemplate entryTpl (entryContext tags)
+            >>= applyTemplate baseTpl baseContext
             >>= relativizeUrls
         version "for-atom" $ compile entryCompiler
 
@@ -47,7 +49,7 @@ main = hakyllWith hakyllConfiguration $ do
         compile $
             loadAllSorted ("entries/*" .&&. hasNoVersion)
             >>= entryListCompiler (entryContext tags)
-            >>= T.applyTemplate T.baseTpl
+            >>= applyTemplate baseTpl
                 (constField "title" "Simonas' Entries" `mappend` baseContext)
             >>= relativizeUrls
 
@@ -62,16 +64,16 @@ main = hakyllWith hakyllConfiguration $ do
                        >>= entryListCompiler (entryContext tags)
 
             pandocCompilerHyph
-                >>= T.applyTemplate T.indexTpl
+                >>= applyTemplate indexTpl
                     (indexContext $ itemBody entries)
-                >>= T.applyTemplate T.baseTpl baseContext
+                >>= applyTemplate baseTpl baseContext
                 >>= relativizeUrls
 
     match "pages/pgp.md" $ do
         route   $ gsubRoute "pages/" (const "")
                   `composeRoutes` setExtension "html"
         compile $ pandocCompilerHyph
-                  >>= T.applyTemplate T.baseTpl baseContext
+                  >>= applyTemplate baseTpl baseContext
                   >>= relativizeUrls
 
     -- Build a page and a separate atom feed for each tag
@@ -85,7 +87,7 @@ main = hakyllWith hakyllConfiguration $ do
         compile $
             loadAllSorted pattern
             >>= entryListCompiler (entryContext tags)
-            >>= T.applyTemplate T.baseTpl
+            >>= applyTemplate baseTpl
                 (constField "title" title `mappend` baseContext)
             >>= relativizeUrls
 
