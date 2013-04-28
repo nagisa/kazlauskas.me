@@ -123,6 +123,21 @@ a:link:hover, a:visited:hover {
     text-decoration: underline;
 }
 
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
 article {
     column-count: 1;
     column-gap: 1em;
@@ -171,6 +186,14 @@ article > p:last-child {
     color: #E3DFBA;
     overflow: hidden;
     margin-bottom: .25em;
+}
+
+.footnoteRef::before {
+    content: '[';
+}
+
+.footnoteRef::after {
+    content: ']';
 }
 
 main code {
