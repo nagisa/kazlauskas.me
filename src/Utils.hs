@@ -6,11 +6,10 @@ module Utils
     , setItemsIdVersions
     ) where
 
-import Control.Applicative    ((<|>))
-import Data.Binary            (Binary)
-import Data.Monoid            (mappend)
-import Data.Typeable          (Typeable)
-import Hakyll       hiding    (applyTemplateList, applyTemplate, renderTags)
+import Data.Binary                      (Binary)
+import Data.Monoid                      (mappend)
+import Data.Typeable                    (Typeable)
+import Hakyll                    hiding (applyTemplateList, applyTemplate)
 import Hakyll.Web.Template.Blaze
 
 import Configuration

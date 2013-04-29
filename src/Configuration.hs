@@ -4,8 +4,8 @@ module Configuration
     , hakyllConfiguration
     ) where
 
-import Text.Pandoc.Options
 import Hakyll
+import Text.Pandoc.Options
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration

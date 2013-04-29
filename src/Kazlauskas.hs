@@ -1,16 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
-
-import Control.Applicative    ((<$>), (<|>))
-import Data.Monoid            (mappend)
-
-import Hakyll hiding (applyTemplate)
+import Control.Applicative              ((<$>))
+import Data.Monoid                      (mappend)
+import Hakyll                    hiding (applyTemplate)
 import Hakyll.Web.Template.Blaze
-import Utils
-import Configuration
-import Compilers
-import Contexts
 
+import Compilers
+import Configuration
+import Contexts
 import Templates
+import Utils
 
 
 main :: IO ()

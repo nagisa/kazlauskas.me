@@ -5,10 +5,10 @@ module Contexts
     , baseContext
     ) where
 
-import           Control.Applicative    ((<|>), empty)
-import           Data.Monoid            (mappend, mconcat)
-import           Hakyll
-import           Text.Pandoc.Options
+import Control.Applicative ((<|>), empty)
+import Data.Monoid         (mappend, mconcat)
+import Hakyll
+import Text.Pandoc.Options
 
 
 entryContext tags = mconcat [ dateField "date" "%Y-%m-%d"
