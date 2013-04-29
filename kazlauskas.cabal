@@ -13,7 +13,8 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 executable kazlauskas
-  main-is: Kazlauskas.hs
+  hs-source-dirs:      src
+  main-is:             Kazlauskas.hs
   -- other-modules:
   build-depends: base ==4.6.*
                , bytestring ==0.10.*
