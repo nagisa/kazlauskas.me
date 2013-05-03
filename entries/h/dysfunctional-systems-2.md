@@ -85,9 +85,9 @@ to various laws, that don't favour game's scenario.
 # Amendments
 
 Discussion at [Dischan forums][discussion] pointed out that all my calculations
-are completely dependent on the first assumption. Indeed they do, so I'll write
-how I came to conclusion this assumption is safe enough to be depended on. If
-the Sule is bigger than the Earth, the story of irradiation is even more
+are completely dependent on the first assumption. Indeed they are, so I'll
+write how I came to conclusion this assumption is safe enough to be depended
+on. If the Sule is bigger than the Earth, the story of irradiation is even more
 unlikely as the distance between Gabrea and Brighton is even larger. On the
 other hand the planet can't get much smaller (or more accurately, easier[^3])
 and still be capable of having an atmosphere.
