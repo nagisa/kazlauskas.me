@@ -77,9 +77,9 @@ main = hakyllWith hakyllConfiguration $ do
     -- Build a page and a separate atom feed for each tag
     tagsRules tags $ \tag pattern -> do
         let title = "Entries about " ++ tag
-        -- let fConf = feedConfiguration {
-        --     feedTitle = feedTitle feedConfiguration ++ " – " ++ title
-        -- }
+        let fConf = feedConfiguration {
+            feedTitle = feedTitle feedConfiguration ++ " – " ++ title
+        }
 
         route idRoute
         compile $
@@ -89,11 +89,11 @@ main = hakyllWith hakyllConfiguration $ do
                 (constField "title" title `mappend` baseContext)
             >>= relativizeUrls
 
-        -- version "atom" $ do
-        --     route $ setExtension "atom"
-        --     compile $ do
-        --         matches <- map (setVersion (Just "for-atom"))
-        --                    <$> getMatches pattern
-        --         setItemsIdVersions Nothing . take 25
-        --             <$> (mapM load matches >>= recentFirst) --loadAllSorted
-        --             >>= renderAtom fConf feedContext
+        version "atom" $ do
+            route $ setExtension "atom"
+            compile $ do
+                matches <- map (setVersion (Just "for-atom"))
+                           <$> getMatches pattern
+                setItemsIdVersions Nothing . take 25
+                    <$> (mapM load matches >>= recentFirst) --loadAllSorted
+                    >>= renderAtom fConf feedContext

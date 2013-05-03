@@ -10,16 +10,18 @@ import Data.Monoid         (mappend, mconcat)
 import Hakyll
 import Text.Pandoc.Options
 
-
 entryContext tags = mconcat [ dateField "date" "%Y-%m-%d"
-                            , tagsField "tags" tags
                             , modificationTimeField "updated" "%Y-%m-%d"
                             , tocField "toc"
+                            , tagsField "tags" tags
                             , defaultContext
                             ]
 
 
-feedContext = bodyField "description" `mappend` defaultContext
+feedContext = mconcat [ bodyField "description"
+                      , modificationTimeField "updated" "%Y-%m-%dT%TZ"
+                      , defaultContext
+                      ]
 
 
 indexContext entries = constField "entries" entries `mappend` defaultContext
