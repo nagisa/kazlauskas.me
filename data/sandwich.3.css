@@ -90,29 +90,50 @@ main {
 }
 
 #metadata {
-    display: none;
-}
-/*    background: rgba(26, 31, 30, .1);
+    background:#1A1F1E url("/data/background.png") repeat;
+    color:#E3DFBA;
+    padding-bottom: .5em;
     font-size: .85em;
-    line-height: normal;
-    overflow: hidden;
-    padding: .5em;
-    text-align: left;
 }
 
-.metah {
+#metadata .metab {
     display: inline-block;
-    font-size: 1.125em;
-    font-variant: small-caps;
-    font-weight: bold;
-    margin: .25em .25em 0 0;
+    padding-left: .5em;
 }
 
-#metadata ul {
-    margin: 0;
-    padding: 0 0 0 1em;
+#metadata .metah::after {
+    content: ':\a0' /* Non breakable space */
 }
-*/
+
+#toc {
+    background: rgba(26, 31, 30, .1);
+    display:block;
+    float:left;
+    font-size: .85em;
+    margin: 0 .5em 0 0;
+    max-width: 40%;
+    overflow: hidden;
+    padding: .25em .5em .25em;
+}
+
+#toc ul {
+    margin: .25em 0;
+    padding: 0;
+}
+
+#toc li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#toctitle {
+    display: block;
+    font-size: 1.15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 a:link, a:visited {
     color: #987C32;
@@ -145,12 +166,9 @@ article {
     max-width: 40em;
     -moz-column-count: 1;
     -moz-column-gap: 1em;
+    padding: 0 1em;
     -webkit-column-count: 1;
     -webkit-column-gap: 1em;
-}
-
-article {
-    padding: 0 1em;
 }
 
 article > p:first-child {
@@ -316,6 +334,15 @@ pre.sourceCode span.er { color: #ff0000; font-weight: bold; }
     font-size: .75em;
 }
 
+@media screen and (max-width: 30em) {
+    #toc {
+        float: none;
+        clear: both;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
 @media screen and (min-width: 55em) {
     html {
         font-size: 1.125em;
@@ -330,12 +357,6 @@ pre.sourceCode span.er { color: #ff0000; font-weight: bold; }
         max-width: 80em;
         -moz-column-count: 2;
         -webkit-column-count: 2;
-    }
-
-    #metadata {
-        float: left;
-        margin-right: .5em;
-        max-width: 12.5em;
     }
 
     #copy::before {

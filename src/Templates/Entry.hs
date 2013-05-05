@@ -36,16 +36,23 @@ entryTpl context item = do
     tags <- context "tags"
     toc <- context "toc"
     return $ do
-        H.article ! A.id "entry" $ safeToHtml body
+
+        H.aside ! A.id "metadata" $ do
+            metadataElement "Published" $ H.time ! A.pubdate "" $ toHtml date
+            if date == update then mempty else
+                metadataElement "Updated" $ H.time $ toHtml update
+            metadataElement "Tags" $ safeToHtml tags
+
+        H.article ! A.id "entry" $ do
+            if toc == "" then mempty else
+                H.aside ! A.id "toc" $ do
+                    H.span ! A.id "toctitle" $ "Table of Contents"
+                    safeToHtml toc
+            safeToHtml body
+
         if fnotes == Nothing then mempty else H.aside ! A.id "footnotes" $ do
             H.h1 $ toHtml "Footnotes"
             safeToHtml $ fromJust fnotes
-        H.aside ! A.id "metadata" $ do
-            metadataElement "Created" $ H.time ! A.pubdate "" $ toHtml date
-            metadataElement "Updated" $ H.time $ toHtml update
-            metadataElement "Tags"    $ safeToHtml tags
-            if toc == "" then mempty else
-                metadataElement "Table of Contents" $ safeToHtml toc
   where
     metadataElement title friends = H.div ! A.class_ "metab" $ do
             H.span ! A.class_ "metah" $ toHtml title
