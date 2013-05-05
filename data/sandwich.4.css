@@ -118,7 +118,7 @@ main {
 
 #toc ul {
     margin: .25em 0;
-    padding: 0;
+    padding: 0 0 0 .5em;
 }
 
 #toc li {
