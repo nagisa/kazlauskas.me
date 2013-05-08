@@ -48,7 +48,7 @@ main = hakyllWith hakyllConfiguration $ do
             loadAllSorted ("entries/*" .&&. hasNoVersion)
             >>= entryListCompiler (entryContext tags)
             >>= applyTemplate baseTpl
-                (constField "title" "Simonas' Entries" `mappend` baseContext)
+                (constField "title" "his entries" `mappend` baseContext)
             >>= relativizeUrls
 
 
