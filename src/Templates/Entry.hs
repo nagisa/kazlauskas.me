@@ -26,8 +26,8 @@ entryItemTpl context item = do
     url <- context "url"
     return $
         H.li $ do
-            H.time ! A.class_ "blogentry-date" $ toHtml date
-            H.a ! A.href (toValue url) $ toHtml title
+            H.time ! A.class_ "blogentry-date" $ string date
+            H.a ! A.href (toValue url) $ string title
 
 entryTpl context item = do
     let (body, fnotes) = splitFootnotes item
@@ -38,9 +38,9 @@ entryTpl context item = do
     return $ do
 
         H.aside ! A.id "metadata" $ do
-            metadataElement "Published" $ H.time ! A.pubdate "" $ toHtml date
+            metadataElement "Published" $ H.time ! A.pubdate "" $ string date
             if date == update then mempty else
-                metadataElement "Updated" $ H.time $ toHtml update
+                metadataElement "Updated" $ H.time $ string update
             metadataElement "Tags" $ safeToHtml tags
 
         H.article ! A.id "entry" $ do
@@ -51,11 +51,11 @@ entryTpl context item = do
             safeToHtml body
 
         if fnotes == Nothing then mempty else H.aside ! A.id "footnotes" $ do
-            H.h1 $ toHtml "Footnotes"
+            H.h1 $ string "Footnotes"
             safeToHtml $ fromJust fnotes
   where
     metadataElement title friends = H.div ! A.class_ "metab" $ do
-            H.span ! A.class_ "metah" $ toHtml title
+            H.span ! A.class_ "metah" $ string title
             friends
 
 
