@@ -74,5 +74,5 @@ splitFootnotes = unparse . partition isFns . parse
     parse = onlyElems . parseXML . itemBody
     unparse ([]  , cEls) = (unparseC cEls, Nothing)
     unparse (fEls, cEls) = (unparseC cEls, Just $ unparseF fEls)
-    unparseC = concat . map showElement
-    unparseF = concat . map (unparseC . filterChildrenName ((/=) "hr" . qName))
+    unparseC = concatMap showElement
+    unparseF = concatMap (unparseC . filterChildrenName ((/=) "hr" . qName))

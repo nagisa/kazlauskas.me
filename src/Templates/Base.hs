@@ -32,7 +32,7 @@ baseTpl context item = do
 
             H.body $ do
                 H.header $ do
-                    H.nav $ H.ul $ menuList
+                    H.nav $ H.ul menuList
                     H.div ! A.id "title-box" $ do
                         H.div ! A.id "intro" $ string "Simonas about"
                         H.div ! A.id "title" $ string title
