@@ -44,4 +44,9 @@ tocField name = field name (const $ fmap itemBody comp)
 
 defaultField :: String -> String -> Context String
 defaultField key defval = Context $ \k i ->
-    if key == k then unContext metadataField k i <|> return defval else empty
+    fmap StringField $ if key == k
+        then (unContext metadataField k i >>= getString) <|> return defval
+        else empty
+  where
+    getString (StringField a) = return a
+    getString _ = fail "Only strings supported yet"

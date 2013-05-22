@@ -36,7 +36,7 @@ baseTpl context item = do
                     H.div ! A.id "title-box" $ do
                         H.div ! A.id "intro" $ string "Simonas about"
                         H.div ! A.id "title" $ string title
-                main ! role "main" $ safeToHtml $ itemBody item
+                main ! role "main" $ preEscapedString $ itemBody item
                 H.footer $ do
                     H.div ! A.id "generator" $ do
                         string "Proudly "

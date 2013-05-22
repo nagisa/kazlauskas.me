@@ -1,5 +1,5 @@
 name:                kazlauskas
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            My hakyll blog
 -- description:
 homepage:            http://kazlauskas.me
@@ -15,15 +15,16 @@ cabal-version:       >=1.8
 executable kazlauskas
   hs-source-dirs:      src
   main-is:             Kazlauskas.hs
+  ghc-options:         -rtsopts -threaded
   -- other-modules:
   build-depends: base ==4.6.*
                , bytestring ==0.10.*
-               , hakyll ==4.2.*
+               , hakyll ==4.3.*
                , hyphenation ==0.2.*
                , hjsmin ==0.1.*
                , pandoc ==1.11.*
                , pandoc-types ==1.10.*
-               , hakyll-blaze-templates ==0.1.*
+               , hakyll-blaze-templates ==0.2.*
                , blaze-markup ==0.5.*
                , blaze-html ==0.6.*
                , binary ==0.5.*

@@ -16,9 +16,9 @@ indexTpl context item = do
     entries <- entriesTpl context item
     return $
         H.article ! A.id "index" $ do
-            safeToHtml $ itemBody item
+            preEscapedString $ itemBody item
             H.section ! A.id "recent-entries" $ do
-                H.h1 $ toHtml "Recent blog entries"
+                H.h1 $ string "Recent blog entries"
                 H.span ! A.id "rbp-sub" $
-                    H.a ! A.href "/entries.html" $ toHtml "full listing"
+                    H.a ! A.href "/entries.html" $ string "full listing"
                 entries

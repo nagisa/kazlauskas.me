@@ -41,18 +41,18 @@ entryTpl context item = do
             metadataElement "Published" $ H.time ! A.pubdate "" $ string date
             if date == update then mempty else
                 metadataElement "Updated" $ H.time $ string update
-            metadataElement "Tags" $ safeToHtml tags
+            metadataElement "Tags" $ preEscapedString tags
 
         H.article ! A.id "entry" $ do
             if toc == "" then mempty else
                 H.aside ! A.id "toc" $ do
                     H.span ! A.id "toctitle" $ "Table of Contents"
-                    safeToHtml toc
-            safeToHtml body
+                    preEscapedString toc
+            preEscapedString body
 
         if fnotes == Nothing then mempty else H.aside ! A.id "footnotes" $ do
             H.h1 $ string "Footnotes"
-            safeToHtml $ fromJust fnotes
+            preEscapedString $ fromJust fnotes
   where
     metadataElement title friends = H.div ! A.class_ "metab" $ do
             H.span ! A.class_ "metah" $ string title
@@ -61,7 +61,7 @@ entryTpl context item = do
 
 entriesTpl context item = do
     entries <- context "entries"
-    return $ H.ul ! A.class_ "blogentries" $ safeToHtml entries
+    return $ H.ul ! A.class_ "blogentries" $ preEscapedString entries
 
 
 -- Splits footnotes from Pandoc generated content and modifies it a bit
