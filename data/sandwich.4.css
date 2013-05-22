@@ -73,7 +73,7 @@ main {
 
 .blogentries {
     display: block;
-    margin: 1em;
+    margin: 1em 1.5em;
     overflow: hidden;
     padding: 0;
     text-align: left;
@@ -161,14 +161,15 @@ sub {
 
 article {
     column-count: 1;
-    column-gap: 1em;
+    column-gap: 1.5em;
     margin: 1em auto;
     max-width: 40em;
     -moz-column-count: 1;
-    -moz-column-gap: 1em;
-    padding: 0 1em;
+    -moz-column-gap: 1.5em;
+    padding: 0 1.5em;
     -webkit-column-count: 1;
-    -webkit-column-gap: 1em;
+    -webkit-column-gap: 1.5em;
+    display: block;
 }
 
 article > p:first-child {
