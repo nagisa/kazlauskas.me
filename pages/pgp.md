@@ -4,6 +4,9 @@ published: 2012-91-18
 ---
 <article>
 
+In case you are sending anything only for my eyes to see – by whatever means,
+snail mail included – you want to encrypt it with following key.
+
 * ID – `0x63457D26`
 * Fingerprint – `F639 7A4C 840E AFD7 637F  FB80 F532 32F8 6345 7D26`
 * Size – 4096

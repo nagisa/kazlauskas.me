@@ -232,9 +232,13 @@ main pre>code {
     display: block;
     overflow: auto;
     padding: .25em;
-    width: max-content;
+    /* It doesn't work as expected yet, also should be added to main pre
+    However on case of overflow it fails to cope with scrollbars correctly
+    The problem is overflow: auto; requirement on `main pre` */
+    /* width: max-content;
     width: -moz-max-content;
     width: -webkit-max-content;
+    */
 }
 
 main pre {
