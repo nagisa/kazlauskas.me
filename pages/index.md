@@ -36,19 +36,20 @@ My explorations tend to be theoretical rather than experimental though.
 
 </section>
 
-# Links
+# Presence online
 
 * You should send me an <a id="email">email</a> if you have any questions,
   inquiries or comments;
 * I have an account on [twitter][twitter];
 * Published code is at [github][github];
-* Music is scrobbled to [last.fm][lastfm];
+* Music related activity at [musicbrainz][musicbrainz];
 * Books I've read are at [goodreads][goodreads];
-* Anime I've seen is at [MAL][mal].
-
+* Anime I've seen is at [MAL][mal];
+* I don't have ZuckerBook, Google⁻ or other social network account I'm aware
+  of.
 
 [github]: https://github.com/simukis/
 [twitter]: https://twitter.com/simukis/
-[lastfm]: http://www.last.fm/user/simukis
+[musicbrainz]: https://musicbrainz.org/user/nagisa/
 [goodreads]: https://goodreads.com/simukis/
 [mal]: http://myanimelist.net/profile/simukis

@@ -335,8 +335,9 @@ pre.sourceCode span.er { color: #ff0000; font-weight: bold; }
     overflow: hidden;
 }
 
-#index #recent-entries {
+#index .blogentries {
     overflow: hidden;
+    margin: .25em 0 0;
 }
 
 #rbp-sub {
