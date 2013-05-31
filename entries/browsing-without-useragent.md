@@ -60,7 +60,7 @@ All in all, if you care about privacy and use something else than Google,
 browsing without sending `User-Agent` is feasible. In case you prefer
 Google, then it's not like you care about your privacy after all, do you?
 
-A continiously updated list of websites failing this experiment:
+A list of websites I found to fail during my short experiment:
 
 * [tools.ietf.org](https://tools.ietf.org/)
 * [git.gnome.org](https://git.gnome.org/)
