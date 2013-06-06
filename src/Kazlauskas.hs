@@ -16,15 +16,16 @@ main = hakyllWith hakyllConfiguration $ do
     tags <- buildTags "entries/*" (fromCapture "tags/*.html")
 
     match ("images/**" .||. "data/**"
-                       .&&. complement (fromRegex "(js|css)$")) $ do
+                       .&&. complement (fromRegex "(js|css)$")
+                       .||. "data/tweets/**") $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "data/**.css" $ do
+    match ("data/**.css" .&&. (complement "data/tweets/**.css")) $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "data/**.js" $ do
+    match ("data/**.js" .&&. (complement "data/tweets/**.js")) $ do
         route   idRoute
         compile jsCompiler
 
