@@ -40,7 +40,7 @@ My explorations tend to be theoretical rather than experimental though.
 
 * You should send me an <a id="email">email</a> if you have any questions,
   inquiries or comments;
-* I have an account on [twitter][twitter];
+* I have an account on [twitter][twitter] ([local tweets' copy][tweets_local]);
 * Published code is at [github][github];
 * Music related activity at [musicbrainz][musicbrainz];
 * Books I've read are at [goodreads][goodreads];
@@ -53,3 +53,4 @@ My explorations tend to be theoretical rather than experimental though.
 [musicbrainz]: https://musicbrainz.org/user/nagisa/
 [goodreads]: https://goodreads.com/simukis/
 [mal]: http://myanimelist.net/profile/simukis
+[tweets_local]: /data/tweets/
