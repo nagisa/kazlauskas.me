@@ -1,0 +1,22 @@
+<aside id="metadata">
+    <div class="metab">
+        <span class="metah">Published</span><time pubdate>$date$</time>
+    </div><div class="metab">
+        <span class="metah">Updated</span><time>$updated$</time>
+    </div><div class="metab">
+        <span class="metah">Tags</span>$tags$
+    </div>
+</aside>
+<article id="entry">
+    $if(toc)$
+    <aside id="toc">
+        <span id="toctitle">Table of Contents</span>
+        $toc$
+    </aside>
+    $endif$
+    $body$
+</article>
+$if(footnotes)$<aside id="footnotes">
+    <h1>Footnotes</h1>
+    $footnotes$
+</aside>$endif$
