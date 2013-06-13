@@ -1,19 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Applicative              ((<$>))
 import Data.Monoid                      (mappend)
-import Hakyll                    hiding (applyTemplate)
-import Hakyll.Web.Template.Blaze
+import Hakyll
 
 import Compilers
 import Configuration
 import Contexts
-import Templates
 import Utils
 
 
 main :: IO ()
 main = hakyllWith hakyllConfiguration $ do
     tags <- buildTags "entries/*" (fromCapture "tags/*.html")
+    let entryListCtx = entryListContext tags
+        entryCtx     = entryContext tags
+
+    match "templates/*" $ compile templateCompiler
 
     match ("images/**" .||. "data/**"
                        .&&. complement (fromRegex "(js|css)$")
@@ -32,8 +34,9 @@ main = hakyllWith hakyllConfiguration $ do
     match "entries/**.md" $ do
         route $ setExtension "html"
         compile $ entryCompiler
-            >>= applyTemplate entryTpl (entryContext tags)
-            >>= applyTemplate baseTpl baseContext
+            >>= loadAndApplyTemplate "templates/entry.html" entryCtx
+            >>= loadAndApplyTemplate "templates/base.html" baseContext
+            -- >>= applyTemplate' baseTpl baseContext
             >>= relativizeUrls
         version "for-atom" $ compile entryCompiler
 
@@ -45,34 +48,30 @@ main = hakyllWith hakyllConfiguration $ do
 
     create ["entries.html"] $ do
         route idRoute
-        compile $
-            loadAllSorted ("entries/*" .&&. hasNoVersion)
-            >>= entryListCompiler (entryContext tags)
-            >>= applyTemplate baseTpl
+        compile $ makeItem ""
+            >>= loadAndApplyTemplate "templates/entry-list.html"
+                (entryListCtx $ loadAllSorted ("entries/*" .&&. hasNoVersion))
+            >>= loadAndApplyTemplate "templates/base.html"
                 (constField "title" "his entries" `mappend` baseContext)
             >>= relativizeUrls
 
-
-
     match "pages/index.md" $ do
         route   $ gsubRoute "pages/" (const "")
-                  `composeRoutes` setExtension "html"
-        compile $ do
-            entries <- take 5
-                       <$> loadAllSorted ("entries/*" .&&. hasNoVersion)
-                       >>= entryListCompiler (entryContext tags)
-
+                 `composeRoutes` setExtension "html"
+        compile $
             pandocCompilerHyph
-                >>= applyTemplate indexTpl
-                    (indexContext $ itemBody entries)
-                >>= applyTemplate baseTpl baseContext
-                >>= relativizeUrls
+            >>= loadAndApplyTemplate "templates/index.html"
+                (entryListCtx (take 5 <$>
+                               loadAllSorted ("entries/*" .&&. hasNoVersion))
+                `mappend` defaultContext)
+            >>= loadAndApplyTemplate "templates/base.html" baseContext
+            >>= relativizeUrls
 
     match "pages/pgp.md" $ do
         route   $ gsubRoute "pages/" (const "")
                   `composeRoutes` setExtension "html"
         compile $ pandocCompilerHyph
-                  >>= applyTemplate baseTpl baseContext
+                  >>= loadAndApplyTemplate "templates/base.html" baseContext
                   >>= relativizeUrls
 
     -- Build a page and a separate atom feed for each tag
@@ -83,10 +82,10 @@ main = hakyllWith hakyllConfiguration $ do
         }
 
         route idRoute
-        compile $
-            loadAllSorted pattern
-            >>= entryListCompiler (entryContext tags)
-            >>= applyTemplate baseTpl
+        compile $ makeItem ""
+            >>= loadAndApplyTemplate "templates/entry-list.html"
+                (entryListCtx (loadAllSorted pattern))
+            >>= loadAndApplyTemplate "templates/base.html"
                 (constField "title" title `mappend` baseContext)
             >>= relativizeUrls
 

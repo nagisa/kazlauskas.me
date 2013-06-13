@@ -1,25 +1,20 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Utils
-    ( entryListCompiler
-    , loadAllSorted
+    ( loadAllSorted
     , setItemIdVersion
     , setItemsIdVersions
+    , splitFootnotes
     ) where
 
 import Data.Binary                      (Binary)
 import Data.Monoid                      (mappend)
 import Data.Typeable                    (Typeable)
 import Hakyll                    hiding (applyTemplateList, applyTemplate)
-import Hakyll.Web.Template.Blaze
+import Text.XML.Light
+import Data.Maybe                       (fromJust, fromMaybe)
+import Data.List                        (partition)
 
 import Configuration
-import Templates
-
-entryListCompiler :: Context String -> [Item String] -> Compiler (Item String)
-entryListCompiler ctx items = applyTemplateList entryItemTpl ctx items >>=
-    \is -> makeItem "" >>= applyTemplate entriesTpl (ctx' is)
-  where
-    ctx' is = constField "entries" is `mappend` defaultContext
 
 
 loadAllSorted :: (Binary a, Typeable a) => Pattern -> Compiler [Item a]
@@ -31,3 +26,15 @@ setItemIdVersion version (Item identifier body) =
     Item (setVersion version identifier) body
 -- And… a convenience function
 setItemsIdVersions v = map (setItemIdVersion v)
+
+
+splitFootnotes :: String -> (String, Maybe String)
+splitFootnotes = unparse . partition isFns . parse
+  where
+    classAttr = blank_name { qName = "class" }
+    isFns = (==) "footnotes" . fromMaybe "" . findAttr classAttr
+    parse = onlyElems . parseXML
+    unparse ([] , cEls) = (unparseC cEls, Nothing)
+    unparse (fEls, cEls) = (unparseC cEls, Just $ unparseF fEls)
+    unparseC = concatMap showElement
+    unparseF = concatMap (unparseC . filterChildrenName ((/=) "hr" . qName))
