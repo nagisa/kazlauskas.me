@@ -3,7 +3,7 @@ Grailbird.data.tweets_2011_03 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -3329,7 +3329,7 @@ Grailbird.data.tweets_2011_03 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -3558,7 +3558,7 @@ Grailbird.data.tweets_2011_03 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",

@@ -6526,7 +6526,7 @@ Grailbird.data.tweets_2012_12 =
       "screen_name" : "garannm",
       "protected" : false,
       "id_str" : "15989423",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3007596946/4f72133ebe313311440e95175fe11db3_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/344513261566455649/975fe46e453ab2dc01c1e514e6c7fb4c_normal.jpeg",
       "id" : 15989423,
       "verified" : false
     }

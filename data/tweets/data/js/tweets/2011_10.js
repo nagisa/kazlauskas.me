@@ -4129,7 +4129,7 @@ Grailbird.data.tweets_2011_10 =
       "id_str" : "16958457",
       "id" : 16958457
     }, {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 78, 85 ],
       "id_str" : "701416453",
@@ -4284,7 +4284,7 @@ Grailbird.data.tweets_2011_10 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",

@@ -6238,7 +6238,7 @@ Grailbird.data.tweets_2011_05 =
       "screen_name" : "cedaviciute",
       "protected" : true,
       "id_str" : "247807632",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2531570551/zvqaefv8wuzv9325tv9h_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000003405669/53f1ccb694aff61fe93bec90113be5fe_normal.jpeg",
       "id" : 247807632,
       "verified" : false
     }

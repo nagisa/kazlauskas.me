@@ -4982,7 +4982,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5011,7 +5011,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5040,7 +5040,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5545,7 +5545,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik Geers",
+      "name" : "Frederik ",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -8240,6 +8240,12 @@ Grailbird.data.tweets_2011_06 =
       "id_str" : "70814014",
       "id" : 70814014
     }, {
+      "name" : "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0436\u0443\u043B\u0430\u043D\u0447\u0438\u043A",
+      "screen_name" : "init2",
+      "indices" : [ 20, 26 ],
+      "id_str" : "1520528611",
+      "id" : 1520528611
+    }, {
       "name" : "phoronix",
       "screen_name" : "phoronix",
       "indices" : [ 37, 46 ],
@@ -8258,6 +8264,12 @@ Grailbird.data.tweets_2011_06 =
     "source" : "web",
     "entities" : {
       "user_mentions" : [ {
+        "name" : "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0436\u0443\u043B\u0430\u043D\u0447\u0438\u043A",
+        "screen_name" : "init2",
+        "indices" : [ 0, 6 ],
+        "id_str" : "1520528611",
+        "id" : 1520528611
+      }, {
         "name" : "phoronix",
         "screen_name" : "phoronix",
         "indices" : [ 17, 26 ],

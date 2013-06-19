@@ -4978,7 +4978,7 @@ Grailbird.data.tweets_2012_05 =
       "screen_name" : "TelegramJames",
       "protected" : false,
       "id_str" : "300410202",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3732196717/ec807019793306a0c3ddd94c1eae698b_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/344513261573052627/12f54f41dfd9fd88e25e9623def030ef_normal.png",
       "id" : 300410202,
       "verified" : false
     }
