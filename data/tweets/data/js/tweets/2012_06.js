@@ -3883,7 +3883,7 @@ Grailbird.data.tweets_2012_06 =
       "screen_name" : "asjustasLT",
       "protected" : true,
       "id_str" : "540882218",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2620579059/tld1lzmndmj5c4qwbfai_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000120859249/50f501d3253f75c0d532dbe76ab0a3e2_normal.jpeg",
       "id" : 540882218,
       "verified" : false
     }
@@ -11510,7 +11510,7 @@ Grailbird.data.tweets_2012_06 =
       "screen_name" : "asjustasLT",
       "protected" : true,
       "id_str" : "540882218",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2620579059/tld1lzmndmj5c4qwbfai_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000120859249/50f501d3253f75c0d532dbe76ab0a3e2_normal.jpeg",
       "id" : 540882218,
       "verified" : false
     }

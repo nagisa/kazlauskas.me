@@ -682,7 +682,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -2401,7 +2401,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -2493,7 +2493,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5285,7 +5285,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5371,7 +5371,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5440,7 +5440,7 @@ Grailbird.data.tweets_2011_09 =
       "id_str" : "89529149",
       "id" : 89529149
     }, {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 9, 16 ],
       "id_str" : "701416453",
@@ -5486,7 +5486,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -8063,7 +8063,7 @@ Grailbird.data.tweets_2011_09 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -8098,7 +8098,7 @@ Grailbird.data.tweets_2011_09 =
       "id_str" : "89529149",
       "id" : 89529149
     }, {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 9, 16 ],
       "id_str" : "701416453",

@@ -4982,7 +4982,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5011,7 +5011,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5040,7 +5040,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -5545,7 +5545,7 @@ Grailbird.data.tweets_2011_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -8291,7 +8291,7 @@ Grailbird.data.tweets_2011_06 =
       "screen_name" : "michaellarabel",
       "protected" : false,
       "id_str" : "70814014",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1557340873/303090_562926090221_78001996_31635627_1892295349_n_normal.jpg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000097675759/bd42d660ff0e7574b5f9010504ef983b_normal.jpeg",
       "id" : 70814014,
       "verified" : false
     }
@@ -9452,7 +9452,7 @@ Grailbird.data.tweets_2011_06 =
       "screen_name" : "ramulis",
       "protected" : false,
       "id_str" : "12823632",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3184706211/cdecddf9dae7ab7e30335ac80ea5dce1_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000113445582/1ea2405bdbf901b39feaf7013c2fd68c_normal.png",
       "id" : 12823632,
       "verified" : false
     }

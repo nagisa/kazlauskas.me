@@ -710,7 +710,7 @@ Grailbird.data.tweets_2013_01 =
       "screen_name" : "monkchips",
       "protected" : false,
       "id_str" : "61233",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3349010789/14c27763d69a0e333d77d52016745ea7_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000038874935/1bc2a0a6419b0f9bc7cdc02a92f8038f_normal.jpeg",
       "id" : 61233,
       "verified" : false
     }
@@ -4034,7 +4034,7 @@ Grailbird.data.tweets_2013_01 =
       "screen_name" : "nerdfaced",
       "protected" : false,
       "id_str" : "81750567",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3755558805/f3e5df73dd6daf767e235734ff151853_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000038963852/29619cf8b31c88d1874f98b9ecee3050_normal.jpeg",
       "id" : 81750567,
       "verified" : false
     }
@@ -7045,7 +7045,7 @@ Grailbird.data.tweets_2013_01 =
       "screen_name" : "ebassi",
       "protected" : false,
       "id_str" : "14296080",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2847619593/cbb31d2fad0f0230420aeb8b52212684_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000118720387/f01d3b91c8a2d61645faa50b64cd8f2c_normal.jpeg",
       "id" : 14296080,
       "verified" : false
     }

@@ -117,7 +117,7 @@ Grailbird.data.tweets_2011_02 =
   "source" : "<a href=\"http://www.destroytwitter.com\" rel=\"nofollow\">DestroyTwitter</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -2481,7 +2481,7 @@ Grailbird.data.tweets_2011_02 =
   "source" : "<a href=\"http://www.destroytwitter.com\" rel=\"nofollow\">DestroyTwitter</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",

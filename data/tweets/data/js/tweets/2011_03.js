@@ -3,7 +3,7 @@ Grailbird.data.tweets_2011_03 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -3329,7 +3329,7 @@ Grailbird.data.tweets_2011_03 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -3558,7 +3558,7 @@ Grailbird.data.tweets_2011_03 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Frederik ",
+      "name" : "Frederik",
       "screen_name" : "GeeFre",
       "indices" : [ 0, 7 ],
       "id_str" : "701416453",
@@ -7793,7 +7793,7 @@ Grailbird.data.tweets_2011_03 =
       "screen_name" : "w3c_user",
       "protected" : false,
       "id_str" : "86767345",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1886996740/Untitled-1_normal.jpg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000032517421/51b4ca4da9136de7761a0a2de51db361_normal.png",
       "id" : 86767345,
       "verified" : false
     }
@@ -8480,7 +8480,7 @@ Grailbird.data.tweets_2011_03 =
       "screen_name" : "sunnychl",
       "protected" : false,
       "id_str" : "162287617",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3430684699/1756f5bc8c567a2b5c2232f54dc8d335_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000118043893/2273d54c0f2ad10c41d72bb99b52899b_normal.jpeg",
       "id" : 162287617,
       "verified" : false
     }

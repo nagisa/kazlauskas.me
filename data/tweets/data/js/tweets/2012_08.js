@@ -14962,7 +14962,7 @@ Grailbird.data.tweets_2012_08 =
       "screen_name" : "CureFosh",
       "protected" : false,
       "id_str" : "172921184",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000002957963/73182f6512ab44389c2d22c0fe7bc150_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000112815764/fd03fe4a22b470963757b6f5132fdd01_normal.jpeg",
       "id" : 172921184,
       "verified" : false
     }

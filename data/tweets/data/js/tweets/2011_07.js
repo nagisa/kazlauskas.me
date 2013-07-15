@@ -1820,7 +1820,7 @@ Grailbird.data.tweets_2011_07 =
       "id_str" : "294325981",
       "id" : 294325981
     }, {
-      "name" : "AnonymousIRC",
+      "name" : "Internet",
       "screen_name" : "AnonymousIRC",
       "indices" : [ 56, 69 ],
       "id_str" : "225663702",

@@ -10456,7 +10456,7 @@ Grailbird.data.tweets_2012_09 =
       "screen_name" : "charliesome",
       "protected" : false,
       "id_str" : "16142240",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3294350676/8c4da94f17e02ce4ab7dab48de830554_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000072636738/8e051a5da892f17442e1001ec2658d17_normal.png",
       "id" : 16142240,
       "verified" : false
     }

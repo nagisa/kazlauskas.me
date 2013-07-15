@@ -9943,7 +9943,7 @@ Grailbird.data.tweets_2011_11 =
   "source" : "web",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "That awkward moment",
+      "name" : "Awkward Moments",
       "screen_name" : "SoVeryAwkward",
       "indices" : [ 3, 17 ],
       "id_str" : "329877981",
@@ -9972,7 +9972,7 @@ Grailbird.data.tweets_2011_11 =
     "id" : 132146295518396419,
     "created_at" : "Thu Nov 03 17:25:06 +0000 2011",
     "user" : {
-      "name" : "That awkward moment",
+      "name" : "Awkward Moments",
       "screen_name" : "SoVeryAwkward",
       "protected" : false,
       "id_str" : "329877981",
@@ -9996,7 +9996,7 @@ Grailbird.data.tweets_2011_11 =
   "source" : "web",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Old Sound Cloud",
+      "name" : "Alvaro Videla",
       "screen_name" : "old_sound",
       "indices" : [ 3, 13 ],
       "id_str" : "16484216",
@@ -10035,7 +10035,7 @@ Grailbird.data.tweets_2011_11 =
     "id" : 132145503789006848,
     "created_at" : "Thu Nov 03 17:21:57 +0000 2011",
     "user" : {
-      "name" : "Old Sound Cloud",
+      "name" : "Alvaro Videla",
       "screen_name" : "old_sound",
       "protected" : false,
       "id_str" : "16484216",

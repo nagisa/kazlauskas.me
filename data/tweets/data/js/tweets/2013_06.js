@@ -1,5 +1,1570 @@
 Grailbird.data.tweets_2013_06 = 
-[ {
+ [ {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "351413039842598912",
+  "text" : "A\u0161 duodu plius\u0105 naujiesiems mar\u0161rutams. Gal\u0117jo net dar \u0161iek tiek mar\u0161rut\u0173 apkarpyti\u2026",
+  "id" : 351413039842598912,
+  "created_at" : "Sun Jun 30 18:52:52 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "351383449682182144",
+  "text" : "\u201CJavaScript is the best example of a domain-specific language. Because of the same-origin policy.\u201D \u2013 shachaf",
+  "id" : 351383449682182144,
+  "created_at" : "Sun Jun 30 16:55:17 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Aivaras Kivilius",
+      "screen_name" : "Aivaras",
+      "indices" : [ 0, 8 ],
+      "id_str" : "17028270",
+      "id" : 17028270
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "351268114530439169",
+  "geo" : {
+  },
+  "id_str" : "351270807676272641",
+  "in_reply_to_user_id" : 17028270,
+  "text" : "@Aivaras Pasiimk EC2 High-memory instance ir ne\u017Eaisk su tuo swap'u, SSD gadini.",
+  "id" : 351270807676272641,
+  "in_reply_to_status_id" : 351268114530439169,
+  "created_at" : "Sun Jun 30 09:27:41 +0000 2013",
+  "in_reply_to_screen_name" : "Aivaras",
+  "in_reply_to_user_id_str" : "17028270",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Aivaras Kivilius",
+      "screen_name" : "Aivaras",
+      "indices" : [ 0, 8 ],
+      "id_str" : "17028270",
+      "id" : 17028270
+    }, {
+      "name" : "Justinas",
+      "screen_name" : "silkuze",
+      "indices" : [ 9, 17 ],
+      "id_str" : "18215072",
+      "id" : 18215072
+    }, {
+      "name" : "Erik Murin",
+      "screen_name" : "ErikMurin33",
+      "indices" : [ 18, 30 ],
+      "id_str" : "597614434",
+      "id" : 597614434
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "351087567241871361",
+  "geo" : {
+  },
+  "id_str" : "351087894087221249",
+  "in_reply_to_user_id" : 17028270,
+  "text" : "@Aivaras @silkuze @ErikMurin33 Ne. Ta\u0161kas.",
+  "id" : 351087894087221249,
+  "in_reply_to_status_id" : 351087567241871361,
+  "created_at" : "Sat Jun 29 21:20:51 +0000 2013",
+  "in_reply_to_screen_name" : "Aivaras",
+  "in_reply_to_user_id_str" : "17028270",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Darius",
+      "screen_name" : "Dariu5",
+      "indices" : [ 0, 7 ],
+      "id_str" : "15480701",
+      "id" : 15480701
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "351063386479525889",
+  "geo" : {
+  },
+  "id_str" : "351065014725128192",
+  "in_reply_to_user_id" : 15480701,
+  "text" : "@Dariu5 Recycling (pun intended) at it's best.",
+  "id" : 351065014725128192,
+  "in_reply_to_status_id" : 351063386479525889,
+  "created_at" : "Sat Jun 29 19:49:56 +0000 2013",
+  "in_reply_to_screen_name" : "Dariu5",
+  "in_reply_to_user_id_str" : "15480701",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Nautilus",
+      "screen_name" : "NautilusMag",
+      "indices" : [ 86, 98 ],
+      "id_str" : "485109912",
+      "id" : 485109912
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "351014384774029312",
+  "text" : "\u201CLife is what happens to you while you\u2019re busy making other plans.\u201D \u2013 John Lennon via @NautilusMag",
+  "id" : 351014384774029312,
+  "created_at" : "Sat Jun 29 16:28:45 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ {
+      "indices" : [ 0, 22 ],
+      "url" : "http://t.co/NcRTNhirib",
+      "expanded_url" : "http://nautil.us/",
+      "display_url" : "nautil.us"
+    } ]
+  },
+  "geo" : {
+  },
+  "id_str" : "351012586503942145",
+  "text" : "http://t.co/NcRTNhirib is one of those few sites I like reading on more than in my RSS reader.",
+  "id" : 351012586503942145,
+  "created_at" : "Sat Jun 29 16:21:36 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "351004671629983744",
+  "text" : "It simply shows how good it is compared to trifle, *native* RSS reader application I've been developing on top of GReader some time ago.",
+  "id" : 351004671629983744,
+  "created_at" : "Sat Jun 29 15:50:09 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ {
+      "indices" : [ 54, 77 ],
+      "url" : "https://t.co/NfGKWAnF4Z",
+      "expanded_url" : "https://bazqux.com/",
+      "display_url" : "bazqux.com"
+    } ]
+  },
+  "geo" : {
+  },
+  "id_str" : "351003626862428161",
+  "text" : "It is very likely I'll be paying at least $9/year for https://t.co/NfGKWAnF4Z after just a day of trial.",
+  "id" : 351003626862428161,
+  "created_at" : "Sat Jun 29 15:46:00 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ {
+      "text" : "firefox",
+      "indices" : [ 11, 19 ]
+    } ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "350993139760250881",
+  "text" : "Lovin' new #firefox logo.",
+  "id" : 350993139760250881,
+  "created_at" : "Sat Jun 29 15:04:20 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Ar\u016Bnas Liuiza",
+      "screen_name" : "IdeaG",
+      "indices" : [ 0, 6 ],
+      "id_str" : "14998437",
+      "id" : 14998437
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ {
+      "indices" : [ 28, 50 ],
+      "url" : "http://t.co/Kz7hZVQNEV",
+      "expanded_url" : "http://help.adobe.com/en_US/indesign/cs/using/WS714a382cdf7d304e7e07d0100196cbc5f-6199a.html",
+      "display_url" : "help.adobe.com/en_US/indesign\u2026"
+    } ]
+  },
+  "in_reply_to_status_id_str" : "350986207037095937",
+  "geo" : {
+  },
+  "id_str" : "350987268984553475",
+  "in_reply_to_user_id" : 14998437,
+  "text" : "@IdeaG Well encodings then\u2026 http://t.co/Kz7hZVQNEV (Ctrl+F \u2192 Character Set). Be sure to save the file as UTF-8 too.",
+  "id" : 350987268984553475,
+  "in_reply_to_status_id" : 350986207037095937,
+  "created_at" : "Sat Jun 29 14:41:00 +0000 2013",
+  "in_reply_to_screen_name" : "IdeaG",
+  "in_reply_to_user_id_str" : "14998437",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Ar\u016Bnas Liuiza",
+      "screen_name" : "IdeaG",
+      "indices" : [ 0, 6 ],
+      "id_str" : "14998437",
+      "id" : 14998437
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350984196287770624",
+  "geo" : {
+  },
+  "id_str" : "350985968871944192",
+  "in_reply_to_user_id" : 14998437,
+  "text" : "@IdeaG Nothing really. You may need *moar* fonts or ensure that you set appropriate encoding when importing\u2026 I can't think of anything else.",
+  "id" : 350985968871944192,
+  "in_reply_to_status_id" : 350984196287770624,
+  "created_at" : "Sat Jun 29 14:35:50 +0000 2013",
+  "in_reply_to_screen_name" : "IdeaG",
+  "in_reply_to_user_id_str" : "14998437",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Ar\u016Bnas Liuiza",
+      "screen_name" : "IdeaG",
+      "indices" : [ 0, 6 ],
+      "id_str" : "14998437",
+      "id" : 14998437
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350973762998513665",
+  "geo" : {
+  },
+  "id_str" : "350974154159296513",
+  "in_reply_to_user_id" : 14998437,
+  "text" : "@IdeaG Klausimas kuo tau tie \u017Eenklai nepatinka? Nematau kuo jiems layout'\u0105 daryt tur\u0117t\u0173 b\u016Bti sunkiau nei ka\u017Ekokiam kitam tekstui.",
+  "id" : 350974154159296513,
+  "in_reply_to_status_id" : 350973762998513665,
+  "created_at" : "Sat Jun 29 13:48:53 +0000 2013",
+  "in_reply_to_screen_name" : "IdeaG",
+  "in_reply_to_user_id_str" : "14998437",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Ar\u016Bnas Liuiza",
+      "screen_name" : "IdeaG",
+      "indices" : [ 0, 6 ],
+      "id_str" : "14998437",
+      "id" : 14998437
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350970359719264258",
+  "geo" : {
+  },
+  "id_str" : "350972977459888128",
+  "in_reply_to_user_id" : 14998437,
+  "text" : "@IdeaG \u203D",
+  "id" : 350972977459888128,
+  "in_reply_to_status_id" : 350970359719264258,
+  "created_at" : "Sat Jun 29 13:44:13 +0000 2013",
+  "in_reply_to_screen_name" : "IdeaG",
+  "in_reply_to_user_id_str" : "14998437",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Flattr",
+      "screen_name" : "Flattr",
+      "indices" : [ 3, 10 ],
+      "id_str" : "97210046",
+      "id" : 97210046
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "350684570150109185",
+  "text" : "RT @Flattr: We are getting there\u2026btc",
+  "retweeted_status" : {
+    "source" : "<a href=\"http://tapbots.com/tweetbot\" rel=\"nofollow\">Tweetbot for iOS</a>",
+    "entities" : {
+      "user_mentions" : [ ],
+      "media" : [ ],
+      "hashtags" : [ ],
+      "urls" : [ ]
+    },
+    "geo" : {
+    },
+    "id_str" : "350680684270067714",
+    "text" : "We are getting there\u2026btc",
+    "id" : 350680684270067714,
+    "created_at" : "Fri Jun 28 18:22:45 +0000 2013",
+    "user" : {
+      "name" : "Flattr",
+      "screen_name" : "Flattr",
+      "protected" : false,
+      "id_str" : "97210046",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1666069325/flattr_normal.gif",
+      "id" : 97210046,
+      "verified" : false
+    }
+  },
+  "id" : 350684570150109185,
+  "created_at" : "Fri Jun 28 18:38:11 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Denas",
+      "screen_name" : "denask",
+      "indices" : [ 0, 7 ],
+      "id_str" : "138674064",
+      "id" : 138674064
+    } ],
+    "media" : [ ],
+    "hashtags" : [ {
+      "text" : "lame",
+      "indices" : [ 60, 65 ]
+    }, {
+      "text" : "joke",
+      "indices" : [ 66, 71 ]
+    } ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350677354483421184",
+  "geo" : {
+  },
+  "id_str" : "350677882428862465",
+  "in_reply_to_user_id" : 138674064,
+  "text" : "@denask Na tai NSA gal\u0117si backup'o tada vis vien papra\u0161yti. #lame #joke",
+  "id" : 350677882428862465,
+  "in_reply_to_status_id" : 350677354483421184,
+  "created_at" : "Fri Jun 28 18:11:37 +0000 2013",
+  "in_reply_to_screen_name" : "denask",
+  "in_reply_to_user_id_str" : "138674064",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "350676682627219456",
+  "text" : "\uD835\uDF0F day!",
+  "id" : 350676682627219456,
+  "created_at" : "Fri Jun 28 18:06:51 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Denas",
+      "screen_name" : "denask",
+      "indices" : [ 0, 7 ],
+      "id_str" : "138674064",
+      "id" : 138674064
+    } ],
+    "media" : [ ],
+    "hashtags" : [ {
+      "text" : "closed",
+      "indices" : [ 54, 61 ]
+    }, {
+      "text" : "ecosystem",
+      "indices" : [ 62, 72 ]
+    } ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350672999004905472",
+  "geo" : {
+  },
+  "id_str" : "350674846381916162",
+  "in_reply_to_user_id" : 138674064,
+  "text" : "@denask You surely backup them to iCloud, aren't you? #closed #ecosystem",
+  "id" : 350674846381916162,
+  "in_reply_to_status_id" : 350672999004905472,
+  "created_at" : "Fri Jun 28 17:59:33 +0000 2013",
+  "in_reply_to_screen_name" : "denask",
+  "in_reply_to_user_id_str" : "138674064",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "350662639480872960",
+  "text" : "Digg reader has a clean interface and is still missing a lot of functionality.",
+  "id" : 350662639480872960,
+  "created_at" : "Fri Jun 28 17:11:02 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Aivaras Kivilius",
+      "screen_name" : "Aivaras",
+      "indices" : [ 0, 8 ],
+      "id_str" : "17028270",
+      "id" : 17028270
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350244415173951489",
+  "geo" : {
+  },
+  "id_str" : "350245333248389120",
+  "in_reply_to_user_id" : 17028270,
+  "text" : "@Aivaras Tai vat\u2026 para\u0161iau ten kur radau + mokyklai. Abu pasi\u016Bl\u0117 slapta\u017Eod\u012F man pakeisti \uD83D\uDE03",
+  "id" : 350245333248389120,
+  "in_reply_to_status_id" : 350244415173951489,
+  "created_at" : "Thu Jun 27 13:32:49 +0000 2013",
+  "in_reply_to_screen_name" : "Aivaras",
+  "in_reply_to_user_id_str" : "17028270",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "350244013942644736",
+  "text" : "Kas man nepatinka su NEC rezultatais, kad crashina kiekvienu atliktu veiksmu. Ai\u0161ku pasi\u016Blo administratoriaus kontaktus susirasti pa\u010Diam.",
+  "id" : 350244013942644736,
+  "created_at" : "Thu Jun 27 13:27:34 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Denas",
+      "screen_name" : "denask",
+      "indices" : [ 0, 7 ],
+      "id_str" : "138674064",
+      "id" : 138674064
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "350220164769386496",
+  "geo" : {
+  },
+  "id_str" : "350221222132457472",
+  "in_reply_to_user_id" : 138674064,
+  "text" : "@denask O kas nervinasi?",
+  "id" : 350221222132457472,
+  "in_reply_to_status_id" : 350220164769386496,
+  "created_at" : "Thu Jun 27 11:57:00 +0000 2013",
+  "in_reply_to_screen_name" : "denask",
+  "in_reply_to_user_id_str" : "138674064",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "350131482058166275",
+  "text" : "Current status: a vegetable. Took me 5 attempts to correctly enter a password in GDM. Typing accuracy 0.",
+  "id" : 350131482058166275,
+  "created_at" : "Thu Jun 27 06:00:25 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Matthias Bussonnier",
+      "screen_name" : "Mbussonn",
+      "indices" : [ 0, 9 ],
+      "id_str" : "888706303",
+      "id" : 888706303
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349897697362313219",
+  "geo" : {
+  },
+  "id_str" : "349908033108840448",
+  "in_reply_to_user_id" : 888706303,
+  "text" : "@Mbussonn Great! Don't have where to test it now, but at least it's assuring there's any command containing reload substring in iPy \uD83D\uDE0A",
+  "id" : 349908033108840448,
+  "in_reply_to_status_id" : 349897697362313219,
+  "created_at" : "Wed Jun 26 15:12:30 +0000 2013",
+  "in_reply_to_screen_name" : "Mbussonn",
+  "in_reply_to_user_id_str" : "888706303",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Povilas Korop",
+      "screen_name" : "Povilask007",
+      "indices" : [ 0, 12 ],
+      "id_str" : "53885893",
+      "id" : 53885893
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349849492104818688",
+  "geo" : {
+  },
+  "id_str" : "349850368554958848",
+  "in_reply_to_user_id" : 53885893,
+  "text" : "@Povilask007 Your best bet'd be to pirate it.",
+  "id" : 349850368554958848,
+  "in_reply_to_status_id" : 349849492104818688,
+  "created_at" : "Wed Jun 26 11:23:22 +0000 2013",
+  "in_reply_to_screen_name" : "Povilask007",
+  "in_reply_to_user_id_str" : "53885893",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Povilas Korop",
+      "screen_name" : "Povilask007",
+      "indices" : [ 0, 12 ],
+      "id_str" : "53885893",
+      "id" : 53885893
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349849492104818688",
+  "geo" : {
+  },
+  "id_str" : "349850289706237952",
+  "in_reply_to_user_id" : 53885893,
+  "text" : "@Povilask007 Ko gero u\u017E gimp \u010Dia nerasi nieko geresnio\u2026 ir turiu pripa\u017Einti, kad gimp'as su pdf'ais ne itin gerai draugauja.",
+  "id" : 349850289706237952,
+  "in_reply_to_status_id" : 349849492104818688,
+  "created_at" : "Wed Jun 26 11:23:03 +0000 2013",
+  "in_reply_to_screen_name" : "Povilask007",
+  "in_reply_to_user_id_str" : "53885893",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349818209031045121",
+  "text" : "Why doesn't ipython have %reload? (Similar to ghci's :reload)",
+  "id" : 349818209031045121,
+  "created_at" : "Wed Jun 26 09:15:35 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ {
+      "expanded_url" : "http://twitter.com/simukis/status/349800431700037632/photo/1",
+      "indices" : [ 10, 32 ],
+      "url" : "http://t.co/Gl5V1IN5Ku",
+      "media_url" : "http://pbs.twimg.com/media/BNq9o6oCUAAtY-c.png",
+      "id_str" : "349800431704231936",
+      "id" : 349800431704231936,
+      "media_url_https" : "https://pbs.twimg.com/media/BNq9o6oCUAAtY-c.png",
+      "sizes" : [ {
+        "h" : 122,
+        "resize" : "fit",
+        "w" : 963
+      }, {
+        "h" : 43,
+        "resize" : "fit",
+        "w" : 340
+      }, {
+        "h" : 122,
+        "resize" : "fit",
+        "w" : 963
+      }, {
+        "h" : 76,
+        "resize" : "fit",
+        "w" : 600
+      }, {
+        "h" : 122,
+        "resize" : "crop",
+        "w" : 150
+      } ],
+      "display_url" : "pic.twitter.com/Gl5V1IN5Ku"
+    } ],
+    "hashtags" : [ {
+      "text" : "api",
+      "indices" : [ 0, 4 ]
+    }, {
+      "text" : "wtf",
+      "indices" : [ 5, 9 ]
+    } ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349800431700037632",
+  "text" : "#api #wtf http://t.co/Gl5V1IN5Ku",
+  "id" : 349800431700037632,
+  "created_at" : "Wed Jun 26 08:04:56 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ {
+      "text" : "jit",
+      "indices" : [ 0, 4 ]
+    } ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349779763029741570",
+  "text" : "#jit Digg reader! Kaip tik keturios dienos iki GReaderio u\u017Edarymo buvo lik\u0119\u2026",
+  "id" : 349779763029741570,
+  "created_at" : "Wed Jun 26 06:42:48 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349773605216858112",
+  "text" : "Gal b\u016Bt ir gerai, kad dirbu developeriu. Darban galima ir kaip dar\u017Eovei ateit. Atsiguli patogioj k\u0117d\u0117j ir tweetini \uD83D\uDE03",
+  "id" : 349773605216858112,
+  "created_at" : "Wed Jun 26 06:18:20 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Arnas",
+      "screen_name" : "Arnas_",
+      "indices" : [ 0, 7 ],
+      "id_str" : "308396719",
+      "id" : 308396719
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349617426679349248",
+  "geo" : {
+  },
+  "id_str" : "349617930008399872",
+  "in_reply_to_user_id" : 308396719,
+  "text" : "@Arnas_ Per didel\u0117 nepatenkint\u0173j\u0173 dalis \u0161ia, beveik banko paslaugas teikian\u010Dia, kompanija. O pinigai, kaip \u017Einia, ne \u017Eaislai.",
+  "id" : 349617930008399872,
+  "in_reply_to_status_id" : 349617426679349248,
+  "created_at" : "Tue Jun 25 19:59:44 +0000 2013",
+  "in_reply_to_screen_name" : "Arnas_",
+  "in_reply_to_user_id_str" : "308396719",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Ar\u016Bnas Liuiza",
+      "screen_name" : "IdeaG",
+      "indices" : [ 0, 6 ],
+      "id_str" : "14998437",
+      "id" : 14998437
+    }, {
+      "name" : "Laim\u0117s K\u016Bdikis",
+      "screen_name" : "LaimesKudikis",
+      "indices" : [ 117, 131 ],
+      "id_str" : "392867852",
+      "id" : 392867852
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349613704662355969",
+  "geo" : {
+  },
+  "id_str" : "349616291620982785",
+  "in_reply_to_user_id" : 14998437,
+  "text" : "@IdeaG Tavo atvejis yra pateisinamas nes parduodi ma\u017Eais kiekiais ir esant reikalui gali pasi\u016Blyti alternatyv\u0105 (kaip @LaimesKudikis k\u0105 tik)",
+  "id" : 349616291620982785,
+  "in_reply_to_status_id" : 349613704662355969,
+  "created_at" : "Tue Jun 25 19:53:14 +0000 2013",
+  "in_reply_to_screen_name" : "IdeaG",
+  "in_reply_to_user_id_str" : "14998437",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Laim\u0117s K\u016Bdikis",
+      "screen_name" : "LaimesKudikis",
+      "indices" : [ 0, 14 ],
+      "id_str" : "392867852",
+      "id" : 392867852
+    }, {
+      "name" : "Ar\u016Bnas Liuiza",
+      "screen_name" : "IdeaG",
+      "indices" : [ 15, 21 ],
+      "id_str" : "14998437",
+      "id" : 14998437
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349613256945573889",
+  "geo" : {
+  },
+  "id_str" : "349613538807001088",
+  "in_reply_to_user_id" : 392867852,
+  "text" : "@LaimesKudikis @IdeaG PayPal yra vengtina paslauga, kuria geriau, jei i\u0161 vis yra tokia galimyb\u0117, nesinaudoti.",
+  "id" : 349613538807001088,
+  "in_reply_to_status_id" : 349613256945573889,
+  "created_at" : "Tue Jun 25 19:42:17 +0000 2013",
+  "in_reply_to_screen_name" : "LaimesKudikis",
+  "in_reply_to_user_id_str" : "392867852",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Arnas",
+      "screen_name" : "Arnas_",
+      "indices" : [ 0, 7 ],
+      "id_str" : "308396719",
+      "id" : 308396719
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349606646340792321",
+  "geo" : {
+  },
+  "id_str" : "349607111770112000",
+  "in_reply_to_user_id" : 308396719,
+  "text" : "@Arnas_ Pataikiau 1% paklaida.",
+  "id" : 349607111770112000,
+  "in_reply_to_status_id" : 349606646340792321,
+  "created_at" : "Tue Jun 25 19:16:45 +0000 2013",
+  "in_reply_to_screen_name" : "Arnas_",
+  "in_reply_to_user_id_str" : "308396719",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ {
+      "indices" : [ 37, 59 ],
+      "url" : "http://t.co/SHJ42AkuGM",
+      "expanded_url" : "http://rezultatai.nec.lt",
+      "display_url" : "rezultatai.nec.lt"
+    } ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349595706723536896",
+  "text" : "Jei k\u0105 yra angl\u0173 kalbos rezultatai @ http://t.co/SHJ42AkuGM, prisijungimo duomenis gauti tur\u0117jote asmeni\u0161kai.",
+  "id" : 349595706723536896,
+  "created_at" : "Tue Jun 25 18:31:26 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349595556395499520",
+  "text" : "Angl\u0173 i\u0161laikiau 89-iais.",
+  "id" : 349595556395499520,
+  "created_at" : "Tue Jun 25 18:30:50 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "AndriusVirbi\u010Dianskas",
+      "screen_name" : "AVirbicianskas",
+      "indices" : [ 0, 15 ],
+      "id_str" : "346410086",
+      "id" : 346410086
+    } ],
+    "media" : [ ],
+    "hashtags" : [ {
+      "text" : "grammarnazi",
+      "indices" : [ 27, 39 ]
+    } ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349491029281488896",
+  "geo" : {
+  },
+  "id_str" : "349491216850759681",
+  "in_reply_to_user_id" : 346410086,
+  "text" : "@AVirbicianskas Daro \u012Ftak\u0105 #grammarnazi",
+  "id" : 349491216850759681,
+  "in_reply_to_status_id" : 349491029281488896,
+  "created_at" : "Tue Jun 25 11:36:13 +0000 2013",
+  "in_reply_to_screen_name" : "AVirbicianskas",
+  "in_reply_to_user_id_str" : "346410086",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349450751208194050",
+  "text" : "Kas \u017Einot koki\u0105 rakt\u0173 kopijavimo paslaugas teikian\u010Di\u0105 \u012Fmon\u0119 kaip \u012Fmanoma ar\u010Diau Gedimino prospekto?",
+  "id" : 349450751208194050,
+  "created_at" : "Tue Jun 25 08:55:26 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "349258082511101952",
+  "text" : "\u306D\u3089\u308F\u308C\u305F\u5B66\u5712 sports a great art. You'll hardly get anything comparable this season\u2026 (technically there's \u8A00\u306E\u8449\u306E\u5EAD, but it's not full length one)",
+  "id" : 349258082511101952,
+  "created_at" : "Mon Jun 24 20:09:50 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Aivaras Kivilius",
+      "screen_name" : "Aivaras",
+      "indices" : [ 0, 8 ],
+      "id_str" : "17028270",
+      "id" : 17028270
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "349221602321379328",
+  "geo" : {
+  },
+  "id_str" : "349222347305263104",
+  "in_reply_to_user_id" : 17028270,
+  "text" : "@Aivaras Grotuvas blogai su notification daemonu kalbasi.",
+  "id" : 349222347305263104,
+  "in_reply_to_status_id" : 349221602321379328,
+  "created_at" : "Mon Jun 24 17:47:50 +0000 2013",
+  "in_reply_to_screen_name" : "Aivaras",
+  "in_reply_to_user_id_str" : "17028270",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ {
+      "text" : "awesome",
+      "indices" : [ 97, 105 ]
+    } ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "348914253329215488",
+  "text" : "So I can already build myself a firefox with fully working gstreamer and partially working gtk3. #awesome",
+  "id" : 348914253329215488,
+  "created_at" : "Sun Jun 23 21:23:35 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "348909631529160704",
+  "text" : "\u0160tai ir gr\u012F\u017Ek po savaitgalio atostog\u0173 nuo interneto\u2026 gerai, kad lai\u0161k\u0173 tik trylika.",
+  "id" : 348909631529160704,
+  "created_at" : "Sun Jun 23 21:05:13 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Laim\u0117s K\u016Bdikis",
+      "screen_name" : "LaimesKudikis",
+      "indices" : [ 0, 14 ],
+      "id_str" : "392867852",
+      "id" : 392867852
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "348090095565426688",
+  "geo" : {
+  },
+  "id_str" : "348091207613808640",
+  "in_reply_to_user_id" : 392867852,
+  "text" : "@LaimesKudikis Pasiimk didel\u012F sk\u0117t\u012F. Bent nuo saul\u0117s pasisl\u0117pt gal\u0117si.",
+  "id" : 348091207613808640,
+  "in_reply_to_status_id" : 348090095565426688,
+  "created_at" : "Fri Jun 21 14:53:05 +0000 2013",
+  "in_reply_to_screen_name" : "LaimesKudikis",
+  "in_reply_to_user_id_str" : "392867852",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Darius",
+      "screen_name" : "Dariu5",
+      "indices" : [ 0, 7 ],
+      "id_str" : "15480701",
+      "id" : 15480701
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "348078808622067712",
+  "geo" : {
+  },
+  "id_str" : "348091076097241089",
+  "in_reply_to_user_id" : 15480701,
+  "text" : "@Dariu5 Pas mane namie stabiliai +22\u00B0C vis\u0105 vasar\u0105.",
+  "id" : 348091076097241089,
+  "in_reply_to_status_id" : 348078808622067712,
+  "created_at" : "Fri Jun 21 14:52:34 +0000 2013",
+  "in_reply_to_screen_name" : "Dariu5",
+  "in_reply_to_user_id_str" : "15480701",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "348025560812892161",
+  "text" : "Vaj\u0117, i\u0161 v\u0117sinamos patalpos laukan i\u0161\u0117jau\u2026 Padv\u0117st vietoj \u012Fmanoma.",
+  "id" : 348025560812892161,
+  "created_at" : "Fri Jun 21 10:32:14 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "krapstuke",
+      "screen_name" : "krapstuke",
+      "indices" : [ 0, 10 ],
+      "id_str" : "374653624",
+      "id" : 374653624
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "347954023179100162",
+  "geo" : {
+  },
+  "id_str" : "347956612683665408",
+  "in_reply_to_user_id" : 374653624,
+  "text" : "@krapstuke Because it's already automated (mostly) all the way?",
+  "id" : 347956612683665408,
+  "in_reply_to_status_id" : 347954023179100162,
+  "created_at" : "Fri Jun 21 05:58:15 +0000 2013",
+  "in_reply_to_screen_name" : "krapstuke",
+  "in_reply_to_user_id_str" : "374653624",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "347784678746509312",
+  "text" : "I suspect my tweet count this month will rise\u2026 dramatically. Especially on topic of stupid browsers' behaviour.",
+  "id" : 347784678746509312,
+  "created_at" : "Thu Jun 20 18:35:03 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "AndriusVirbi\u010Dianskas",
+      "screen_name" : "AVirbicianskas",
+      "indices" : [ 0, 15 ],
+      "id_str" : "346410086",
+      "id" : 346410086
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "347782406293561344",
+  "geo" : {
+  },
+  "id_str" : "347782672023711745",
+  "in_reply_to_user_id" : 346410086,
+  "text" : "@AVirbicianskas Lietuvoj normalaus tofu rasti dar nepavyko. Ma\u010Diau tik supakuot\u0105 ka\u017Ekok\u012F konserv\u0105 kuris net maistu vadintis negali.",
+  "id" : 347782672023711745,
+  "in_reply_to_status_id" : 347782406293561344,
+  "created_at" : "Thu Jun 20 18:27:05 +0000 2013",
+  "in_reply_to_screen_name" : "AVirbicianskas",
+  "in_reply_to_user_id_str" : "346410086",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "geo" : {
+  },
+  "id_str" : "347741055237648386",
+  "text" : "So\u2026 how does one \u201Creload\u201D a cached 301 redirect? (Looking for similar way to ^F5 for regular pages)",
+  "id" : 347741055237648386,
+  "created_at" : "Thu Jun 20 15:41:42 +0000 2013",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
+  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+  "entities" : {
+    "user_mentions" : [ {
+      "name" : "Benamis",
+      "screen_name" : "benamis",
+      "indices" : [ 0, 8 ],
+      "id_str" : "34245811",
+      "id" : 34245811
+    } ],
+    "media" : [ ],
+    "hashtags" : [ ],
+    "urls" : [ ]
+  },
+  "in_reply_to_status_id_str" : "347710515029618689",
+  "geo" : {
+  },
+  "id_str" : "347710937941303296",
+  "in_reply_to_user_id" : 34245811,
+  "text" : "@benamis A\u0161 galiu \u012Fkurti \u012Fmon\u0119 gaminan\u010Di\u0105 vaistus pats apie vaistus i\u0161manydamas tik tiek, kiek para\u0161yta vartojimo instrukcijose.",
+  "id" : 347710937941303296,
+  "in_reply_to_status_id" : 347710515029618689,
+  "created_at" : "Thu Jun 20 13:42:02 +0000 2013",
+  "in_reply_to_screen_name" : "benamis",
+  "in_reply_to_user_id_str" : "34245811",
+  "user" : {
+    "name" : "Simonas",
+    "screen_name" : "simukis",
+    "protected" : false,
+    "id_str" : "45383863",
+    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
+    "id" : 45383863,
+    "verified" : false
+  }
+}, {
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
@@ -1608,7 +3173,7 @@ Grailbird.data.tweets_2013_06 =
       "screen_name" : "hbons",
       "protected" : false,
       "id_str" : "17130013",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3656473027/9f46249976c997a7c4e07d683e5d1c8c_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000021581900/6150f87c5a6dc7bac4cc31f95d5da94b_normal.png",
       "id" : 17130013,
       "verified" : false
     }
@@ -4038,7 +5603,7 @@ Grailbird.data.tweets_2013_06 =
       "screen_name" : "simevidas",
       "protected" : false,
       "id_str" : "175727560",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3444276680/479d77d98b8d71e501a3e864f242a032_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000065125916/326dca11327b0e650c17bb7f5722e393_normal.jpeg",
       "id" : 175727560,
       "verified" : false
     }

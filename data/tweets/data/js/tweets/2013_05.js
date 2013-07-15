@@ -1838,7 +1838,7 @@ Grailbird.data.tweets_2013_05 =
       "screen_name" : "simevidas",
       "protected" : false,
       "id_str" : "175727560",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3444276680/479d77d98b8d71e501a3e864f242a032_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000065125916/326dca11327b0e650c17bb7f5722e393_normal.jpeg",
       "id" : 175727560,
       "verified" : false
     }

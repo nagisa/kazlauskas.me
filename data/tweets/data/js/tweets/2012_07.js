@@ -9404,7 +9404,7 @@ Grailbird.data.tweets_2012_07 =
       "screen_name" : "FirefoxNightly",
       "protected" : false,
       "id_str" : "382769917",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1680832549/nightlyavatar_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000086053092/0e4495d8e33ec2d72fcfb786661ce7f7_normal.png",
       "id" : 382769917,
       "verified" : false
     }

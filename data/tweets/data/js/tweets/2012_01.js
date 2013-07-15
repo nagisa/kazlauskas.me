@@ -4659,7 +4659,7 @@ Grailbird.data.tweets_2012_01 =
       "screen_name" : "Magis69",
       "protected" : false,
       "id_str" : "58555615",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3680449797/988935e1e5bc3628421f111834221afe_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000129660758/a354796106fd4c3b729c34b1b9a46b29_normal.jpeg",
       "id" : 58555615,
       "verified" : false
     }

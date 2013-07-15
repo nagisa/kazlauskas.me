@@ -3486,7 +3486,13 @@ Grailbird.data.tweets_2012_12 =
 }, {
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
-    "user_mentions" : [ ],
+    "user_mentions" : [ {
+      "name" : "shade dan",
+      "screen_name" : "goodguydan",
+      "indices" : [ 0, 11 ],
+      "id_str" : "1592864604",
+      "id" : 1592864604
+    } ],
     "media" : [ ],
     "hashtags" : [ ],
     "urls" : [ ]

@@ -4588,7 +4588,7 @@ Grailbird.data.tweets_2011_12 =
       "screen_name" : "workforfood",
       "protected" : false,
       "id_str" : "7336932",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3710590715/4e9e92d5b6b116ce3afdc41af7093167_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000083000653/752782c50cc2babb10eead7c7be400b5_normal.jpeg",
       "id" : 7336932,
       "verified" : false
     }

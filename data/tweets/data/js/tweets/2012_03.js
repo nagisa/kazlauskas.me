@@ -1800,7 +1800,7 @@ Grailbird.data.tweets_2012_03 =
     "source" : "<a href=\"http://tapbots.com/tweetbot\" rel=\"nofollow\">Tweetbot for iOS</a>",
     "entities" : {
       "user_mentions" : [ {
-        "name" : "Dana Danger",
+        "name" : "Dana McCallum",
         "screen_name" : "DanaDanger",
         "indices" : [ 121, 132 ],
         "id_str" : "821958",
