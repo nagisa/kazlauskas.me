@@ -45,8 +45,8 @@ My explorations tend to be theoretical rather than experimental though.
 * Music related activity at [musicbrainz][musicbrainz];
 * Books I've read are at [goodreads][goodreads];
 * Anime I've seen is at [hummingbird][hummingbird];
-* I don't have ZuckerBook, Google⁻ or other social network account I'm aware
-  of.
+* I don't other social network account (including F⁕⁕⁕book and Poogle⁻) I'm
+  aware of.
 
 [github]: https://github.com/nagisa/
 [twitter]: https://twitter.com/simukis/
