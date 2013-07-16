@@ -45,7 +45,7 @@ My explorations tend to be theoretical rather than experimental though.
 * Music related activity at [musicbrainz][musicbrainz];
 * Books I've read are at [goodreads][goodreads];
 * Anime I've seen is at [MAL][mal];
-* I don't other social network account (including F⁕⁕⁕book and Poogle⁻) I'm
+* I don't own other social network account (including F⁕⁕⁕book and Poogle⁻) I'm
   aware of.
 
 [github]: https://github.com/nagisa/
