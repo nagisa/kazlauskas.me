@@ -1,0 +1,65 @@
+---
+title: Renewable energy fallacy
+published: 2013-03-09
+tags: Natural Sciences
+---
+
+It is widely accepted to label energy produced from sources such as sunlight,
+wind, geothermal heat or even biomass as renewable energy. As soon as one looks
+at the bigger picture, it is inevitable for one to start noticing lack of
+renewability of all aforementioned sources.
+
+If we define renewable energy as “any naturally occurring, theoretically
+inexhaustible source of energy, that is not derived from fossil or nuclear
+fuel” we find that neither sun, nor geothermal, biomass or wind energy
+satisfy those conditions.
+
+The sun
+=======
+
+The Sun, like any other star, “burns” hydrogen into helium emitting huge amounts
+of energy in the process. Therefore, the Sun is energy source derived from
+nuclear fuel. It is very likely humanity won’t live long enough to observe the
+moment the Sun exhausts its last drops of hydrogen, so calling the Sun
+inexhaustible might not be that wrong. However ultimately, it is theoretically
+proved that the Sun is exhaustible and hence cannot be called renewable.
+
+Geothermal energy
+=================
+
+Probably all of us heard how Icelanders exploit geothermal energy and how cheap
+their heating systems are in the long run. Contrary to what most people think,
+heat in the depths of the Earth does not come from nothingness (nor the
+pressure is a cause). The fission of various elements, mostly thorium, heats
+the Earth and by extension, the water people pump down there. If people are
+smart enough to deem nuclear fuel to be exhaustible, they should find it to be
+a case with the geothermal energy too.
+
+Wind
+====
+
+> Wind is caused by differences in atmospheric pressure.
+> — [Wikipedia](http://en.wikipedia.org/wiki/Wind#Cause)
+
+The atmospheric pressure differences are mostly caused by the Sun. Therefore,
+no sun – no wind. It is questionable whether we can call energy source, which
+is dependent on existence of another exhaustible (as proved in “The sun”
+section) energy source, renewable.
+
+Biomass
+=======
+
+Biomass is the worst offender of renewable title. Plants grown for
+biomass not only occupy precious farmland and exhaust the soil but depends on
+the external (exhaustible) sources of energy such as the sun as well! I would
+really like to speak with a person who claims being able to prove biomass
+energy is renewable.
+
+The renewable fallacy
+=====================
+
+The phrase “renewable energy” is obviously just a marketing trick used by
+various interested parties to mislead people into thinking there exists some
+kind of energy panacea. Money get wasted, time, which could be better spent, is
+wasted too. Politicians vote for terrible decisions and proper long-term energy
+strategies are spoiled.
