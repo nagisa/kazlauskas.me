@@ -31,6 +31,10 @@ main = hakyllWith hakyllConfiguration $ do
         route   idRoute
         compile jsCompiler
 
+    match ("redirects.conf") $ do
+        route $ constRoute ".redirects.conf"
+        compile copyFileCompiler
+
     match "entries/**.md" $ do
         route $ setExtension "html"
         compile $ entryCompiler
