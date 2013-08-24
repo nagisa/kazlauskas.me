@@ -5991,7 +5991,7 @@ Grailbird.data.tweets_2012_04 =
       "screen_name" : "LaimesKudikis",
       "protected" : false,
       "id_str" : "392867852",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2695606870/cf7baa1422fd14978395415dfa284f30_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000215887538/1fa71cf44bffeb897043820043b4ed81_normal.png",
       "id" : 392867852,
       "verified" : false
     }
@@ -10567,7 +10567,7 @@ Grailbird.data.tweets_2012_04 =
       "id_str" : "18215072",
       "id" : 18215072
     }, {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 38, 49 ],
       "id_str" : "17216350",
@@ -10593,7 +10593,7 @@ Grailbird.data.tweets_2012_04 =
     "source" : "web",
     "entities" : {
       "user_mentions" : [ {
-        "name" : "Julius",
+        "name" : "jurgelenas",
         "screen_name" : "jurgelenas",
         "indices" : [ 25, 36 ],
         "id_str" : "17216350",

@@ -893,59 +893,6 @@ Grailbird.data.tweets_2013_05 =
 }, {
   "source" : "web",
   "entities" : {
-    "user_mentions" : [ {
-      "name" : "Wim Remes",
-      "screen_name" : "wimremes",
-      "indices" : [ 3, 12 ],
-      "id_str" : "14932408",
-      "id" : 14932408
-    } ],
-    "media" : [ ],
-    "hashtags" : [ ],
-    "urls" : [ ]
-  },
-  "geo" : {
-  },
-  "id_str" : "338396184613888001",
-  "text" : "RT @wimremes: I wrote a tool called SQLrillex. When you run it, it drops all databases.",
-  "retweeted_status" : {
-    "source" : "<a href=\"http://twitter.com/#!/download/ipad\" rel=\"nofollow\">Twitter for iPad</a>",
-    "entities" : {
-      "user_mentions" : [ ],
-      "media" : [ ],
-      "hashtags" : [ ],
-      "urls" : [ ]
-    },
-    "geo" : {
-    },
-    "id_str" : "332215303616483328",
-    "text" : "I wrote a tool called SQLrillex. When you run it, it drops all databases.",
-    "id" : 332215303616483328,
-    "created_at" : "Wed May 08 19:27:55 +0000 2013",
-    "user" : {
-      "name" : "Wim Remes",
-      "screen_name" : "wimremes",
-      "protected" : false,
-      "id_str" : "14932408",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2872939854/103eee81360b1ff9cf2dfba5e6bb6078_normal.jpeg",
-      "id" : 14932408,
-      "verified" : false
-    }
-  },
-  "id" : 338396184613888001,
-  "created_at" : "Sat May 25 20:48:32 +0000 2013",
-  "user" : {
-    "name" : "Simonas",
-    "screen_name" : "simukis",
-    "protected" : false,
-    "id_str" : "45383863",
-    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
-    "id" : 45383863,
-    "verified" : false
-  }
-}, {
-  "source" : "web",
-  "entities" : {
     "user_mentions" : [ ],
     "media" : [ ],
     "hashtags" : [ ],

@@ -1853,7 +1853,7 @@ Grailbird.data.tweets_2011_07 =
     "source" : "web",
     "entities" : {
       "user_mentions" : [ {
-        "name" : "AnonymousIRC",
+        "name" : "Internet",
         "screen_name" : "AnonymousIRC",
         "indices" : [ 43, 56 ],
         "id_str" : "225663702",

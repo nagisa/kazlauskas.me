@@ -2232,7 +2232,7 @@ Grailbird.data.tweets_2012_08 =
       "screen_name" : "LaimesKudikis",
       "protected" : false,
       "id_str" : "392867852",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2695606870/cf7baa1422fd14978395415dfa284f30_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000215887538/1fa71cf44bffeb897043820043b4ed81_normal.png",
       "id" : 392867852,
       "verified" : false
     }
@@ -5330,7 +5330,7 @@ Grailbird.data.tweets_2012_08 =
       "screen_name" : "Dariu5",
       "protected" : false,
       "id_str" : "15480701",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2940501609/11707e58a52b66b0133122a2dcbac702_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000344642481/eb76bb91e2a547c7814a330f517f88d3_normal.png",
       "id" : 15480701,
       "verified" : false
     }
@@ -7259,93 +7259,6 @@ Grailbird.data.tweets_2012_08 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Wells Riley",
-      "screen_name" : "wellsriley",
-      "indices" : [ 3, 14 ],
-      "id_str" : "900735438",
-      "id" : 900735438
-    }, {
-      "name" : "Simonas",
-      "screen_name" : "simukis",
-      "indices" : [ 30, 38 ],
-      "id_str" : "45383863",
-      "id" : 45383863
-    }, {
-      "name" : "Branch",
-      "screen_name" : "branch",
-      "indices" : [ 82, 89 ],
-      "id_str" : "494518813",
-      "id" : 494518813
-    } ],
-    "media" : [ ],
-    "hashtags" : [ ],
-    "urls" : [ {
-      "indices" : [ 91, 111 ],
-      "url" : "http://t.co/uNcE4o4A",
-      "expanded_url" : "http://on.branch.com/NTiVEq",
-      "display_url" : "on.branch.com/NTiVEq"
-    } ]
-  },
-  "geo" : {
-  },
-  "id_str" : "237476362745683968",
-  "text" : "RT @wellsriley: Great post by @simukis in \u201CHow would you improve Hacker News?\u201D on @branch. http://t.co/uNcE4o4A",
-  "retweeted_status" : {
-    "source" : "<a href=\"http://twitter.com/tweetbutton\" rel=\"nofollow\">Tweet Button</a>",
-    "entities" : {
-      "user_mentions" : [ {
-        "name" : "Simonas",
-        "screen_name" : "simukis",
-        "indices" : [ 14, 22 ],
-        "id_str" : "45383863",
-        "id" : 45383863
-      }, {
-        "name" : "Branch",
-        "screen_name" : "branch",
-        "indices" : [ 66, 73 ],
-        "id_str" : "494518813",
-        "id" : 494518813
-      } ],
-      "media" : [ ],
-      "hashtags" : [ ],
-      "urls" : [ {
-        "indices" : [ 75, 95 ],
-        "url" : "http://t.co/uNcE4o4A",
-        "expanded_url" : "http://on.branch.com/NTiVEq",
-        "display_url" : "on.branch.com/NTiVEq"
-      } ]
-    },
-    "geo" : {
-    },
-    "id_str" : "237474340126461953",
-    "text" : "Great post by @simukis in \u201CHow would you improve Hacker News?\u201D on @branch. http://t.co/uNcE4o4A",
-    "id" : 237474340126461953,
-    "created_at" : "Mon Aug 20 09:01:09 +0000 2012",
-    "user" : {
-      "name" : "Wells Riley",
-      "screen_name" : "wr",
-      "protected" : false,
-      "id_str" : "15670202",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3665878663/eb6f345803345c595afb859bb2024302_normal.jpeg",
-      "id" : 15670202,
-      "verified" : false
-    }
-  },
-  "id" : 237476362745683968,
-  "created_at" : "Mon Aug 20 09:09:11 +0000 2012",
-  "user" : {
-    "name" : "Simonas",
-    "screen_name" : "simukis",
-    "protected" : false,
-    "id_str" : "45383863",
-    "profile_image_url_https" : "https://si0.twimg.com/profile_images/2157149886/avatar_normal.png",
-    "id" : 45383863,
-    "verified" : false
-  }
-}, {
-  "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
-  "entities" : {
-    "user_mentions" : [ {
       "name" : "Edgaras",
       "screen_name" : "Apsega",
       "indices" : [ 0, 7 ],
@@ -8747,7 +8660,7 @@ Grailbird.data.tweets_2012_08 =
       "screen_name" : "awoods",
       "protected" : false,
       "id_str" : "14256894",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1690236107/avatar_normal.jpg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000158219062/eb0fb94b20120046873f0ac62e50df7b_normal.jpeg",
       "id" : 14256894,
       "verified" : false
     }
@@ -9275,7 +9188,7 @@ Grailbird.data.tweets_2012_08 =
       "screen_name" : "daryl",
       "protected" : false,
       "id_str" : "348429830",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3759223059/f79ee18136aba2e4d117e513ac8bce97_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000345987539/bcda089bc1652c25afba3873f8d08b95_normal.jpeg",
       "id" : 348429830,
       "verified" : false
     }
@@ -14487,7 +14400,7 @@ Grailbird.data.tweets_2012_08 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 3, 14 ],
       "id_str" : "17216350",
@@ -14516,7 +14429,7 @@ Grailbird.data.tweets_2012_08 =
     "id" : 232972992743878656,
     "created_at" : "Tue Aug 07 22:54:24 +0000 2012",
     "user" : {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "protected" : false,
       "id_str" : "17216350",
@@ -14962,7 +14875,7 @@ Grailbird.data.tweets_2012_08 =
       "screen_name" : "CureFosh",
       "protected" : false,
       "id_str" : "172921184",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000112815764/fd03fe4a22b470963757b6f5132fdd01_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000326645387/59927324bb7858abac4565e72041f34c_normal.png",
       "id" : 172921184,
       "verified" : false
     }

@@ -5288,7 +5288,7 @@ Grailbird.data.tweets_2011_02 =
   "source" : "web",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Freddy",
+      "name" : "FREDDY",
       "screen_name" : "FreddyAmazin",
       "indices" : [ 3, 16 ],
       "id_str" : "61003804",
@@ -5317,11 +5317,11 @@ Grailbird.data.tweets_2011_02 =
     "id" : 35421160044756993,
     "created_at" : "Wed Feb 09 19:33:57 +0000 2011",
     "user" : {
-      "name" : "Freddy",
+      "name" : "FREDDY",
       "screen_name" : "FreddyAmazin",
       "protected" : false,
       "id_str" : "61003804",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3746803514/e3156e6a83537848c3adf54eafad1f6c_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000192666918/c1dfe33bcd942ea9dd8ee17f87119069_normal.png",
       "id" : 61003804,
       "verified" : true
     }

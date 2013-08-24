@@ -1553,7 +1553,7 @@ Grailbird.data.tweets_2012_07 =
       "screen_name" : "Dariu5",
       "protected" : false,
       "id_str" : "15480701",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2940501609/11707e58a52b66b0133122a2dcbac702_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000344642481/eb76bb91e2a547c7814a330f517f88d3_normal.png",
       "id" : 15480701,
       "verified" : false
     }
@@ -3623,7 +3623,7 @@ Grailbird.data.tweets_2012_07 =
       "screen_name" : "Dratas",
       "protected" : false,
       "id_str" : "17499706",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2708255982/c05cc091752643f06b1491822b3fc22d_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000341230025/52554cce4d646f0d1e8290e0f61d1cff_normal.png",
       "id" : 17499706,
       "verified" : false
     }
@@ -3856,7 +3856,7 @@ Grailbird.data.tweets_2012_07 =
       "screen_name" : "codylindley",
       "protected" : false,
       "id_str" : "12078532",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1761993154/Screen_shot_2010-09-27_at_1.32.49_PM_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000218069250/91222084dc1959ba699460c09c132032_normal.jpeg",
       "id" : 12078532,
       "verified" : false
     }
@@ -9259,7 +9259,7 @@ Grailbird.data.tweets_2012_07 =
       "id_str" : "53885893",
       "id" : 53885893
     }, {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 13, 24 ],
       "id_str" : "17216350",
@@ -10621,7 +10621,7 @@ Grailbird.data.tweets_2012_07 =
       "screen_name" : "LaimesKudikis",
       "protected" : false,
       "id_str" : "392867852",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2695606870/cf7baa1422fd14978395415dfa284f30_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000215887538/1fa71cf44bffeb897043820043b4ed81_normal.png",
       "id" : 392867852,
       "verified" : false
     }

@@ -8721,7 +8721,7 @@ Grailbird.data.tweets_2011_11 =
       "screen_name" : "LaimesKudikis",
       "protected" : false,
       "id_str" : "392867852",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2695606870/cf7baa1422fd14978395415dfa284f30_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000215887538/1fa71cf44bffeb897043820043b4ed81_normal.png",
       "id" : 392867852,
       "verified" : false
     }
@@ -9611,7 +9611,7 @@ Grailbird.data.tweets_2011_11 =
       "screen_name" : "LaimesKudikis",
       "protected" : false,
       "id_str" : "392867852",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2695606870/cf7baa1422fd14978395415dfa284f30_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000215887538/1fa71cf44bffeb897043820043b4ed81_normal.png",
       "id" : 392867852,
       "verified" : false
     }
@@ -9943,7 +9943,7 @@ Grailbird.data.tweets_2011_11 =
   "source" : "web",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Awkward Moments",
+      "name" : "That awkward moment",
       "screen_name" : "SoVeryAwkward",
       "indices" : [ 3, 17 ],
       "id_str" : "329877981",
@@ -9972,11 +9972,11 @@ Grailbird.data.tweets_2011_11 =
     "id" : 132146295518396419,
     "created_at" : "Thu Nov 03 17:25:06 +0000 2011",
     "user" : {
-      "name" : "Awkward Moments",
+      "name" : "That awkward moment",
       "screen_name" : "SoVeryAwkward",
       "protected" : false,
       "id_str" : "329877981",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3235525808/619c8b82a40a290907e5cc2209d41b2b_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000163683092/2ed233ad52abe488078d11aaf0dee88a_normal.jpeg",
       "id" : 329877981,
       "verified" : false
     }
@@ -9996,7 +9996,7 @@ Grailbird.data.tweets_2011_11 =
   "source" : "web",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Alvaro Videla",
+      "name" : "Alvaro Gus. Videla",
       "screen_name" : "old_sound",
       "indices" : [ 3, 13 ],
       "id_str" : "16484216",
@@ -10035,7 +10035,7 @@ Grailbird.data.tweets_2011_11 =
     "id" : 132145503789006848,
     "created_at" : "Thu Nov 03 17:21:57 +0000 2011",
     "user" : {
-      "name" : "Alvaro Videla",
+      "name" : "Alvaro Gus. Videla",
       "screen_name" : "old_sound",
       "protected" : false,
       "id_str" : "16484216",

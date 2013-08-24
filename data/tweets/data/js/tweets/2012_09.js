@@ -4684,12 +4684,6 @@ Grailbird.data.tweets_2012_09 =
       "id_str" : "18473706",
       "id" : 18473706
     }, {
-      "name" : "Giedr\u0117 Ti.",
-      "screen_name" : "_TheRedonhead",
-      "indices" : [ 44, 58 ],
-      "id_str" : "98860708",
-      "id" : 98860708
-    }, {
       "name" : "milda",
       "screen_name" : "aamericanmary",
       "indices" : [ 59, 73 ],
@@ -5848,7 +5842,7 @@ Grailbird.data.tweets_2012_09 =
       "screen_name" : "Dariu5",
       "protected" : false,
       "id_str" : "15480701",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2940501609/11707e58a52b66b0133122a2dcbac702_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000344642481/eb76bb91e2a547c7814a330f517f88d3_normal.png",
       "id" : 15480701,
       "verified" : false
     }

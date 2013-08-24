@@ -5735,7 +5735,7 @@ Grailbird.data.tweets_2012_01 =
       "screen_name" : "Dariu5",
       "protected" : false,
       "id_str" : "15480701",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/2940501609/11707e58a52b66b0133122a2dcbac702_normal.jpeg",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000344642481/eb76bb91e2a547c7814a330f517f88d3_normal.png",
       "id" : 15480701,
       "verified" : false
     }
@@ -5788,7 +5788,7 @@ Grailbird.data.tweets_2012_01 =
       "screen_name" : "pauliusa",
       "protected" : false,
       "id_str" : "18605860",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/1881483710/crop_z9i7131_normal.JPG",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000219765525/1d7d554aa4e55d9e6da2821b4f5644a2_normal.jpeg",
       "id" : 18605860,
       "verified" : false
     }
@@ -6135,7 +6135,7 @@ Grailbird.data.tweets_2012_01 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 44, 55 ],
       "id_str" : "17216350",
@@ -6845,7 +6845,7 @@ Grailbird.data.tweets_2012_01 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",
@@ -6950,7 +6950,7 @@ Grailbird.data.tweets_2012_01 =
       "id_str" : "176351264",
       "id" : 176351264
     }, {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 9, 20 ],
       "id_str" : "17216350",
@@ -6990,7 +6990,7 @@ Grailbird.data.tweets_2012_01 =
       "id_str" : "134528971",
       "id" : 134528971
     }, {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 9, 20 ],
       "id_str" : "17216350",

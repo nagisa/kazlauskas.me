@@ -3487,7 +3487,7 @@ Grailbird.data.tweets_2012_12 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "shade dan",
+      "name" : "bukhari ahmad",
       "screen_name" : "goodguydan",
       "indices" : [ 0, 11 ],
       "id_str" : "1592864604",

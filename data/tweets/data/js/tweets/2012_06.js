@@ -2017,7 +2017,7 @@ Grailbird.data.tweets_2012_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",
@@ -7120,7 +7120,7 @@ Grailbird.data.tweets_2012_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",
@@ -7154,7 +7154,7 @@ Grailbird.data.tweets_2012_06 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",

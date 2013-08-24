@@ -874,12 +874,6 @@ Grailbird.data.tweets_2012_11 =
       "indices" : [ 0, 10 ],
       "id_str" : "15249081",
       "id" : 15249081
-    }, {
-      "name" : "Justautas",
-      "screen_name" : "JustasKontrimas",
-      "indices" : [ 11, 27 ],
-      "id_str" : "125023598",
-      "id" : 125023598
     } ],
     "media" : [ ],
     "hashtags" : [ ],
@@ -6944,7 +6938,7 @@ Grailbird.data.tweets_2012_11 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",
@@ -6983,7 +6977,7 @@ Grailbird.data.tweets_2012_11 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",
@@ -7017,7 +7011,7 @@ Grailbird.data.tweets_2012_11 =
   "source" : "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",

@@ -607,8 +607,6 @@ Grailbird.data.tweets_2013_02 =
       } ]
     },
     "geo" : {
-      "type" : "Point",
-      "coordinates" : [ 30.2388855117, -97.73290867 ]
     },
     "id_str" : "306774864772071424",
     "text" : "Passive-aggressive SSIDs. http://t.co/Ayypm6foxI /ht @wendyrlibrarian",

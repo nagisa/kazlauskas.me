@@ -1954,7 +1954,7 @@ Grailbird.data.tweets_2012_10 =
       "screen_name" : "UndergroundPixl",
       "protected" : false,
       "id_str" : "320894194",
-      "profile_image_url_https" : "https://si0.twimg.com/profile_images/3279449684/88184dbfc0af86956a514a0d89c9cc9b_normal.png",
+      "profile_image_url_https" : "https://si0.twimg.com/profile_images/378800000150211026/4845671bd1a56504dfe103a5491f70b4_normal.jpeg",
       "id" : 320894194,
       "verified" : false
     }

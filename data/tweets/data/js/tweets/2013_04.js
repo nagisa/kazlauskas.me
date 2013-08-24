@@ -304,7 +304,7 @@ Grailbird.data.tweets_2013_04 =
       "id_str" : "14998437",
       "id" : 14998437
     }, {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 7, 18 ],
       "id_str" : "17216350",
@@ -3828,7 +3828,7 @@ Grailbird.data.tweets_2013_04 =
   "source" : "web",
   "entities" : {
     "user_mentions" : [ {
-      "name" : "Julius",
+      "name" : "jurgelenas",
       "screen_name" : "jurgelenas",
       "indices" : [ 0, 11 ],
       "id_str" : "17216350",
