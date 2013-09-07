@@ -41,16 +41,16 @@ My explorations tend to be theoretical rather than experimental though.
 * You should send me an <a id="email">email</a> if you have any questions,
   inquiries or comments;
 * I have an account on [twitter][twitter] ([local tweets' copy][tweets_local]);
-* Published code is at [github][github];
+* Published code is stored on [github][github];
 * Music related activity at [musicbrainz][musicbrainz];
-* Books I've read are at [goodreads][goodreads];
-* Anime I've seen is at [hummingbird][hummingbird];
-* I don't own other social network account (including F⁕⁕⁕book and Poogle⁻) I'm
+* Books I read are at [goodreads][goodreads];
+* Anime I watch is tracked at [hummingbird][hummingbird];
+* I don't own other social network account (F⁕⁕⁕book, Poogle⁻) I'm
   aware of.
 
 [github]: https://github.com/nagisa/
 [twitter]: https://twitter.com/simukis/
 [musicbrainz]: https://musicbrainz.org/user/nagisa/
 [goodreads]: https://goodreads.com/simukis/
-[hummingbird]: http://hummingbird.me/users/6517-nagisa/
+[hummingbird]: http://hummingbird.me/users/nagisa/watchlist
 [tweets_local]: /data/tweets/
