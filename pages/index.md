@@ -44,7 +44,7 @@ My explorations tend to be theoretical rather than experimental though.
 * Published code is at [github][github];
 * Music related activity at [musicbrainz][musicbrainz];
 * Books I've read are at [goodreads][goodreads];
-* Anime I've seen is at [MAL][mal];
+* Anime I've seen is at [hummingbird][hummingbird];
 * I don't own other social network account (including F⁕⁕⁕book and Poogle⁻) I'm
   aware of.
 
@@ -52,5 +52,5 @@ My explorations tend to be theoretical rather than experimental though.
 [twitter]: https://twitter.com/simukis/
 [musicbrainz]: https://musicbrainz.org/user/nagisa/
 [goodreads]: https://goodreads.com/simukis/
-[mal]: http://myanimelist.net/profile/simukis
+[hummingbird]: http://hummingbird.me/users/6517-nagisa/
 [tweets_local]: /data/tweets/
