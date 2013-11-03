@@ -35,7 +35,7 @@ main = hakyllWith hakyllConfiguration $ do
         route $ constRoute ".redirects.conf"
         compile copyFileCompiler
 
-    match "entries/**.md" $ do
+    match "entries/**.mkd" $ do
         route $ setExtension "html"
         compile $ entryCompiler
             >>= loadAndApplyTemplate "templates/entry.html" entryCtx
