@@ -1,7 +1,7 @@
 ---
 title: Hyphenation hints and justification
 published: 2013-02-18
-tags: UX, Web
+tags: Design, Web
 ---
 
 # Hyphen and hyphenation

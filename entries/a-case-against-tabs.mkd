@@ -1,7 +1,7 @@
 ---
 title: A case against tabs
 published: 2013-01-23
-tags: UX
+tags: Design
 ---
 
 A long time (12 years or so) ago certain two browsers were fighting over
