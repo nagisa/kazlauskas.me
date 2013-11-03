@@ -1,11 +1,11 @@
 var user_details =  {
-  "expanded_url" : "http://www.kazlauskas.me/",
+  "expanded_url" : "http:\/\/kazlauskas.me\/",
   "screen_name" : "simukis",
   "location" : "lo",
-  "url" : "http://t.co/qqt77sjztP",
+  "url" : "http:\/\/t.co\/vqfeuyFyiX",
   "full_name" : "Simonas",
-  "bio" : "Geriausias vis\u0173 sutikusi\u0173 persekiotoj\u0173 internetinis draugas\r\n\u2403",
+  "bio" : "I like it between A and C. Inclusive. A best friend of all contracted followers. \u2403",
   "id" : "45383863",
-  "created_at" : "Sun Jun 07 17:51:40 +0000 2009",
+  "created_at" : "2009-06-07 17:51:40 +0000",
   "display_url" : "kazlauskas.me"
 }
