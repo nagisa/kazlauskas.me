@@ -84,7 +84,7 @@ to various laws, that don't favour game's scenario.
 
 # Amendments
 
-Discussion at [Dischan forums][discussion] pointed out that all my calculations
+Discussion at Dischan forums[^forums] pointed out that all my calculations
 are completely dependent on the first assumption. Indeed they are, so I'll
 write how I came to conclusion this assumption is safe enough to be depended
 on. If the Sule is bigger than the Earth, the story of irradiation is even more
@@ -102,13 +102,14 @@ elements.  After that ensuring those elements would be able to participate in a
 process of creating other highly complex elements we call organic matter and so
 on and on.
 
-[discussion]: http://dischan.org/forum/viewforum.php?c=1&f=12&t=1746
-
 [^3]: In order for body to have it's own atmosphere body's gravitation should
 be large enough so it could hold down gases of which atmosphere consists.
 Gravitation is proportional to the mass of the body rather than size.
 Assumption #1, however, includes similar density to Earth, thus I can use size
 and mass in such comparisons interchangeably.
+[^forums]: Originally linked to
+http://dischan.org/forum/viewforum.php?c=1&f=12&t=1746, but forums
+were removed at some point.
 
 # Final words
 
