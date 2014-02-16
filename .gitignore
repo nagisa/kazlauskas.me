@@ -2,3 +2,5 @@
 .cabal-sandbox
 _site
 dist
+cabal*
+kazlauskas
