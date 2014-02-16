@@ -4,8 +4,8 @@
          local('Heuristica Regular'),
          local('Heuristica-Regular'),
          url('Hrstc-R.eot?') format('eot'),
-         url('Hrstc-R.otf')  format('opentype'),
          url('Hrstc-R.woff') format('woff'),
+         url('Hrstc-R.otf')  format('opentype'),
          url('Hrstc-R.ttf')  format('truetype'),
          url('Hrstc-R.svg#Heuristica-Regular') format('svg');
     font-weight: 400;
@@ -18,8 +18,8 @@
          local('Heuristica Bold'),
          local('Heuristica-Bold'),
          url('Hrstc-B.eot?') format('eot'),
-         url('Hrstc-B.otf')  format('opentype'),
          url('Hrstc-B.woff') format('woff'),
+         url('Hrstc-B.otf')  format('opentype'),
          url('Hrstc-B.ttf')  format('truetype'),
          url('Hrstc-B.svg#Heuristica-Bold') format('svg');
     font-weight: 800;
@@ -32,8 +32,8 @@
          local('Heuristica Italic'),
          local('Heuristica-Italic'),
          url('Hrstc-I.eot?') format('eot'),
-         url('Hrstc-I.otf')  format('opentype'),
          url('Hrstc-I.woff') format('woff'),
+         url('Hrstc-I.otf')  format('opentype'),
          url('Hrstc-I.ttf')  format('truetype'),
          url('Hrstc-I.svg#Heuristica-Italic') format('svg');
     font-weight: 400;
@@ -47,8 +47,8 @@
          local('Heuristica-Bold-Italic'),
          local('Heuristica-BoldItalic'),
          url('Hrstc-BI.eot?') format('eot'),
-         url('Hrstc-BI.otf')  format('opentype'),
          url('Hrstc-BI.woff') format('woff'),
+         url('Hrstc-BI.otf')  format('opentype'),
          url('Hrstc-BI.ttf')  format('truetype'),
          url('Hrstc-BI.svg#Heuristica-BoldItalic') format('svg');
     font-weight: 800;
