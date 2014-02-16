@@ -11,7 +11,7 @@
         rcb   = function (e){ready = true; cb();},
         cb    = function(){
             /* EMail */
-            mel = document.getElementById('email');
+            mel = document.getElementById('email-link');
             if(mel) mel.href = '\x6d\x61\x69\x6cto:\x77\x65\x62\x40kazlauskas.me';
 
             /* MathJax */

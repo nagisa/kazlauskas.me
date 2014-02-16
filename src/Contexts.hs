@@ -4,24 +4,30 @@ module Contexts
     , feedContext
     , baseContext
     , entryListContext
+    , yearGroupedEntryListContext
     ) where
 
-import Control.Applicative ((<|>), empty)
-import Data.Monoid         (mappend, mconcat)
+import Control.Applicative ((<|>), (<$>), empty)
+import Data.Monoid         (mconcat, (<>))
+import Control.Monad       (forM)
 import Data.Maybe          (fromMaybe)
+import Data.Time.Calendar  (toGregorian)
+import Data.Time.Clock     (utctDay)
+import Data.List           (groupBy)
+import System.Locale       (defaultTimeLocale)
 import Hakyll
 import Text.Pandoc.Options
 
 import Utils (splitFootnotes)
 
-entryContext tags = mconcat [ splitFootnotesField "footnotes"
-                            , splitBodyField "body"
-                            , dateField "date" "%Y-%m-%d"
-                            , modificationTimeField "updated" "%Y-%m-%d"
-                            , failIfEmpty $ tocField "toc"
-                            , tagsField "tags" tags
-                            , defaultContext
-                            ]
+entryContext = mconcat [ splitFootnotesField "footnotes"
+                       , splitBodyField "body"
+                       , dateField "date" "%Y-%m-%d"
+                       , dateField "list-date" "%m-%d"
+                       , modificationTimeField "updated" "%Y-%m-%d"
+                       , failIfEmpty $ tocField "toc"
+                       , defaultContext
+                       ]
 
 
 feedContext = mconcat [ bodyField "description"
@@ -29,9 +35,34 @@ feedContext = mconcat [ bodyField "description"
                       , defaultContext
                       ]
 
-entryListContext tags entries = listField "entries" (entryContext tags) entries
+entryListContext entries = listField "entries" entryContext entries
 
-baseContext = defaultField "copy" "CC BY 3.0" `mappend` defaultContext
+
+-- | TODO: refactor, perhaps?
+--
+-- I can't read this code that same evening I wrote it...
+makeItemPairs :: MonadMetadata m => [Item a] -> m [(Item a, Integer)]
+makeItemPairs = mapM $ \i -> do
+    time <- getItemUTC defaultTimeLocale $ itemIdentifier i
+    return $ (i, (\(a,b,c) -> a) $ toGregorian $ utctDay time)
+groupItems :: [(Item a, Integer)] -> [(String, [Item a])]
+groupItems = map (\g -> (show $ snd $ head g, map fst g))
+             . groupBy (\(i1, y1) (i2, y2) -> y1 == y2)
+oneYearGroup :: Context (String, [Item String])
+oneYearGroup = field "year" (return . fst . itemBody) <> articlesField
+  where
+    articlesField :: Context (String, [Item String])
+    articlesField = Context $ \k i -> if k == "entries"
+        then return $ ListField entryContext (snd . itemBody $ i)
+        else empty
+yearGroupedEntryListContext :: Compiler [Item String] -> Context a
+yearGroupedEntryListContext items = listField "years" oneYearGroup is
+  where
+    is :: Compiler [Item (String, [Item String])]
+    is = fmap groupItems (items >>= makeItemPairs) >>= mapM makeItem
+
+
+baseContext = defaultField "copy" "CC BY 3.0" <> defaultContext
 
 --Custom fields---------------------------------------------------------------
 

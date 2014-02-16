@@ -1,19 +1,16 @@
-<aside id="metadata">
-    <div class="metab">
-        <span class="metah">Published</span><time pubdate>$date$</time>
-    </div><div class="metab">
-        <span class="metah">Updated</span><time>$updated$</time>
-    </div><div class="metab">
-        <span class="metah">Tags</span>$tags$
-    </div>
-</aside>
-<article id="entry">
+<!--
     $if(toc)$
     <aside id="toc">
         <span id="toctitle">Table of Contents</span>
         $toc$
     </aside>
     $endif$
+-->
+<aside id="metadata">
+    <h1>$title$</h1>
+    <span><time pubdate>$date$</time> (Updated: <time>$updated$</time>)</span>
+</aside>
+<article id="entry">
     $body$
 </article>
 $if(footnotes)$<aside id="footnotes">

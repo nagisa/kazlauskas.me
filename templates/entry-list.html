@@ -1,6 +1,10 @@
-<ul class="blogentries">
-    $for(entries)$<li>
-        <time class="blogentry-date">$date$</time>
-        <a href="$url$">$title$</a>
+<ul class="years">
+    $for(years)$<li data-year="$year$">
+        <ul class="entries">
+            $for(entries)$<li data-moday="$list-date$">
+                <time class="date" datetime="$date$">$list-date$</time>
+                <a href="$url$">$title$</a>
+            </li>$endfor$
+        </ul>
     </li>$endfor$
-</ul>
+$endfor$

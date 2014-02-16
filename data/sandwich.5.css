@@ -1,0 +1,411 @@
+@font-face {
+    font-family: 'Hrstc';
+    src: local('Heuristica'),
+         local('Heuristica Regular'),
+         local('Heuristica-Regular'),
+         url('Hrstc-R.eot?') format('eot'),
+         url('Hrstc-R.otf')  format('opentype'),
+         url('Hrstc-R.woff') format('woff'),
+         url('Hrstc-R.ttf')  format('truetype'),
+         url('Hrstc-R.svg#Heuristica-Regular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hrstc';
+    src: local('Heuristica'),
+         local('Heuristica Bold'),
+         local('Heuristica-Bold'),
+         url('Hrstc-B.eot?') format('eot'),
+         url('Hrstc-B.otf')  format('opentype'),
+         url('Hrstc-B.woff') format('woff'),
+         url('Hrstc-B.ttf')  format('truetype'),
+         url('Hrstc-B.svg#Heuristica-Bold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hrstc';
+    src: local('Heuristica'),
+         local('Heuristica Italic'),
+         local('Heuristica-Italic'),
+         url('Hrstc-I.eot?') format('eot'),
+         url('Hrstc-I.otf')  format('opentype'),
+         url('Hrstc-I.woff') format('woff'),
+         url('Hrstc-I.ttf')  format('truetype'),
+         url('Hrstc-I.svg#Heuristica-Italic') format('svg');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Hrstc';
+    src: local('Heuristica'),
+         local('Heuristica Bold Italic'),
+         local('Heuristica-Bold-Italic'),
+         local('Heuristica-BoldItalic'),
+         url('Hrstc-BI.eot?') format('eot'),
+         url('Hrstc-BI.otf')  format('opentype'),
+         url('Hrstc-BI.woff') format('woff'),
+         url('Hrstc-BI.ttf')  format('truetype'),
+         url('Hrstc-BI.svg#Heuristica-BoldItalic') format('svg');
+    font-weight: 800;
+    font-style: italic;
+}
+
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+html {
+    background: #fdf6e3;
+    color: #657b83;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+    font-family: "Hrstc", "Cardo", "Crimson Text", serif;
+    font-kerning: normal;
+    font-variant-ligatures: common-ligatures contextual;
+    min-width: 300px;
+}
+
+@media screen and (max-width: 480px){
+    body { font-size: 16px; }
+}
+
+main, footer, header {
+    max-width: 35em;
+    max-width: 65ch;
+    margin: 0 auto;
+}
+
+main {
+    border: 1px solid #657b83;
+    box-shadow: 0px 0px 15px -5px #657b83;
+    position: relative;
+    z-index: 10;
+}
+
+@media (max-width: 800px){
+    main, footer, header {
+        width: 100%!important;
+        max-width: 800px;
+    }
+
+    main {
+        border-left: none;
+        border-right: none;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    font-weight: 800;
+    margin: 0.25em .25em;
+    color: #586e75;
+    font-style: italic;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.75em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+h6 {
+    font-size: 0.85em;
+}
+
+:link {
+    color: #268bd2;
+    text-decoration: none;
+}
+
+:link:hover {
+    text-decoration: underline;
+}
+
+:visited {
+    color: #2aa198;
+}
+
+p {
+    margin: 0 .5em;
+    text-indent: 1.75em;
+    line-height: 1.25em;
+    text-align: justify;
+}
+
+strong, b {
+    font-weight: 800;
+}
+
+img {
+    max-width: 100%;
+}
+
+figure {
+    margin: .5em 0;
+    padding: 0;
+}
+
+figcaption {
+    padding: 0 .5em .25em;
+}
+
+figure, code, pre {
+    background: #eee8d5;
+    max-width: 100%;
+}
+
+pre, code {
+    font-family: "Source Code Pro";
+    font-size: 18px;
+}
+
+pre {
+    max-width: 100%;
+    overflow: auto;
+}
+
+pre code {
+    /* Banzai all the hacks! */
+    display: table;
+    padding: .5em;
+}
+
+blockquote {
+    background: #eee8d5;
+    color: #93a1a1;
+    margin: .25em 0;
+    padding: .25em 1em;
+}
+
+article ol, article ul {
+    margin: .5em 0;
+    padding: 0 .5em 0 2em;
+}
+
+article>p:last-child, article>section:last-child {
+    margin-bottom: .5em;
+}
+
+article>p:first-child, article>section:first-child {
+    margin-top: .5em;
+}
+
+del {
+    color: #93a1a1;
+}
+
+#metadata span {
+    font-size: .85em;
+    color: #93a1a1;
+}
+
+#metadata {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+#metadata h1 {
+    margin-bottom: 0em;
+}
+
+#footnotes {
+    background: #002b36;
+    overflow: hidden;
+    margin-top: .25em;
+    color: #839496;
+    padding-bottom: .5em;
+}
+
+#footnotes h1 {
+    color: #93a1a1;
+}
+
+#footnotes p {
+    text-indent: 0;
+    display: block;
+    margin-left: 2em;
+}
+
+#footnotes ol {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: footnote;
+}
+
+#footnotes li:target {
+    background: #073642;
+}
+
+#footnotes li {
+    padding: .25em .5em .25em 0;
+    overflow: hidden;
+}
+
+#footnotes li::before, #footnotes li:before {
+    counter-increment:footnote;
+    content: counters(footnote, "") ".";
+    float: left;
+    width: 2em;
+    text-align: center;
+}
+
+
+#footnotes li a:last-child {
+    float: right;
+    margin: 0 .15em;
+}
+
+#footnotes figure, #footnotes code, #footnotes pre {
+    background: #073642;
+}
+
+header {
+    padding: .25em 0;
+    overflow: hidden;
+}
+
+header #title::before, header #title:before {
+    content: "Kazlauskas";
+}
+
+header #title {
+    color: #93a1a1;
+    margin: 0;
+    z-index: -1;
+    width: 100%;
+    position: relative;
+    display: block;
+    margin-bottom: -.12em;
+    font-style: normal;
+    font-size: 5em;
+    line-height: 0.8em;
+    text-align: center;
+}
+
+@media screen and (max-width: 640px){
+    header #title {
+        font-size: 3em;
+    }
+}
+
+nav {
+    overflow: hidden;
+    width: 100%;
+    background: #002b36;
+    z-index: 20;
+    margin-bottom: -.25em;
+    position: relative;
+}
+
+nav ul {
+    list-style: none;
+    padding: .25em .5em;
+    margin: 0;
+    width: 100%;
+    font-size: .85em;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block;
+    padding: 0 .5em;
+}
+
+footer {
+    padding: .25em .5em;
+    overflow: hidden;
+}
+
+#generator, #copy {
+    font-size: 0.85em2
+}
+
+#generator {
+    float: right;
+}
+
+#generator::before, #generator:before{
+    content: "Proudly";
+}
+
+#copy {
+    float: left;
+}
+
+#copy::before, #copy:before {
+    content: "The content in this page is licensed under";
+}
+
+@media screen and (max-width: 70ch){
+    #copy::before, #copy:before {
+        content: "©";
+    }
+
+    #generator::before, #generator:before{
+        content: "";
+    }
+}
+
+@media screen and (max-width: 43.5em){
+    #copy::before, #copy:before {
+        content: "©";
+    }
+
+    #generator::before, #generator:before{
+        content: "";
+    }
+}
+
+/* Specific pages */
+.years, .entries {
+    list-style: none;
+    padding: 0 .5em;
+    margin: 1em 0 .5em;
+}
+
+.entries {
+    padding: 0 0 0 2.5em;
+    margin: 0;
+}
+
+.years>li:before {
+    content: attr(data-year) "";
+    font-weight: 800;
+}
+
+.entries>li:before {
+    content: attr(data-moday) "";
+}
+
+.entries time {
+    display: none;
+}
