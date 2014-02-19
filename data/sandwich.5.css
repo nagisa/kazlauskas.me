@@ -413,3 +413,9 @@ footer {
 .entries time {
     display: none;
 }
+
+/* non-standard */
+::-moz-selection { color: #93a1a1;  background: #002b36; }
+::selection { color: #93a1a1;  background: #002b36; }
+#footnotes *::-moz-selection, nav *::-moz-selection { background: #fdf6e3; color: #586e75; }
+#footnotes *::selection, nav *::selection { background: #fdf6e3; color: #586e75; }
