@@ -44,6 +44,7 @@ main = hakyllWith hakyllConfiguration $ do
         compile $ let es = loadAllSorted ("entries/*" .&&. hasNoVersion) in
             getResourceBody
             >>= applyAsTemplate (yearGroupedEntryListContext es)
+            >>= return . fmap hyphHTML
             >>= loadAndApplyTemplate "templates/base.html" baseContext
             >>= relativizeUrls
 

@@ -6,10 +6,10 @@ module Compilers
     ) where
 
 import Configuration
+import Utils                  (hyphText)
+import Control.Applicative    ((<$>))
 import Data.ByteString.Lazy   (ByteString)
-import Data.List              (intercalate)
 import Hakyll
-import Text.Hyphenation       (hyphenate, english_GB, hyphenatorRightMin)
 import Text.Jasmine           (minify)
 import Text.Pandoc            (bottomUp, Pandoc)
 import Text.Pandoc.Definition (Inline (Str))
@@ -23,15 +23,12 @@ pandocCompilerWithHyph ropt wopt =
     pandocCompilerWithTransform ropt wopt hyphenatePandoc
   where
     hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
-    hyphW = intercalate "\x00AD" . hyphenate english_GB
-    hyphInline (Str str) = Str $ (unwords . map hyphW . words) str
+    hyphInline (Str str) = Str $ hyphText str
     hyphInline a = a
-
 
 pandocCompilerHyph :: Compiler (Item String)
 pandocCompilerHyph =
     pandocCompilerWithHyph defaultHakyllReaderOptions siteWriterOptions
-
 
 entryCompiler :: Compiler (Item String)
 entryCompiler =
