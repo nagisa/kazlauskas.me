@@ -1,60 +1,3 @@
-@font-face {
-    font-family: 'Hrstc';
-    src: local('Heuristica'),
-         local('Heuristica Regular'),
-         local('Heuristica-Regular'),
-         url('Hrstc-R.eot?') format('eot'),
-         url('Hrstc-R.woff') format('woff'),
-         url('Hrstc-R.otf')  format('opentype'),
-         url('Hrstc-R.ttf')  format('truetype'),
-         url('Hrstc-R.svg#Heuristica-Regular') format('svg');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Hrstc';
-    src: local('Heuristica'),
-         local('Heuristica Bold'),
-         local('Heuristica-Bold'),
-         url('Hrstc-B.eot?') format('eot'),
-         url('Hrstc-B.woff') format('woff'),
-         url('Hrstc-B.otf')  format('opentype'),
-         url('Hrstc-B.ttf')  format('truetype'),
-         url('Hrstc-B.svg#Heuristica-Bold') format('svg');
-    font-weight: 800;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Hrstc';
-    src: local('Heuristica'),
-         local('Heuristica Italic'),
-         local('Heuristica-Italic'),
-         url('Hrstc-I.eot?') format('eot'),
-         url('Hrstc-I.woff') format('woff'),
-         url('Hrstc-I.otf')  format('opentype'),
-         url('Hrstc-I.ttf')  format('truetype'),
-         url('Hrstc-I.svg#Heuristica-Italic') format('svg');
-    font-weight: 400;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Hrstc';
-    src: local('Heuristica'),
-         local('Heuristica Bold Italic'),
-         local('Heuristica-Bold-Italic'),
-         local('Heuristica-BoldItalic'),
-         url('Hrstc-BI.eot?') format('eot'),
-         url('Hrstc-BI.woff') format('woff'),
-         url('Hrstc-BI.otf')  format('opentype'),
-         url('Hrstc-BI.ttf')  format('truetype'),
-         url('Hrstc-BI.svg#Heuristica-BoldItalic') format('svg');
-    font-weight: 800;
-    font-style: italic;
-}
-
 * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -72,14 +15,14 @@ html {
 body {
     margin: 0;
     padding: 0;
-    font-size: 22px;
-    font-family: "Hrstc", "Cardo", "Crimson Text", serif;
+    font-size: 24px;
+    font-family: "Alegreya", "Heuristica", "Cardo", "Crimson Text", serif;
     font-kerning: normal;
     font-variant-ligatures: common-ligatures contextual;
     min-width: 300px;
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 580px){
     body { font-size: 16px; }
 }
 
@@ -96,10 +39,10 @@ main {
     z-index: 10;
 }
 
-@media (max-width: 800px){
+@media (max-width: 875px){
     main, footer, header {
         width: 100%!important;
-        max-width: 800px;
+        max-width: none;
     }
 
     main {
@@ -184,7 +127,7 @@ figure, code, pre {
 
 pre, code {
     font-family: "Source Code Pro";
-    font-size: 18px;
+    font-size: 0.833333em;
 }
 
 pre {
@@ -254,11 +197,11 @@ math {
 }
 
 .footnoteRef sup:after,
-.footnoteRef sup::before {
+.footnoteRef sup::after {
     content: "]"
 }
 
-.footnoteRef sup:hover {
+.footnoteRef:hover sup {
     text-decoration: underline;
 }
 
@@ -330,7 +273,7 @@ header #title {
     width: 100%;
     position: relative;
     display: block;
-    margin-bottom: -.12em;
+    margin-bottom: -.125em;
     font-style: normal;
     font-size: 5em;
     line-height: 0.8em;
@@ -391,17 +334,7 @@ footer {
     content: "The content in this page is licensed under";
 }
 
-@media screen and (max-width: 70ch){
-    #copy::before, #copy:before {
-        content: "©";
-    }
-
-    #generator::before, #generator:before{
-        content: "";
-    }
-}
-
-@media screen and (max-width: 43.5em){
+@media screen and (max-width: 45em){
     #copy::before, #copy:before {
         content: "©";
     }
