@@ -2,10 +2,13 @@ module Configuration
     ( feedConfiguration
     , siteWriterOptions
     , hakyllConfiguration
+    , hyphLang
     ) where
 
 import Hakyll
 import Text.Pandoc.Options
+import Text.Hyphenation            (english_GB, Hyphenator(..))
+import Text.Hyphenation.Exception  (addException)
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -32,3 +35,13 @@ hakyllConfiguration = defaultConfiguration
                    ++ " _site/ 'umibox:~http/main/'"
     }
 
+hyphLang = lang { hyphenatorLeftMin = 1
+                , hyphenatorRightMin = 1
+                , hyphenatorExceptions = exceptions
+                }
+  where
+    lang = english_GB
+    exceptions = foldr addException (hyphenatorExceptions lang) $
+        [ "si-mo-nas"
+        , "lith-u-a-ni-a"
+        ]

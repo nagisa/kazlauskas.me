@@ -14,7 +14,7 @@ import Data.Monoid                      (mappend)
 import Data.Typeable                    (Typeable)
 import Hakyll                    hiding (applyTemplateList, applyTemplate)
 import Text.XML.Light
-import Text.Hyphenation                 (hyphenate, english_GB, hyphenatorRightMin)
+import Text.Hyphenation                 (hyphenate)
 import Text.HTML.TagSoup             as TS
 import Data.Maybe                       (fromJust, fromMaybe)
 import Data.List                        (partition, intercalate)
@@ -48,7 +48,7 @@ splitFootnotes = unparse . partition isFns . parse
 
 -- | Expects to be given a word, not string!
 hyphWord :: String -> String
-hyphWord = intercalate "\x00AD" . hyphenate english_GB
+hyphWord = intercalate "\x00AD" . hyphenate hyphLang
 
 hyphText :: String -> String
 hyphText t = l ++ m ++ r
