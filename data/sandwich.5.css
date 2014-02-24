@@ -53,7 +53,7 @@ main {
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
-    font-weight: 800;
+    font-weight: 700;
     margin: 0.25em .25em;
     color: #586e75;
     font-style: italic;
@@ -104,7 +104,7 @@ p {
 }
 
 strong, b {
-    font-weight: 800;
+    font-weight: 700;
 }
 
 img {
@@ -358,7 +358,9 @@ footer {
 
 .years>li:before {
     content: attr(data-year) "";
-    font-weight: 800;
+    font-weight: 700;
+    min-width: 2.5em;
+    text-align: center;
 }
 
 .entries>li:before {
