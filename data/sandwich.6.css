@@ -359,12 +359,12 @@ footer {
 .years>li:before {
     content: attr(data-year) "";
     font-weight: 700;
-    min-width: 2.5em;
-    text-align: center;
 }
 
 .entries>li:before {
     content: attr(data-moday) "";
+    min-width: 2.5em;
+    text-align: center;
 }
 
 .entries time {
