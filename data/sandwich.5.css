@@ -248,6 +248,20 @@ math {
     margin-bottom: 0em;
 }
 
+.footnoteRef sup:before,
+.footnoteRef sup::before {
+    content: "[";
+}
+
+.footnoteRef sup:after,
+.footnoteRef sup::before {
+    content: "]"
+}
+
+.footnoteRef sup:hover {
+    text-decoration: underline;
+}
+
 #footnotes {
     background: #002b36;
     overflow: hidden;
