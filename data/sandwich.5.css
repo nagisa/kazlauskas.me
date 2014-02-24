@@ -226,6 +226,14 @@ del {
     color: #93a1a1;
 }
 
+sup, sub {
+    line-height: 0.5;
+}
+
+math {
+    font-size: 0.85em;
+}
+
 #metadata span {
     font-size: .85em;
     color: #93a1a1;
