@@ -363,6 +363,7 @@ footer {
 
 .entries>li:before {
     content: attr(data-moday) "";
+    display: inline-block;
     min-width: 2.5em;
     text-align: center;
 }
