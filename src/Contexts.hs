@@ -10,7 +10,6 @@ module Contexts
 import Control.Applicative ((<|>), (<$>), empty)
 import Data.Monoid         (mconcat, (<>))
 import Control.Monad       (forM)
-import Data.Maybe          (fromMaybe)
 import Data.Time.Calendar  (toGregorian)
 import Data.Time.Clock     (utctDay)
 import Data.List           (groupBy)
@@ -35,7 +34,7 @@ feedContext = mconcat [ bodyField "description"
                       , defaultContext
                       ]
 
-entryListContext entries = listField "entries" entryContext entries
+entryListContext = listField "entries" entryContext
 
 
 -- | TODO: refactor, perhaps?
@@ -44,7 +43,7 @@ entryListContext entries = listField "entries" entryContext entries
 makeItemPairs :: MonadMetadata m => [Item a] -> m [(Item a, Integer)]
 makeItemPairs = mapM $ \i -> do
     time <- getItemUTC defaultTimeLocale $ itemIdentifier i
-    return $ (i, (\(a,b,c) -> a) $ toGregorian $ utctDay time)
+    return (i, (\(a,b,c) -> a) $ toGregorian $ utctDay time)
 groupItems :: [(Item a, Integer)] -> [(String, [Item a])]
 groupItems = map (\g -> (show $ snd $ head g, map fst g))
              . groupBy (\(i1, y1) (i2, y2) -> y1 == y2)
@@ -108,5 +107,5 @@ splitFootnotesField key = Context $ \k i ->
         then unContext (bodyField k) k i >>= go
         else empty
   where
-    go (StringField a) = fromMaybe empty $ (fmap return (snd (splitFootnotes a)))
+    go (StringField a) = maybe empty return (snd (splitFootnotes a))
     go _ = fail "Only string fields are supported"

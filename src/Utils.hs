@@ -54,8 +54,8 @@ hyphText :: String -> String
 hyphText t = l ++ m ++ r
   where
     m = unwords . map hyphWord . words $ t
-    l = fst $ span isSpace t
-    r = fst $ span isSpace $ reverse t
+    l = takeWhile isSpace t
+    r = takeWhile isSpace $ reverse t
 
 
 hyphHTML :: String -> String

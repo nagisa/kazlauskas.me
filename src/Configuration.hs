@@ -41,7 +41,7 @@ hyphLang = lang { hyphenatorLeftMin = 1
                 }
   where
     lang = english_GB
-    exceptions = foldr addException (hyphenatorExceptions lang) $
+    exceptions = foldr addException (hyphenatorExceptions lang)
         [ "si-mo-nas"
         , "lith-u-a-ni-a"
         ]

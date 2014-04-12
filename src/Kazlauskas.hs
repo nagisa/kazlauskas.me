@@ -19,15 +19,15 @@ main = hakyllWith hakyllConfiguration $ do
         route   idRoute
         compile copyFileCompiler
 
-    match ("data/**.css" .&&. (complement "data/tweets/**.css")) $ do
+    match ("data/**.css" .&&. complement "data/tweets/**.css") $ do
         route   idRoute
         compile compressCssCompiler
 
-    match ("data/**.js" .&&. (complement "data/tweets/**.js")) $ do
+    match ("data/**.js" .&&. complement "data/tweets/**.js") $ do
         route   idRoute
         compile jsCompiler
 
-    match ("redirects.conf") $ do
+    match "redirects.conf" $ do
         route $ constRoute ".redirects.conf"
         compile copyFileCompiler
 
