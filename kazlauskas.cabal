@@ -18,7 +18,7 @@ executable kazlauskas
   ghc-options:         -rtsopts -threaded
   -- other-modules:
   build-depends: base == 4.7.*
-               , hakyll == 4.5.*
+               , hakyll >= 4.5.2.0 && < 4.6
                , bytestring == 0.10.*
                , hyphenation == 0.4.*
                , hjsmin == 0.1.*
