@@ -383,3 +383,47 @@ footer {
 ::selection { color: #93a1a1;  background: #002b36; }
 #footnotes *::-moz-selection, nav *::-moz-selection { background: #fdf6e3; color: #586e75; }
 #footnotes *::selection, nav *::selection { background: #fdf6e3; color: #586e75; }
+
+@media print {
+
+    * {
+        background: transparent !important;
+    }
+
+    main, header, footer {
+        width: auto;
+        max-width: none;
+    }
+
+    html, body{
+        font-size: 12pt;
+        color: #000;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #000;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #generator {
+        display: none;
+    }
+
+    main {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+    }
+
+    #title {
+        color: #000;
+    }
+
+    #copy::before, #copy:before {
+        content: "The content in this document is licensed under";
+    }
+}
