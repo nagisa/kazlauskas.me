@@ -1,0 +1,140 @@
+---
+title: When droplets go misssing
+published: 2014-05-12
+tags: Server Administration
+---
+
+It does not take much effort to lock yourself outside a remote virtual machine:
+as soon as you lose ssh access to your server, most of them are as good as
+lost. Some VPS providers, including DigitalOcean, make it possible to access
+the console of the server even if the server is offline, which makes recovering
+a failed droplet possible.
+
+Given the terrible DigitalOcean kernel handling, messing up a droplet is very
+easy. Changing a kernel the droplet boots up into is a matter of 5 clicks. One
+will encounter no warnings along the way and a single power cycle later the
+droplet will be gone from the Internet. Upgrading the kernel package inside the
+droplet will lead to the same outcome. Although I knew this after getting burnt
+trying to upgrade the kernel on my droplet more than a year ago, I still
+committed the same mistake twice since then. Yesterday, when the init daemon
+segfaulted after 11 months of uptime and the machine became unreachable,
+something inside me finally snapped and I set off looking for the reason behind
+missing `eth0` after a kernel upgrade.
+
+# Droplet kernel versus boot kernel
+
+Droplets boot with kernel other than one installed inside the droplet sometimes
+causing compatibility issues between two. Therefore, distinction between the
+boot and the droplet kernels is important in this article:
+
+* *Droplet kernel* shall mean kernel residing inside the droplet and usually
+  managed by OS package manager;
+* *Boot kernel* is the kernel a droplet boots with.
+
+Change of the boot kernel is accomplished through DigitalOcean droplet
+management interface:
+
+![Control panel section for changing the kernel][kernel-img]
+
+If you only changed the boot kernel and did not upgrade the droplet kernel,
+changing the boot kernel back should fix any problems you have.
+
+If you upgraded the droplet kernel, fixing it is more complicated and is the
+focus of this article. First of all, check whether you can change to a boot
+kernel with exactly the same version as your droplet kernel and power cycle
+the droplet after changing. If there is no matching version, pick the closest
+version available and follow the instructions.
+
+# Accessing the droplet
+
+DigitalOcean provides a simple way to access your droplet through the VNC
+console. Actually, it is probably the only way one can access a droplet by
+oneself when it loses the access to the Internet. You can open it by clicking
+on the “Console Access” button available in the droplet control panel:
+
+![Control panel section with “Console Access” button visible][vnc-img]
+
+This console provides the same amount of control over a droplet one would get
+through ssh, although the experience is not as smooth.
+
+# Understanding the underlying cause
+
+Kernels interact with hardware through a well specified API via drivers. Linux
+drivers are usually implemented as kernel modules which are loaded during
+runtime. Usually, when the kernel is unable to load some module it will not
+fail and boot just fine, but some features, such as the Ethernet, might be
+unavailable.
+
+In my case droplet kernel upgrade caused a change of modules’ location in the
+file system and made the boot kernel unable to find modules necessary for
+normal operation.
+
+# Quick and dangerous
+
+Kernel modules reside at a well defined path and in case of a version mismatch
+between the boot and the droplet kernel this location has an infinitely big
+chance of not existing. Given a `3.14.1-1` kernel release modules are located
+at `/usr/lib/modules/3.14.1-1` and you can find the path where your boot kernel
+expects to find them with `sh -c 'echo /usr/lib/modules/$(uname -r)'`. As
+modules don’t change much, you can attempt using modules of your droplet kernel
+with the boot kernel even if the kernel versions do not match:
+
+```bash
+cp -R /usr/lib/modules/$DROPLET_KERNEL_VERSION /usr/lib/modules/$(uname -r)
+reboot
+```
+
+If everything is all right, after a reboot the boot kernel should load all
+the necessary modules and `eth0` along with the Internet connection should be
+back.
+
+# Slower and safer
+
+You can also load modules manually which is slower and in case of an accident
+will not make your droplet unbootable:
+
+```bash
+cd /usr/lib/modules/$DROPLET_KERNEL_VERSION/kernel/drivers
+insmod net/mii.ko*
+insmod net/ethernet/realtek/8139cp.ko*
+insmod virtio/virtio.ko*
+insmod virtio/virtio_ring.ko*
+insmod net/virtio_net.ko*
+```
+
+Once the modules are loaded without any errors, you can try connecting to the
+Internet. `$YOUR_IP` and `$GATEWAY_IP` are conveniently provided below the
+console window.
+
+```bash
+ifconfig eth0 $YOUR_IP netmask 255.255.255.0 up
+route add default gw $GATEWAY_IP
+ping $GATEWAY_IP -c 1
+```
+
+At this point your droplet will have full Internet connection making data
+recovery possible, but will not have DNS which implies no domain resolution.
+
+# Signed modules
+
+Depending on distribution setup `insmod` might also fail with an error about
+module having a bad signature when you try to insert them (or after reboot if
+you used the dangerous method). Removing the signature is an effective way to
+circumvent the check:
+
+```bash
+objcopy -R .note.module.sig module.ko module.ko
+```
+
+In case the failing module is compressed (`.ko.gz`), you’ll need to decompress
+it with `gzip -d` first.
+
+# Fin
+
+Using the system in production after patching like this is discouraged. This
+article is only meant to help people to recover data locked into the droplet.
+After the Internet connection is recovered, you by all means want to move
+everything from failed droplet to a pristine one.
+
+[vnc-img]:/images/recovering-digitalocean-kernel-change/vnc.png
+[kernel-img]:/images/recovering-digitalocean-kernel-change/kernel.png
