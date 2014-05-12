@@ -35,8 +35,8 @@ hakyllConfiguration = defaultConfiguration
                    ++ " _site/ 'umibox:~http/main/'"
     }
 
-hyphLang = lang { hyphenatorLeftMin = 1
-                , hyphenatorRightMin = 1
+hyphLang = lang { hyphenatorLeftMin = 2
+                , hyphenatorRightMin = 2
                 , hyphenatorExceptions = exceptions
                 }
   where
@@ -44,4 +44,6 @@ hyphLang = lang { hyphenatorLeftMin = 1
     exceptions = foldr addException (hyphenatorExceptions lang)
         [ "si-mo-nas"
         , "lith-u-a-ni-a"
+        , "dig-it-al-ocean" -- O-cean is not hyphenated as it does not satisfy
+                            -- hyphenatorLeftMin
         ]
