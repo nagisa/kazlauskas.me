@@ -111,13 +111,19 @@ img {
     max-width: 100%;
 }
 
+figure img {
+    margin: 0 auto;
+    display: block;
+}
+
 figure {
     margin: .5em 0;
     padding: 0;
 }
 
 figcaption {
-    padding: 0 .5em .25em;
+    padding: .05em .5em .25em;
+    text-align: center;
 }
 
 figure, code, pre {
