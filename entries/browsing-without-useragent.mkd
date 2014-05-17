@@ -51,7 +51,7 @@ There's some that fail more gracefully:
 
 * *Calendar* which redirects to a mobile version;
 * *Groups* serves the old version and lets user to opt into a new one, which
-  works fine if you ignore a scary alert about problem with *.gwt.xml file;
+  works fine if you ignore a scary alert about problem with \*.gwt.xml file;
 * *Picasa Web* just shows a warning that the browser is not supported, but
   otherwise works completely fine;
 * *Contacts* and *Youtube* work without any noticeable differences.
@@ -59,6 +59,8 @@ There's some that fail more gracefully:
 All in all, if you care about privacy and use something else than Google,
 browsing without sending `User-Agent` is feasible. In case you prefer
 Google, then it's not like you care about your privacy after all, do you?
+
+---
 
 A list of websites I found to fail during my short experiment:
 
