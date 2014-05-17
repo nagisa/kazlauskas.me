@@ -65,10 +65,6 @@ body {
     min-width: 300px;
 }
 
-@media screen and (max-width: 580px){
-    body { font-size: 16px; }
-}
-
 main, footer, header {
     max-width: 35em;
     max-width: 65ch;
@@ -125,16 +121,16 @@ h6 {
     font-size: 0.85em;
 }
 
-:link {
+:link, :link>* {
     color: #268bd2;
     text-decoration: none;
 }
 
-:link:hover {
+:link:hover, :link:hover * {
     text-decoration: underline;
 }
 
-:visited {
+:visited, :visited>* {
     color: #2aa198;
 }
 
@@ -169,14 +165,14 @@ figcaption {
     text-align: center;
 }
 
-figure, code, pre {
+figure, pre, blockquote {
     background: #eee8d5;
     max-width: 100%;
 }
 
 pre, code {
     font-family: "Source Code Pro";
-    font-size: 0.833333em;
+    font-size: 0.9em;
 }
 
 pre {
@@ -191,8 +187,6 @@ pre code {
 }
 
 blockquote {
-    background: #eee8d5;
-    color: #93a1a1;
     margin: .25em 0;
     padding: .25em 1em;
 }
@@ -313,17 +307,11 @@ header #title {
     width: 100%;
     position: relative;
     display: block;
-    margin-bottom: -.125em;
+    margin-bottom: -.15em;
     font-style: normal;
     font-size: 5em;
     line-height: 0.8em;
     text-align: center;
-}
-
-@media screen and (max-width: 640px){
-    header #title {
-        font-size: 3em;
-    }
 }
 
 nav {
@@ -337,7 +325,7 @@ nav {
 
 nav ul {
     list-style: none;
-    padding: .25em .5em;
+    padding: 0 .5em;
     margin: 0;
     width: 100%;
     font-size: .85em;
@@ -416,6 +404,10 @@ footer {
     font-weight: 700;
 }
 
+.entries li {
+    padding: .25em 0;
+}
+
 .entries>li:before {
     content: attr(data-moday) "";
     display: inline-block;
@@ -433,8 +425,17 @@ footer {
 nav *::-moz-selection { background: #fdf6e3; color: #586e75; }
 nav *::selection { background: #fdf6e3; color: #586e75; }
 
-@media print {
 
+
+@media screen and (max-width: 580px){
+    body { font-size: 16px; }
+    header #title { font-size: 3em!important; }
+    .entries li { padding: .5em 0; }
+}
+
+
+
+@media print {
     * {
         background: transparent !important;
     }
