@@ -216,6 +216,38 @@ sup, sub {
     line-height: 0.5;
 }
 
+@supports(font-variant-position:sub){
+    sub {
+        vertical-align: baseline;
+        font-size: 100%;
+        line-height: inherit;
+        font-variant-position: sub;
+    }
+}
+@supports(font-variant-position:super){
+    sup {
+        vertical-align: baseline;
+        font-size: 100%;
+        line-height: inherit;
+        font-variant-position: super;
+    }
+}
+
+hr {
+    border: none;
+    margin: .25em 0;
+    text-align: center;
+    height: .5em;
+}
+
+hr:after {
+    content: '· · ·';
+    position: relative;
+    top: -1em;
+    font-size: 2em;
+    line-height: 2.05em;
+}
+
 math {
     font-size: 0.85em;
 }
@@ -234,18 +266,8 @@ math {
     margin-bottom: 0em;
 }
 
-.footnoteRef sup:before,
-.footnoteRef sup::before {
-    content: "[";
-}
-
-.footnoteRef sup:after,
-.footnoteRef sup::after {
-    content: "]"
-}
-
-.footnoteRef:hover sup {
-    text-decoration: underline;
+.footnoteRef sup {
+    padding: 0 0.15em 0 0
 }
 
 #footnotes {
