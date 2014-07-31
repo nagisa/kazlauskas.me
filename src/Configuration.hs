@@ -32,7 +32,7 @@ hakyllConfiguration = defaultConfiguration
     , tmpDirectory = "/tmp/hakyll-kazlauskas.me/tmp/"
     , deployCommand = "rsync --recursive --links --times --omit-dir-times"
                    ++ "  --specials --verbose --compress --checksum --rsh=ssh "
-                   ++ " _site/ 'umibox:~http/main/'"
+                   ++ " _site/ 'ankobox:/var/www/kazlauskas.me/'"
     }
 
 hyphLang = lang { hyphenatorLeftMin = 2
