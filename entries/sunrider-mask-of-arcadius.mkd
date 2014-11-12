@@ -1,0 +1,91 @@
+---
+title: Review of Sunrider: Mask of Arcadius
+published: 2014-11-12T12:00:00Z
+url: http://steamcommunity.com/id/nagisachan/recommended/313730
+---
+
+Sunrider: Mask of Arcadius is an indie visual novel with a catch. Depending on
+the choice you make at the start of the game, you will play anything ranging
+from a good visual novel to a terrible turn-based spaceship battle game.  I had
+pleasure to try both the former (visual novel difficulty setting) and the
+latter (hard difficulty setting). This review is, therefore, split into two
+separate sections covering both variations of the game separately.
+
+First of all, I probably would not even consider playing this game if it was
+not free, unless I got a strong recommendation from a friend, or the game came
+as a part of a bundle; this game being free will only cost you about 1GiB of
+bandwidth to play and you should definitely check it out.
+
+Also, thanks to the technology the game is created with (RenPy) this game is
+supported across three major operating systems. Sunrider deserves a big plus
+just for diversifying Linux gaming ecosystem.
+
+# The great side: visual novel mode
+
+As long as visual novels are concerned there’s three things they have going for
+them: story, art and sound, and the game does fine at most of them.
+
+## Story
+
+This game has a traditional science fiction setting – in a far future the
+humanity has already inhabited most of the galaxy, they have huge spaceships,
+warping devices and laser weapons, and, obviously there’s evil guys who try to
+take over the same galaxy. The writing is very approachable and easy to follow,
+but repetitive, cliché at times. Sunrider being a visual novel, ability to make
+some “important” story-altering decisions as the story progresses would be
+expected; capability to make the decisions is presented, but they appear to
+have no substantial effect to the story at all: throw a girl into a confinement
+chamber and you will still find her in your virtual harem sometime soon anyway.
+
+## Art
+
+The story is wrapped into beautiful japanimation-style art, as common to most
+of the visual novels. It is clear that much attention was dedicated to it and I
+hereby declare art to be the best thing about Sunrider.
+
+## Sound
+
+Unlike the art, the music is in a much worse shape. While the selection of
+tracks is quite likeable, they have a severe deficiency that should not have
+been overlooked for beta – the tracks lack any form of loudness normalisation.
+You will find yourself reaching for volume control to save your ears when a
+louder than usually track starts casually raping them.
+
+On the positive side, the characters are voiced! I’m making the Asaga’s “I’m
+firing my lasers” my alarm *right now*. A big +1 here.
+
+# The bad side: combat mode
+
+Now, if you happen to make a mistake and pick any difficulty harder than the
+“visual novel”, you will find yourself battling 8-bit sprites better part of
+the game instead of indulging in textual pleasures with your virtual harem
+and, occasionally, a dude or two. This does not sound like a problem until you
+realize there’s only a few types of units available to fight against and they
+are all powered by a pretty stupid, suicidal AI (more likely, just a few hard
+coded patterns) making the combat mode a lackluster.
+
+## Sound
+
+The playlist in combat mode seems to differ somewhat from the one used for the
+visual novel mode. Regardless, music here suffers from the same issues
+mentioned in the visual novel part of the review. Moreover, all this is made
+worse by the playback of the tracks: they are stopped after each turn and
+another randomly selected track is started from the beginning when next turn
+comes around. This results in a feeling of discontinuity and, alas, makes it
+hard to appreciate the possibly fine music in its full form.
+
+# Misc
+
+## Bugs
+
+While I realise this is a beta version, it is still quite easy to encounter a
+crasher or two and get thrown back into the main menu losing all your progress
+past the last save. Other bugs I found (where’s the “report a bug” button?)
+qualify for beta-grade and mostly consist of graphical issues such as
+miscalculated text baselines in research fund allocation screen.
+
+---
+
+In conclusion, while I’d like to rate this game as two separate games, Steam
+only has a single binary switch. Therefore, unless I rate visual novel part
+\>8/10, the average score turns out to be less than ½, hence the “thumbs-down”.
