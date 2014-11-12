@@ -43,7 +43,7 @@ main = hakyllWith hakyllConfiguration $ do
         route   $ gsubRoute "pages/" (const "")
         compile $ let es = loadAllSorted ("entries/*" .&&. hasNoVersion) in
             getResourceBody
-            >>= applyAsTemplate (yearGroupedEntryListContext es)
+            >>= applyAsTemplate (entriesByYearContext "years" "year" "entries" entryContext es)
             >>= return . fmap hyphHTML
             >>= loadAndApplyTemplate "templates/base.html" baseContext
             >>= relativizeUrls

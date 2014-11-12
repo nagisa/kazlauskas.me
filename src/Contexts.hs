@@ -4,7 +4,7 @@ module Contexts
     , feedContext
     , baseContext
     , entryListContext
-    , yearGroupedEntryListContext
+    , entriesByYearContext
     ) where
 
 import Control.Applicative ((<|>), (<$>), empty)
@@ -19,12 +19,11 @@ import Text.Pandoc.Options
 
 import Utils (splitFootnotes)
 
-entryContext = mconcat [ splitFootnotesField "footnotes"
-                       , splitBodyField "body"
+entryContext = mconcat [ footnotesField "footnotes"
+                       , bodyField' "body"
                        , dateField "date" "%Y-%m-%d"
                        , dateField "list-date" "%m-%d"
                        , modificationTimeField "updated" "%Y-%m-%d"
-                       , failIfEmpty $ tocField "toc"
                        , defaultContext
                        ]
 
@@ -37,75 +36,46 @@ feedContext = mconcat [ bodyField "description"
 entryListContext = listField "entries" entryContext
 
 
--- | TODO: refactor, perhaps?
---
--- I can't read this code that same evening I wrote it...
-makeItemPairs :: MonadMetadata m => [Item a] -> m [(Item a, Integer)]
-makeItemPairs = mapM $ \i -> do
-    time <- getItemUTC defaultTimeLocale $ itemIdentifier i
-    return (i, (\(a,b,c) -> a) $ toGregorian $ utctDay time)
-groupItems :: [(Item a, Integer)] -> [(String, [Item a])]
-groupItems = map (\g -> (show $ snd $ head g, map fst g))
-             . groupBy (\(i1, y1) (i2, y2) -> y1 == y2)
-oneYearGroup :: Context (String, [Item String])
-oneYearGroup = field "year" (return . fst . itemBody) <> articlesField
+
+entriesByYearContext :: String -> String -> String -> Context String
+                     -> Compiler [Item String] -> Context a
+entriesByYearContext key yK aK aC entries = listField key yearGroup entries'
   where
-    articlesField :: Context (String, [Item String])
-    articlesField = Context $ \k i -> if k == "entries"
-        then return $ ListField entryContext (snd . itemBody $ i)
-        else empty
-yearGroupedEntryListContext :: Compiler [Item String] -> Context a
-yearGroupedEntryListContext items = listField "years" oneYearGroup is
-  where
-    is :: Compiler [Item (String, [Item String])]
-    is = fmap groupItems (items >>= makeItemPairs) >>= mapM makeItem
+    -- Produces Items that contain (Year, [Entries]) tuples.
+    entries' :: Compiler [Item (Integer, [Item String])]
+    entries' = mapM makeItem =<< groupPairs <$> (entries >>= makePairs)
+    -- Extract publish date from each item
+    makePairs :: [Item a] -> Compiler [(Integer, Item a)]
+    makePairs = mapM $ \i -> do
+        (y, m, d) <- fmap (toGregorian . utctDay)
+                          (getItemUTC defaultTimeLocale $ itemIdentifier i)
+        return (y, i)
+    groupPairs :: [(Integer, Item a)] -> [(Integer, [Item a])]
+    groupPairs = map extractPairs . groupBy (\(a, _) (b, _) -> a == b)
+    extractPairs g = (fst $ head g, map snd g)
+    yearGroup = field yK (return . show . fst . itemBody) <>
+        listFieldWith aK aC (return . snd . itemBody)
 
 
-baseContext = defaultField "copy" "CC BY 3.0" <> defaultContext
+baseContext = {- defaultField "copy" "CC BY 3.0" <> defaultContext -}
+    constField "copy" "CC BY 3.0" <> defaultContext
 
 --Custom fields---------------------------------------------------------------
 
--- | Needed for $if$ to evaluate as false when string returned by field is
---   empty
-failIfEmpty :: Context a -> Context a
-failIfEmpty ctx = Context $ \k i ->
-    fmap StringField $ unContext ctx k i >>= go
-  where
-    go (StringField []) = empty
-    go (StringField a) = return a
-    go _ = fail "Only string fields are supported"
+-- tocField :: String -> Context a
+-- tocField name = field name (const $ fmap itemBody comp)
+--   where
+--     comp = fmap (writePandocWith wopt . readPandocWith ropt) getResourceBody
+--     ropt = defaultHakyllReaderOptions
+--     wopt = defaultHakyllWriterOptions { writerTableOfContents = True
+--                                       , writerStandalone = True
+--                                       , writerTemplate = "$toc$"
+--                                       }
 
-tocField :: String -> Context a
-tocField name = field name (const $ fmap itemBody comp)
-  where
-    comp = fmap (writePandocWith wopt . readPandocWith ropt) getResourceBody
-    ropt = defaultHakyllReaderOptions
-    wopt = defaultHakyllWriterOptions { writerTableOfContents = True
-                                      , writerStandalone = True
-                                      , writerTemplate = "$toc$"
-                                      }
+bodyField' :: String -> Context String
+bodyField' key = field key $ \i ->
+    return . fst . splitFootnotes $ itemBody i
 
-defaultField :: String -> String -> Context String
-defaultField key defval = Context $ \k i ->
-    fmap StringField $ if key == k
-        then (unContext metadataField k i >>= getString) <|> return defval
-        else empty
-  where
-    getString (StringField a) = return a
-    getString _ = fail "Only string fields are supported"
-
-splitBodyField, splitFootnotesField :: String -> Context String
-splitBodyField key = Context $ \k i ->
-    fmap StringField $ if key == k
-        then unContext (bodyField k) k i >>= go
-        else empty
-  where
-    go (StringField a) = return . fst . splitFootnotes $ a
-    go _ = fail "Only string fields are supported"
-splitFootnotesField key = Context $ \k i ->
-    fmap StringField $ if key == k
-        then unContext (bodyField k) k i >>= go
-        else empty
-  where
-    go (StringField a) = maybe empty return (snd (splitFootnotes a))
-    go _ = fail "Only string fields are supported"
+footnotesField :: String -> Context String
+footnotesField key = maybeField key $ \i ->
+    return . snd . splitFootnotes $ itemBody i

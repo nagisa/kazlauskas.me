@@ -18,11 +18,11 @@ executable kazlauskas
   ghc-options:         -rtsopts -threaded
   -- other-modules:
   build-depends: base == 4.7.*
-               , hakyll >= 4.5.2.0 && < 4.6
+               , hakyll >= 4.6.0.1 && < 4.7
                , bytestring == 0.10.*
                , hyphenation == 0.4.*
                , hjsmin == 0.1.*
-               , pandoc == 1.12.*
+               , pandoc == 1.13.*
                , pandoc-types == 1.12.*
                , binary == 0.7.*
                , xml == 1.3.*
