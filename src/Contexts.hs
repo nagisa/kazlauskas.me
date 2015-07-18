@@ -9,11 +9,11 @@ module Contexts
 
 import Control.Applicative ((<|>), (<$>), empty)
 import Data.Monoid         (mconcat, (<>))
-import Control.Monad       (forM)
+import Control.Monad       (forM, (<=<))
 import Data.Time.Calendar  (toGregorian)
 import Data.Time.Clock     (utctDay)
 import Data.List           (groupBy)
-import System.Locale       (defaultTimeLocale)
+import Data.Time.Format    (defaultTimeLocale)
 import Hakyll
 import Text.Pandoc.Options
 
@@ -60,6 +60,9 @@ entriesByYearContext key yK aK aC entries = listField key yearGroup entries'
 baseContext = {- defaultField "copy" "CC BY 3.0" <> defaultContext -}
     constField "copy" "CC BY 3.0" <> defaultContext
 
+maybeField :: String -> (Item a -> Compiler (Maybe String)) -> Context a
+maybeField key value = field key $ maybe empty return <=< value
+
 --Custom fields---------------------------------------------------------------
 
 -- tocField :: String -> Context a
@@ -73,9 +76,7 @@ baseContext = {- defaultField "copy" "CC BY 3.0" <> defaultContext -}
 --                                       }
 
 bodyField' :: String -> Context String
-bodyField' key = field key $ \i ->
-    return . fst . splitFootnotes $ itemBody i
+bodyField' key = field key (return . fst . splitFootnotes . itemBody)
 
 footnotesField :: String -> Context String
-footnotesField key = maybeField key $ \i ->
-    return . snd . splitFootnotes $ itemBody i
+footnotesField key = maybeField key (return . snd . splitFootnotes . itemBody)
