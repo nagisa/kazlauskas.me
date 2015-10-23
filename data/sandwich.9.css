@@ -87,6 +87,12 @@ main {
     main {
         border-left: none;
         border-right: none;
+        border-bottom: none;
+    }
+
+    footer {
+        background: #002b36;
+        color: #93a1a1;
     }
 }
 
