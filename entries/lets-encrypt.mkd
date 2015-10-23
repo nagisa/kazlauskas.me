@@ -1,0 +1,61 @@
+---
+title: Let’s Encrypt!
+published: 2015-10-23
+tags: Meta
+---
+
+Almost a year ago, an initiative to deliver a free, secure and easy SSL/TLS to everybody on the
+web was announced.  That’s [Let’s Encrypt][lencrypt]. I’ve been following the project closely ever
+since and, yesterday, have received an invite to test Let’s Encrypt through their closed beta
+program.
+
+Therefore… my personal website is available through [HTTPS] and SPDY[^http2]! This was the first
+time I had anything to do with setting up TLS and I can’t say it was a fun experience. I don’t
+even want to think how bad setting up TLS is through traditional means.
+
+[lencrypt]: https://letsencrypt.org/2014/11/18/announcing-lets-encrypt.html
+[HTTPS]: https://kazlauskas.me/entries/lets-encrypt.html
+[nginx]: https://www.nginx.com/blog/nginx-1-9-5/
+[^http2]: HTTP/2 has been enabled in [nginx 1.9.5][nginx] and I will be enabling that as soon as
+this version of nginx lands into Ubuntu repositories.
+
+# Setup
+
+Once Let’s Encrypt is made available publicly, setting up a server to use TLS should be as easy as
+getting `letsencrypt` tool onto your server and answering two or three questions after launching
+said tool. Ta-dah! TLS is up! However, this being a closed beta and my server being one of those
+low-end kind, I ran into some issues, and some manual fiddling was necessary to set the things up
+properly.
+
+Installation process of the `letsencrypt` tool compiles some nontrivial native libraries. 192MB
+available on my server[^1] were not enough for GCC to deal with the task and I had to compile the
+necessary libraries elsewhere. I also opted to use the manual authenticator, because the nginx
+authenticator has a scary warning about it not working yet. Once the authentication process was
+complete, though, all the necessary certificates were up and ready to go in `/etc/letsencrypt/live`
+before I counted to three. Awesome!
+
+[^1]: Interestingly, I couldn’t create any additional swap space either, because for some dumb
+reason the VPS provider had removed permissions necessary to use the `swapon(2)`. Low-end servers,
+heh…
+
+# Perspective
+
+Provided the `letsencrypt` tool indeed works as advertised (it seems there’s nothing out there
+preventing Let’s Encrypt from achieving that), I see absolutely no more reasons for a website
+without TLS support exist. On the other hand, there are plenty of reasons for non-TLS websites to
+implement TLS: other than the obvious more-security propaganda, the browser vendors are strongly
+encouraging encryption via miscellaneous means too. For example, Firefox Nightlies now represent
+website as insecure when a [password field exists on a HTTP site][passwd] and there’s some browsers
+(Chrome and Firefox, at least), that only support HTTP/2 and SPDY over TLS.
+
+Success of Let’s Encrypt would also strongly influence the market of SSL/TLS certificates –
+competition would be forced to provide at least a single free or very cheap (sub-€/sub-$) option to
+obtaining a certificate signed by them, as well as greatly improving UX of generating and managing
+said certificates. I hear [things aren’t in a good shape][hbleed] currently.
+
+[hbleed]: https://en.wikipedia.org/wiki/StartCom#Response_to_Heartbleed
+[passwd]: https://bugzilla.mozilla.org/show_bug.cgi?id=748193
+[spdy]: https://en.wikipedia.org/wiki/SPDY
+
+All in all, I’m now even more enthusiastic about the future of the web and what Let’s Encrypt
+project is bringing to the table. Thanks for all the hard work!
