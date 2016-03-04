@@ -505,3 +505,17 @@ nav *::selection { background: #fdf6e3; color: #586e75; }
         content: "The content in this document is licensed under";
     }
 }
+
+code .kw { color: #268BD2; }
+code .dt { color: #268BD2; }
+code .dv,
+code .bn,
+code .fl { color: #D33682; }
+code .ch { color: #DC322F; }
+code .st { color: #2AA198; }
+code .co { color: #93A1A1; }
+code .ot { color: #A57800; }
+code .al { color: #CB4B16; font-weight: bold; }
+code .fu { color: #268BD2; }
+code .re { }
+code .er { color: #D30102; font-weight: bold; }

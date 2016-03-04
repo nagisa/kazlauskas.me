@@ -1,0 +1,188 @@
+---
+title: A x64 OS #1: UEFI
+published: 2016-03-03
+tags: OS
+---
+
+As a part of the OS project for the university there has been a request to also write up the
+experiences and challenges encountered. This is the first post of the series on writing a x64
+operating system when booting straight from UEFI. Please keep in mind that these posts are
+written by a not-even-hobbyist and content in these posts should be taken with a grain of salt.
+
+# Kernel and UEFI
+
+I’ve decided to write a kernel targeting x64 as a [UEFI] application. There is a number of appeals
+to write a kernel as UEFI application as opposed to writing a multiboot kernel. Namely:
+
+1. For x86 family of processors, you avoid the work necessary to upgrade from [real mode] to
+   [protected mode] and then from [protected mode] to [long mode] which is more commonly known as
+   64-bit mode. As a UEFI application your kernel gets a fully working x64 environment from a
+   get-go;
+2. Unlike [BIOS], UEFI is a [well documented firmware][uefi-docs]. Most of the interfaces provided
+   by BIOS are de facto and you’re lucky if they work at all, while most of these provided by UEFI
+   are de jure and usually just work;
+3. UEFI is extensible, whereas BIOS is not really;
+4. Finally, UEFI is *the* modern technology which is to stay around, while BIOS is a 40 years old
+   piece of technology on death row. Learning about soon-to-be-dead technology is waste of the
+   effort.
+
+[real mode]: http://wiki.osdev.org/Real_mode
+[protected mode]: http://wiki.osdev.org/Protected_Mode
+[long mode]: http://wiki.osdev.org/Long_Mode
+[BIOS]: https://en.wikipedia.org/wiki/BIOS
+[uefi-docs]: http://www.uefi.org/specsandtesttools
+[UEFI]: https://en.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface
+
+Despite my strong attachment to the Rust community and Rust’s perfect suitability for kernels[^1],
+I’ll be writing the kernel in C. Mostly because it is unlikely people inside the university will be
+familiar with Rust, but also because GNU-EFI is a C library and I cannot be bothered to bind it.
+I’d surely be writing it in Rust were I more serious about the project.
+
+[^1]: As proved by numerous kernels written in Rust out there.
+
+# Toolchain
+
+As it turns out, developing a x64 kernel on a x64 host greatly simplifies setting up the build
+tool-chain. I’ll be using:
+
+* [`clang`][clang] to compile the C code (no cross-compiler is necessary[^3]!);
+* `gnu-efi` library to interact with the UEFI firmware;
+* [`qemu` emulator][qemu] to run my kernel; and
+* [`OVMF`][ovmf] as the UEFI firmware.
+
+[clang]: http://clang.llvm.org/
+[ovmf]: http://www.tianocore.org/ovmf/
+[qemu]: http://wiki.qemu.org/Main_Page
+[^3]: That being said, clang can cross-compile without having to build it from source for that
+purpose in the first place, like it is necessary to do with `gcc`.
+
+# The UEFI “Hello, world!”
+
+The following snippet of code is *all* the code you need to print something on the screen as an
+UEFI application:
+
+```c
+// main.c
+#include <efi.h>
+#include <efilib.h>
+#include <efiprot.h>
+
+EFI_STATUS
+efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
+{
+    InitializeLib(ImageHandle, SystemTable);
+    Print(L"Hello, world from x64!");
+    for(;;) __asm__("hlt");
+}
+```
+
+However, compiling this code correctly is not as trivial. Following three commands are necessary to
+produce a working UEFI application:
+
+```bash
+clang -I/usr/include/efi -I/usr/include/efi/x86_64 -I/usr/include/efi/protocol -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DHAVE_USE_MS_ABI -c -o src/main.o src/main.c
+ld -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L /usr/lib /usr/lib/crt0-efi-x86_64.o src/main.o -o huehuehuehuehue.so -lefi -lgnuefi
+objcopy -j .text -j .sdata -j .data -j .dynamic -j .dynsym  -j .rel -j .rela -j .reloc --target=efi-app-x86_64 huehuehuehuehue.so huehuehuehuehue.efi
+```
+
+The `clang` command is pretty self-explanatory: we tell the compiler where to look for the EFI
+headers and what to compile into a object file. Probably the most non-trivial option here is the
+`-DHAVE_USE_MS_ABI` one – x64 UEFI uses the Windows’ x64 calling convention, and not the regular C
+one, thus all arguments in calls to UEFI functions must be passed in a different way than it is
+usually done in C code. Historically this conversion was done by the `uefi_call_wrapper` wrapper,
+but `clang` supports the calling convention natively, and we tell that fact to the gnu-efi library
+with this option[^2].
+
+[^2]: If gnu-efi was a perfect library, the `-DGNU_EFI_USE_MS_ABI` option should be used instead,
+but the library only version-checks for `gcc` and always reports that clang does not support the
+option.
+
+Then, I manually link my object file and UEFI-specific C runtime up into a shared library using a
+custom linker script provided by the gnu-efi library. The result is an ELF library about 250KB in
+size. However, UEFI expects its applications in [PE] executable format, so we must convert our
+library into the desired format with the `objcopy` command. At this point `huehuehuehuehue.efi`
+file should be produced and majority of UEFI firmwares should be able to run it.
+
+In practice, I’ve automated these steps along with a considerably complex sequence of building
+image files I’ve stolen from OSDEV’s [tutorial on creating images][uefi-images] into a [Makefile].
+Feel free to copy it in parts or in whole for your own use cases.
+
+[PE]: https://en.wikipedia.org/wiki/Portable_Executable
+[uefi-images]: http://wiki.osdev.org/UEFI#Creating_disk_images
+[Makefile]: https://gitlab.com/nagisa/huehuehuehuehue/blob/ddcb1f60333886898edc7d464d427f7f618cd607/Makefile
+
+# UEFI boot and runtime services
+
+A UEFI application has 2 distinct stages over its lifetime: a stage where so-called boot services
+are available and stage after these boot services are disabled. An UEFI application will be
+launched by the UEFI firmware and both boot and runtime services will be available to the
+application. Most notably, boot services provide APIs for loading other UEFI applications
+(e.g. implementing bootloaders), handling (allocating and deallocating) memory and using protocols
+(speaking to other active UEFI applications).
+
+Once the kernel is done with using boot services it calls `ExitBootServices` which is a method
+provided by… a boot service. Past that point only runtime services are available and you cannot
+ever return to a state where boot services are available except by resetting the system. Managing
+UEFI variables, system clock and resetting the system is pretty much the only things you can do
+with the runtime services.
+
+For my kernel, I will use the graphics output protocol to set up the video frame buffer, exit the
+boot services and, finally, shut down the machine before reaching the `hlt` instruction. Following
+piece of code implements the described sequence. I left some code out, you can see it in full [at
+Gitlab]. For example, [the definition of `init_graphics`].
+
+```c
+EFI_STATUS
+efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
+{
+    EFI_STATUS status;
+    InitializeLib(ImageHandle, SystemTable);
+
+    // Initialize graphics
+    EFI_GRAPHICS_OUTPUT_PROTOCOL *graphics;
+    EFI_GUID graphics_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
+    status = SystemTable->BootServices->LocateProtocol(&graphics_proto, NULL, (void **)&graphics);
+    if(status != EFI_SUCCESS) return status;
+    status = init_graphics(graphics);
+    if(status != EFI_SUCCESS) return status;
+
+    // Figure out the memory map (should be identity mapping)
+    boot_state.memory_map = LibMemoryMap(&boot_state.memory_map_size,
+                                         &boot_state.map_key,
+                                         &boot_state.descriptor_size,
+                                         &boot_state.descriptor_version);
+    // Exit the boot services...
+    SystemTable->BootServices->ExitBootServices(ImageHandle, boot_state.map_key);
+    // and set up the memory map we just found.
+    SystemTable->RuntimeServices->SetVirtualAddressMap(boot_state.memory_map_size,
+                                                       boot_state.descriptor_size,
+                                                       boot_state.descriptor_version,
+                                                       boot_state.memory_map);
+    // Once we’re done we power off the machine.
+    SystemTable->RuntimeServices->ResetSystem(EfiResetShutdown, EFI_SUCCESS, 0, NULL);
+    for(;;) __asm__("hlt");
+}
+```
+
+[at Gitlab]: https://gitlab.com/nagisa/huehuehuehuehue/tree/061416ec82ccb7c8590ae9086fb943af69fad2e0
+[the definition of `init_graphics`]:
+https://gitlab.com/nagisa/huehuehuehuehue/blob/061416ec82ccb7c8590ae9086fb943af69fad2e0/src/graphics.c#L13
+
+Note, that some protocols can either be attached to your own `EFI_HANDLE` or some other
+`EFI_HANDLE` (i.e. protocol is provided by another UEFI application). Graphics output protocol I’m
+using here is an example of a protocol attached to another `EFI_HANDLE`, therefore we use
+`LocateProtocol` boot service to find it. In the off-chance the protocol is attached to
+application’s own `EFI_HANDLE`, the `HandleProtocol` method should be used instead:
+
+```c
+EFI_LOADED_IMAGE *loaded_image = NULL;
+EFI_GUID loaded_image_protocol = LOADED_IMAGE_PROTOCOL;
+EFI_STATUS status = SystemTable->BootServices->HandleProtocol(ImageHandle, &loaded_image_protocol, &loaded_image);
+```
+
+# Next steps
+
+At this point I have a bare bones frame for my awesome kernel called “huehuehuehuehue”. From this
+point onwards the development of the kernel should not differ much from the traditional development
+of any other x64 kernel. Next, I’ll be implementing software and hardware interrupts; expect a post
+on that.

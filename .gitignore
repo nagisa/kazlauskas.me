@@ -4,3 +4,7 @@ _site
 dist
 cabal*
 kazlauskas
+_cache
+build
+package.conf.inplace
+setup-config
