@@ -1,0 +1,113 @@
+---
+title: I reverse engineered a motherboard
+published: 2017-04-15
+tags: Programming, OS
+---
+
+Recently, feeling restricted by the hardware on my laptop, I built myself a desktop computer based
+on a recently released Ryzen CPUs by AMD. These CPUs are built on a new architecture, plug into a
+new sort of socket and have a whole new ecosystem around them.
+
+Motherboard was one of the most difficult things to decide on. I wanted to go for a small system,
+but one, that’s large enough for future expansion into water cooling. This meant going for a smaller
+form factor motherboard – µATX of, even better, mITX. Alas, nobody had released any motherboards of
+mITX form factor by the time, so µATX was the only choice.
+
+After some research I decided on the MSI B350M MORTAR ARCTIC motherboard, because it had a pretty
+nice feature set (S/PDIF, sensible number of USB ports, RGB header) and matched the colour scheme
+of my white build as well!
+
+Trouble didn’t take long at all to rear its head. Turns out the motherboard uses a proprietary
+Super I/O chip: Nuvoton NCT6795D! This chip is known to be responsible for little, but important,
+details such as monitoring temperatures around the board, controlling the speed of fans and so on.
+This chip is apparently made [exclusively for
+MSI](https://github.com/groeck/nct6775/issues/49#issuecomment-289452990) and MSI refuses to provide
+the specsheets for the chip:
+
+> me: Additionally, please release/give me the specsheet for NCT6795D chip.
+
+> MSI: We are sorry that we cannot supply the details spec of it, Or you can contact the chipset
+>      vendor directly.Thanks!
+
+> me: What about the RGB header? Nuvoton is on record saying that we should request the specsheets
+>     from you as it is a chip designed specifically for MSI. Can you please communicate with
+>     Nuvoton and make sure the sheets are released?
+
+> MSI: We are sorry that we cannot supply the details spec of it. Sorry for any inconvenience
+>      caused you.
+
+> me: pretty please?
+
+> MSI: We are sorry that the detailed datasheet is related with confidential of MSI and the
+>      Manufacturer. It cannot be made public due to confidentiality agreement. Sorry for the
+>      inconvenience caused you.
+
+That’s a shame, but this exchange was by no means a worthless one. Even if indirectly, it points
+out where the RGB header is controlled. I decided to follow this lead.
+
+Being a student, I get to claim one of those free everything Microsoft licenses free of charge.
+Having installed the Windows 10, MSI’s Gaming App (the program which allows control of the RGB
+header) and a copy of [RWEverything](http://rweverything.com/)[^1] I start digging around. Shortly
+after I’m greeted by great news: changing the colour in the Gaming App would also make the bottom
+two rows change significantly as well!
+
+![RWEverything reacting to colour changes with the Gaming App][img]
+
+[img]: /images/i-reverse-engineered-a-motherboard/superio.png
+
+The next day, as I was collecting the information about what each bit in the sI/O registers does, I
+noticed the registers not actually changing the colour unless the Gaming App was turned on first.
+Worried about hitting a dead end, I started looking into disassemblers and debuggers on Windows.
+The obvious first option was MSVC. Disappointingly, I couldn’t make to work in the end – its
+debugger refused to show me the disassembly no matter what. I ended up settling on
+[x64dbg](http://x64dbg.com/), a very awesome visual debugger/disassembler.
+
+Picking at the disassembly of `MSI_LED.exe` eventually led me to two interesting functions:
+`IoPortWriteByte` and `DeviceIoControl`, which the former function calls.  Nothing, that would look
+like actual writing to an I/O Port, though. I seldom do anything with Windows and this is my first
+time looking into Windows’ internals too. That’s the reason why it took me till Saturday to realise
+that the actual communication happens inside a driver of some sort, not the executable I was
+looking at.
+
+Could I debug a driver in a live system? Turns out it is possible, but not without a second
+computer with a serial header. Not only I haven’t another computer, I do not have a cable that
+could do serial either. In the end, I ended up disassembling the driver itself, learning the
+Windows driver basics as I went. Knowing nothing about Windows drivers meant stumbling around and
+figuring what *all* the assembly did. Luckily, the driver was only 4KiB in size, so by the evening
+I had a nice trace of the `in` and `out` instructions that the Gaming App indirectly invokes:
+
+```
+PORT 4E DATA 87
+PORT 4E DATA 87
+PORT 4E DATA 07
+PORT 4F DATA 12
+PORT 4E DATA F0
+PORT 4F DATA 00
+PORT 4E DATA 87
+PORT 4E DATA 87
+PORT 4E DATA 07
+PORT 4F DATA 12
+PORT 4E DATA F1
+PORT 4F DATA 00
+...
+```
+
+Boot back into Linux-land, `open("/dev/port", "wb")`, repeat all the same calls… to my delight
+– the colour changes! Hooray!
+
+There are some outstanding questions, such as: “Why didn’t, then, writing straight sI/O register
+via RWEverything work?” I don’t know. It might be the unusual sequence of `87 87 07 12` that
+appears before every write in the dumps[^2]. I’m glad it all works, and am not going to risk
+bricking my board a second time.
+
+[^2]: Diverging from the dump somewhat, doing just `87 07 12` works just fine as well. A detail,
+    but an interesting one nevertheless.
+
+All this is implemented in a utility tool called [msi-rgb](https://github.com/nagisa/msi-rgb). In
+the end this utility tool ended up being much more flexible compared to the MSI’s own app. While
+msi-rgb does not monitor the CPU temperature or react to the music, it allows for much more
+customisation than the 7 static colours offered by the Windows app. I haven’t yet investigated
+making the utility more portable, but it shouldn’t be too hard seeing the only really unportable
+part in it is the use of `/dev/port` device.
+
+[^1]: Now this is an awesome utility. If not for it, I would probably have given up.

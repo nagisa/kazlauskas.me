@@ -1,5 +1,5 @@
 ---
-title: Design for mobile: Browser viewport
+title: "Design for mobile: Browser viewport"
 published: 2013-11-03 15:00:00+0200
 tags: Design, Web
 ...

@@ -17,15 +17,15 @@ executable kazlauskas
   main-is:             Kazlauskas.hs
   ghc-options:         -rtsopts -threaded
   -- other-modules:
-  build-depends: base == 4.8.*
-               , hakyll >= 4.7.0.0 && < 4.8
+  build-depends: base == 4.9.*
+               , hakyll >= 4.9.0.0 && < 4.10
                , bytestring == 0.10.*
-               , hyphenation == 0.5.*
-               , hjsmin == 0.1.*
-               , pandoc == 1.15.*
-               , pandoc-types == 1.12.*
-               , binary == 0.7.*
+               , hyphenation == 0.6.*
+               , hjsmin == 0.2.*
+               , pandoc >= 1.14 && < 1.20
+               , pandoc-types == 1.17.*
+               , binary == 0.8.*
                , xml == 1.3.*
                , containers == 0.5.*
-               , time == 1.5.*
-               , tagsoup == 0.13.*
+               , time >= 1.4 && < 1.8
+               , tagsoup >= 0.13.1 && < 0.15
