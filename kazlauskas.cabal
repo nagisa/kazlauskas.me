@@ -20,7 +20,7 @@ executable kazlauskas
   build-depends: base == 4.9.*
                , hakyll >= 4.9.0.0 && < 4.10
                , bytestring == 0.10.*
-               , hyphenation == 0.6.*
+               , hyphenation == 0.7.*
                , hjsmin == 0.2.*
                , pandoc >= 1.14 && < 1.20
                , pandoc-types == 1.17.*
