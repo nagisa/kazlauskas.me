@@ -1,0 +1,94 @@
+---
+title: How to write build.rs scripts properly
+published: 2017-05-14
+tags: Rust
+---
+
+In Rust ecosystem it is fairly popular for a FFI binding library declare the “native” libraries it
+links to in a `build.rs` script. If the binding is intended for a cross-platform use, chances are
+that the `build.rs` script is written incorrectly.
+
+Assume a somewhat common case where linkage decisions are platform dependent. One then might write
+the `build.rs` script as such:
+
+```rust
+#[cfg(windows)]
+fn main() {
+    println!("cargo:rustc-link-lib=something");
+    println!("cargo:rustc-link-lib=someotherthing");
+    // ...
+}
+
+#[cfg(not(windows))]
+fn main() {
+    println!("cargo:rustc-link-lib=somelib");
+    println!("cargo:rustc-link-lib=someotherlib");
+    // ...
+}
+```
+
+This will work great if the `target` = `host`. However, it is not a case in a cross-compilation
+scenario, when `target` is not the same as the `host`.
+
+Consider `target = windows` and `host = linux` for example. This is what would happen, when one
+is cross-compiling using the mingw toolchain from a linux system. In this scenario, the `build.rs`
+script runs on the machine which does the compilation, so it is compiled for linux and the
+configuration variables assume values typical of a linux target. This means that the `build.rs`
+script in question will output the libraries for `#[cfg(not(windows))]`, rather than
+`#[cfg(windows)]` case… but we’re targeting Windows and want the Windows libraries! This obviously
+can’t work! What a mess!
+
+That’s exactly the bug I had to solve in
+[libloading](https://github.com/nagisa/rust_libloading)[^1]. The `libloading` library exposes a
+cross-platform API for dynamically loading (and unloading) libraries. Relevant system APIs, on
+UNIX-like systems come in a form of `dlopen`, `dlclose`, `dlsym`, et cetera. These, as it turns
+out, are provided by different libraries on different systems. On Linux-likes it comes from
+libdl, FreeBSD et al provide it in libc, whereas variants of OpenBSD will make these symbols
+available in any dynamic executable, no linking involved. To enable such conditional reasoning in
+`build.rs` scripts I had resorted to writing
+[target_build_utils](https://github.com/nagisa/target_build_utils.rs), which would go as far as
+to replicate the rustc behaviour and even parse the custom target specifications.
+
+Sadly, target_build_utils is not the nicest library in the world as it pulls along quite a number
+of heavy dependencies. To everybody’s rejoice, since the last time I worked on this… sometime
+between Rust version 1.13 and 1.14… Cargo began exporting some undocumented, but very useful,
+environment variables during the execution of the `build.rs` scripts:
+
+* `CARGO_CFG_TARGET_OS`;
+* `CARGO_CFG_TARGET_ENV`;
+* `CARGO_CFG_TARGET_FEATURE`;
+* `CARGO_CFG_TARGET_ENDIAN`;
+* `CARGO_CFG_TARGET_VENDOR`;
+* `CARGO_CFG_TARGET_FAMILY`;
+* `CARGO_CFG_DEBUG_ASSERTIONS`;
+* `CARGO_CFG_TARGET_HAS_ATOMIC`;
+* `CARGO_CFG_TARGET_POINTER_WIDTH`;
+* `CARGO_CFG_TARGET_THREAD_LOCAL`;
+* `CARGO_CFG_UNIX`;
+* `CARGO_CFG_TARGET_ARCH`;
+
+These variables correspond to equivalent `cfg(...)` attributes in the source code and are otherwise
+exactly what it says on the label. The difference from the regular `cfg(...)` attributes lies in
+these variables assuming values for the target system, rather than the host system. This makes it
+possible to correctly handle the cross-compilation scenario without resorting to libraries like
+target_build_utils. By using these variables, it is possible to write a `build.rs` that’s correct
+in the cross-compilation scenario described above. Following code snippet is how a correct
+`build.rs` script might end up looking like:
+
+```rust
+fn main() {
+    let target_os = env::var("CARGO_CFG_TARGET_OS");
+    match target_os.as_ref().map(|x| &**x) {
+        Ok("linux") | Ok("android") => println!("cargo:rustc-link-lib=dl"),
+        Ok("freebsd") | Ok("dragonfly") => println!("cargo:rustc-link-lib=c"),
+        Ok("openbsd") | Ok("bitrig") | Ok("netbsd") | Ok("macos") | Ok("ios") => {}
+        Ok("windows") => {}
+        tos => panic!("unknown target os {:?}!", tos)
+    }
+}
+```
+
+Glad to see the tooling improving at such a breakneck pace. Cheers for ever improving
+cross-compilation story in Rust!
+
+[^1]: A long time ago. Commit logs suggest me working on it in July, 2016.
