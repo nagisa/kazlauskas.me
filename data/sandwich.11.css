@@ -67,7 +67,7 @@ body {
 
 main, footer, header {
     max-width: 35em;
-    max-width: 65ch;
+    max-width: 70ch;
     margin: 0 auto;
 }
 
@@ -166,14 +166,33 @@ figure {
     padding: 0;
 }
 
-figcaption {
+figcaption, caption {
     padding: .05em .5em .25em;
     text-align: center;
 }
 
-figure, pre, blockquote {
+table>caption {
+    padding: .25em .5em .05em;
+}
+
+figure, table, pre, blockquote, caption {
     background: #eee8d5;
     max-width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: .5em 0;
+    table-layout: fixed;
+}
+
+th {
+  border-bottom: 1px solid #073642;
+}
+
+td, th {
+  padding: 0 .75ex;
 }
 
 pre, code {
@@ -335,7 +354,7 @@ header #title {
     width: 100%;
     position: relative;
     display: block;
-    margin-bottom: -.15em;
+    margin-bottom: -.075em;
     font-style: normal;
     font-size: 5em;
     line-height: 0.8em;
