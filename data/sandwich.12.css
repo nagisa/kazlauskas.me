@@ -152,13 +152,18 @@ strong, b {
     color: #586e75;
 }
 
-img {
+p>img {
+    display: block;
     max-width: 100%;
+    max-width: calc(100% + 1em);
+    margin: .5em 0;
+    margin: .5em calc(0em - .5em);
 }
 
-figure img {
+figure>img {
     margin: 0 auto;
     display: block;
+    max-width: 100%;
 }
 
 figure {

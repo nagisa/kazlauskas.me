@@ -11,20 +11,20 @@ written by a not-even-hobbyist and content in these posts should be taken with a
 
 # Kernel and UEFI
 
-I’ve decided to write a kernel targeting x64 as a [UEFI] application. There is a number of appeals
-to write a kernel as UEFI application as opposed to writing a multiboot kernel. Namely:
+I’ve decided to write a kernel targeting x64 as an [UEFI] application. There are a number of
+reasons to write a kernel as an UEFI application as opposed to writing a multiboot kernel. Namely:
 
 1. For x86 family of processors, you avoid the work necessary to upgrade from [real mode] to
    [protected mode] and then from [protected mode] to [long mode] which is more commonly known as
-   64-bit mode. As a UEFI application your kernel gets a fully working x64 environment from a
+   a 64-bit mode. As an UEFI application your kernel gets a fully working x64 environment from the
    get-go;
 2. Unlike [BIOS], UEFI is a [well documented firmware][uefi-docs]. Most of the interfaces provided
    by BIOS are de facto and you’re lucky if they work at all, while most of these provided by UEFI
    are de jure and usually just work;
 3. UEFI is extensible, whereas BIOS is not really;
-4. Finally, UEFI is *the* modern technology which is to stay around, while BIOS is a 40 years old
-   piece of technology on death row. Learning about soon-to-be-dead technology is waste of the
-   effort.
+4. Finally, UEFI is a modern technology which is likely to stay around, while BIOS is a 40 years
+   old piece of technology on the death row. Learning about soon-to-be-dead technology is a waste
+   of the effort.
 
 [real mode]: http://wiki.osdev.org/Real_mode
 [protected mode]: http://wiki.osdev.org/Protected_Mode
@@ -34,16 +34,16 @@ to write a kernel as UEFI application as opposed to writing a multiboot kernel. 
 [UEFI]: https://en.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface
 
 Despite my strong attachment to the Rust community and Rust’s perfect suitability for kernels[^1],
-I’ll be writing the kernel in C. Mostly because it is unlikely people inside the university will be
-familiar with Rust, but also because GNU-EFI is a C library and I cannot be bothered to bind it.
-I’d surely be writing it in Rust were I more serious about the project.
+I’ll be writing the kernel in C. Mostly because of how unlikely it is for people at the university
+to be familiar with Rust. Also because GNU-EFI is a C library and I cannot be bothered to bind it.
+I’d surely be writing it in Rust was I more serious about the project.
 
 [^1]: As proved by numerous kernels written in Rust out there.
 
 # Toolchain
 
 As it turns out, developing a x64 kernel on a x64 host greatly simplifies setting up the build
-tool-chain. I’ll be using:
+toolchain. I’ll be using:
 
 * [`clang`][clang] to compile the C code (no cross-compiler is necessary[^3]!);
 * `gnu-efi` library to interact with the UEFI firmware;
@@ -58,8 +58,8 @@ purpose in the first place, like it is necessary to do with `gcc`.
 
 # The UEFI “Hello, world!”
 
-The following snippet of code is *all* the code you need to print something on the screen as an
-UEFI application:
+The following snippet of code is *all* you need to print something on the screen as an UEFI
+application:
 
 ```c
 // main.c
@@ -86,12 +86,12 @@ objcopy -j .text -j .sdata -j .data -j .dynamic -j .dynsym  -j .rel -j .rela -j 
 ```
 
 The `clang` command is pretty self-explanatory: we tell the compiler where to look for the EFI
-headers and what to compile into a object file. Probably the most non-trivial option here is the
-`-DHAVE_USE_MS_ABI` one – x64 UEFI uses the Windows’ x64 calling convention, and not the regular C
+headers and what to compile into an object file. Probably the most non-trivial option here is the
+`-DHAVE_USE_MS_ABI` – x64 UEFI uses the Windows’ x64 calling convention, and not the regular C
 one, thus all arguments in calls to UEFI functions must be passed in a different way than it is
 usually done in C code. Historically this conversion was done by the `uefi_call_wrapper` wrapper,
-but `clang` supports the calling convention natively, and we tell that fact to the gnu-efi library
-with this option[^2].
+but `clang` supports the calling convention natively, and we tell that to the gnu-efi library with
+this option[^2].
 
 [^2]: If gnu-efi was a perfect library, the `-DGNU_EFI_USE_MS_ABI` option should be used instead,
 but the library only version-checks for `gcc` and always reports that clang does not support the
@@ -113,11 +113,11 @@ Feel free to copy it in parts or in whole for your own use cases.
 
 # UEFI boot and runtime services
 
-A UEFI application has 2 distinct stages over its lifetime: a stage where so-called boot services
+An UEFI application has 2 distinct stages over its lifetime: a stage where so-called boot services
 are available and stage after these boot services are disabled. An UEFI application will be
 launched by the UEFI firmware and both boot and runtime services will be available to the
 application. Most notably, boot services provide APIs for loading other UEFI applications
-(e.g. implementing bootloaders), handling (allocating and deallocating) memory and using protocols
+(e.g. to implement bootloaders), handling (allocating and deallocating) memory and using protocols
 (speaking to other active UEFI applications).
 
 Once the kernel is done with using boot services it calls `ExitBootServices` which is a method
@@ -171,7 +171,7 @@ https://gitlab.com/nagisa/huehuehuehuehue/blob/061416ec82ccb7c8590ae9086fb943af6
 Note, that some protocols can either be attached to your own `EFI_HANDLE` or some other
 `EFI_HANDLE` (i.e. protocol is provided by another UEFI application). Graphics output protocol I’m
 using here is an example of a protocol attached to another `EFI_HANDLE`, therefore we use
-`LocateProtocol` boot service to find it. In the off-chance the protocol is attached to
+`LocateProtocol` boot service to find it. In the off-chance a protocol is attached to the
 application’s own `EFI_HANDLE`, the `HandleProtocol` method should be used instead:
 
 ```c
