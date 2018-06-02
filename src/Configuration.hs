@@ -21,8 +21,7 @@ feedConfiguration = FeedConfiguration
 
 siteWriterOptions :: WriterOptions
 siteWriterOptions = defaultHakyllWriterOptions
-    { writerHTMLMathMethod = MathML Nothing
-    , writerHtml5 = True
+    { writerHTMLMathMethod = MathML
     , writerSectionDivs = True
     }
 
