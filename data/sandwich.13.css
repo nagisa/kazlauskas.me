@@ -4,7 +4,7 @@
     font-weight:400;
     src:local('Alegreya'),
         local('Alegreya-Regular'),
-    url(//brick.freetls.ssl.fastly.net/fonts/alegreya/400.woff) format('woff');
+    url(//brick.freetls.fastly.net/fonts/alegreya/400.woff) format('woff');
 }
 
 @font-face{
@@ -13,7 +13,7 @@
     font-weight:400;
     src:local('Alegreya Italic'),
         local('Alegreya-Italic'),
-        url(//brick.freetls.ssl.fastly.net/fonts/alegreya/400i.woff) format('woff');
+        url(//brick.freetls.fastly.net/fonts/alegreya/400i.woff) format('woff');
 }
 
 @font-face{font-family:'Alegreya';
@@ -21,7 +21,7 @@
     font-weight:700;
     src:local('Alegreya Bold'),
         local('Alegreya-Bold'),
-        url(//brick.freetls.ssl.fastly.net/fonts/alegreya/700.woff) format('woff');
+        url(//brick.freetls.fastly.net/fonts/alegreya/700.woff) format('woff');
 }
 
 @font-face{font-family:'Alegreya';
@@ -29,7 +29,7 @@
     font-weight:700;
     src:local('Alegreya Bold Italic'),
         local('Alegreya-BoldItalic'),
-        url(//brick.freetls.ssl.fastly.net/fonts/alegreya/700i.woff) format('woff');
+        url(//brick.freetls.fastly.net/fonts/alegreya/700i.woff) format('woff');
 }
 
 @font-face{font-family:'Source Code Pro';
@@ -38,7 +38,7 @@
     src:local('Source Code Pro Regular'),
         local('SourceCodePro-Regular'),
         local('Source Code Pro'),
-        url(//brick.freetls.ssl.fastly.net/fonts/sourcecodepro/400.woff) format('woff');
+        url(//brick.freetls.fastly.net/fonts/sourcecodepro/400.woff) format('woff');
 }
 
 * {
