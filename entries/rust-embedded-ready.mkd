@@ -1,0 +1,174 @@
+---
+title: "Transcript: Should you Rust in embedded yet?"
+published: 2018-02-22
+tags: Rust, Embedded
+---
+
+This is a transcript of a talk I gave at the Vilnius Rust meetup. You can download slides
+[here][slides] or simply follow along.
+
+Note that content on this page will get out-of-date fairly quickly (within months), so check the
+date above.
+
+[slides]: /images/rust-embedded-ready/presentation.pdf
+
+![](/images/rust-embedded-ready/p1.svg)
+
+It would not be an exaggeration to say that embedded is omnipresent. You can find embedded firmware
+everywhere from fridges, microwaves and personal computers to safety-critical applications in
+automotive, medical fields, etc.
+
+Most of this software is still written in C or C++, and neither of these, given their non-ideal
+track record in relation to security critical software, are the most confidence inspiring choice
+for safety-critical systems.
+
+![](/images/rust-embedded-ready/p2.svg)
+
+In my experience, bugs occurring in embedded firmware tend to be fairly similar to those commonly
+found in the user-space software. That is:
+
+* Memory bugs: double frees, leaks, invalid frees, use after free, out of bound accesses, etc;
+* Data races: embedded tends to not have multi-core, but has peripherals that may access memory
+  concurrently. A common source of data race bugs. Another common mistake is non-atomic
+  modification of global data; and
+* Logic bugs in general.
+
+Unlike in the user-space, conveniences such as MMU or address sanitizer are not used, less capable
+or not present at all. This means that more of the bugs go under the radar and, when discovered,
+more difficult to debug.
+
+Rust managed to reduce presence of these bugs in the user-space software and is well positioned to
+work its magic on embedded firmware as well.
+
+![](/images/rust-embedded-ready/p3.svg)
+
+Before rewriting all your embedded projects in Rust, it is prudent to consider Rust’s support for
+your hardware. Among the architectures natively supported by the Rust compiler ARM and MSP430 are
+the ones interesting for embedded use cases.
+
+If your project uses an ARM-based chip, you’re in luck – in terms of quality, the support for this
+architecture is comparable to, say, x86. Support for MSP430 chips is built into the compiler as
+well, however its backend less battle-tested and the library components are more prone to issues
+due to the esoteric nature of a 16-bit architecture.
+
+Often, due to their cheaper price or, perhaps, design constraints, architectures such as AVR are
+employed. `rustc` does not ship native support for any of these architectures, but there might
+exist a fork that implements support for these architectures. Forked `rustc` not having “official”
+support and potentially diverging out-of-date from the original project are the usual caveats,
+though.
+
+Then, there are the architectures for which no LLVM backend exists. Those, by extension, are
+unlikely to be supported by `rust` anytime soon. For these, you’re stuck with (often, manufacturer
+provided) C toolchain.
+
+[mrustc](https://github.com/thepowersgang/mrustc) makes it possible to use Rust with any
+architecture for which a C compiler exists, but is still an extremely experimental technology.
+
+![](/images/rust-embedded-ready/p4.svg)
+
+To meaningfully program a microcontroller, it is important to have access to the peripherals and
+functions it advertises. Manufacturers provide microcontroller-specific libraries usable within
+C/C++. These libraries expose the registers and convenience functions to control the peripherals
+and sometimes even example driver implementations.
+
+These aren’t directly usable within Rust, but not all is lost! Manufacturers also tend to provide
+description of the registers in some machine-readable format. One such format, SVD, is pretty
+popular and there exists the `svd2rust` tool to generate nice Rust wrappers to access these
+registers.
+
+![](/images/rust-embedded-ready/p5.svg)
+
+Registers, however are not the end of the story… As I mentioned earlier, manufacturer libraries
+also provide convenience library functions as well as example driver implementations. This is where
+`embedded-hal` comes in. `embedded-hal` provides a number of traits which expose common concepts in
+embedded programming in a *portable* and *safe* manner.
+
+Safety aspect is fairly self-explanatory and the portability aspect is where `embedded-hal` shines
+the most, I think. Consider for example a driver written against the non-portable
+manufacturer-provided libraries. If you wanted to use the same driver with some other MCU, there
+would be a non-trivial amount of porting effort necessary. With `embedded-hal`, all the
+device-specific parts are properly abstracted, which makes these drivers portable and useful when
+put on crates.io.
+
+There, of course, is a trade-off of having to implement these traits for each microcontroller
+family, possibly by yourself, if no crate implementing them exists on crates.io yet.
+
+![](/images/rust-embedded-ready/p6.svg)
+
+Currently crates.io has approximately 40 microcontroller support crates. Majority of these are just
+generated register bindings, however there are also quite a few crates providing higher level
+abstractions and implementations of the `embedded-hal` traits.
+
+As a part of firmware development, it is very likely you’ll need a real-time operating system as
+well as libraries for commonly encountered tasks such as communicating over TCP/IP. Rust’s quickly
+evolving ecosystem already has libraries for many of these tasks. These libraries are well
+documented and implemented, but are less widespread and may be harder to get help with.
+
+Even then, if the pure Rust libraries do not serve your needs well enough, Rust’s great FFI support
+provides all means necessary to include the popular C libraries into your project.
+
+![](/images/rust-embedded-ready/p7.svg)
+
+All that being said, embedded firmware cannot yet be meaningfully developed in stable Rust. Many
+tasks still require unstable features to be achieved. Some of them, such as ability to define the
+`panic_fmt` language item, are expected to become stable very soon, while some other features, such
+as inline assembly still need a fair amount of design work before their stabilisation will be
+considered.
+
+![](/images/rust-embedded-ready/p8.svg)
+
+Stable features, however, aren’t the whole story. Embedded development also relies on a number of
+“features” that aren’t explicitly tracked for their stability in Rust. Minor changes to, say,
+linking or code generation, while compatible in the user-space world, may often cause issues for
+embedded firmware.
+
+Consider an incident that happened just this week: a recent change to the compiler upgraded LLVM to
+a new version. This upgrade changed the optimisation pipeline enough, that a certain firmware
+became just 500 bytes larger than it was before. With this increase, the compiled code would no
+longer fit into the flash storage of the microcontroller and would fail to link! Something that
+wouldn’t usually be considered a breaking change ended up breaking actual code!
+
+![](/images/rust-embedded-ready/p9.svg)
+
+So, in summary, can you use Rust to develop your embedded firmware? Absolutely. Absolutely, as long
+as you are willing to deal with slightly less mature ecosystem, pay the upfront cost for future
+benefits and fix the occasional breakage caused by compiler changes. In return Rust will give you
+its superior static analyses and a more-correct end result.
+
+# Q/A
+
+I was asked a few questions during the Q/A session after the talk. Sadly, I do not remember their
+exact phrasing anymore, so they are all paraphrased.
+
+## Obtaining `libcore` for embedded targets
+
+`rustc` does not ship with precompiled `libcore` for embedded targets, however with the `xargo`
+tool using `libcore` and other libraries is as easy as specifying a dependency on a crates.io
+crate.
+
+## Using standard collections such as `HashMap` in embedded development
+
+The standard libraries are split into more than just `libcore` and `libstd`. Quite a few
+collections live in `liballoc` (NB: during actual Q/A I called this `libcollections`; what a
+blunder). `HashMap` in particular depends on random number generation to work, so it is currently
+living in `libstd` and is not directly usable within embedded context.
+
+## `libstd` in embedded and wasm
+
+Embedded and wasm are indeed very similar in their constraints in that they both are very
+low-level environments. Fairly similar problems seem to be applicable to both (e.g. code size
+awareness, no `libstd`).
+
+You can use `libstd` in wasm, but we ended up implementing most of the functionality (such as
+filesystems) with `unimplemented!()`, so you have to be careful about what you end up using.
+
+One of the ideas running around is to “unify” the `libcore`, `libstd` and friends and instead to
+rely on features and `cfg` to expose what is usable for a particular target. This would also enable
+using `libstd` within embedded.
+
+## What microcontroller to use?
+
+I recommend the Blue Pill (STM32F103C8). It runs at 72MHz, has 128kB of flash. One can be gotten
+from the Chinese (Aliexpress) for a small price of €1.50.
+
+Plus, the ecosystem support for it is *great*.
