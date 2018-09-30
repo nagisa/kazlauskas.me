@@ -1,0 +1,198 @@
+---
+title: What makes <code>[T]::align_to</code> work
+published: 2018-09-30
+tags: Rust, Programming
+---
+
+A few days ago, [a pull request] to stabilise one of my favourite library functions,
+`[T]::align_to` has landed. Since the function, to the best of my knowledge, has no counterparts in
+other languages[^1], I really wanted to detail what it took to make this function possible.
+`[T]::align_to` describes itself as such:
+
+> `pub unsafe fn align_to<U>(&self) -> (&[T], &[U], &[T])`
+>
+> Transmute the slice to a slice of another type, ensuring alignment of the types is maintained.
+
+This description is fairly terse and cryptic, but is also the best I could come up for what the
+function does. The documentation continues:
+
+> This method splits the slice into three distinct slices: prefix, correctly aligned middle slice of
+a new type, and the suffix slice. The method does a best effort to make the middle slice the
+greatest length possible for a given type and input slice, but only your algorithm's performance
+should depend on that, not its correctness.
+
+The last sentence hints at `[T]::align_to` being made specifically to aid in optimisation.  For
+example, algorithms operating on byte buffers become much faster if they are able to take advantage
+of the SIMD operations provided by most of the modern computer architectures. Alas, these
+operations also tend to impose strict alignment requirements for the data they operate on, making
+these operations impossible to apply to byte buffers without first aligning them as required.
+With `[T]::align_to` it becomes very easy to do:
+
+```rust
+fn my_algorithm(bytes: &[u8]) {
+    unsafe {
+        let (prefix, simd, suffix) = bytes.align_to::<__m128>();
+        less_fast_algorithm_for_bytes(prefix);
+        more_fast_simd_algorithm(simd);
+        less_fast_algorithm_for_bytes(suffix);
+    }
+}
+```
+
+Aligning a byte buffer like this is the common case and this specific case is fairly easy to
+implement by hand. The difficulties (and differences) rear their head when `T` stored in the slice
+is anything but a byte. `[T]::align_to::<U>` is capable of aligning the buffer for any `T` and `U`
+and does it about as efficiently as possible. Alas, the implementation ended up being hard to
+understand and review.  Hopefully, this post will be sufficient in helping others to understand how
+the implementation works while also being useful to a curious passerby.
+
+[a pull request]: https://github.com/rust-lang/rust/pull/53754
+[^1]: C++’s `std::align` is a close relative to `[T]::align_to`; `[T]::align_to` supports a strict
+superset of functionality.
+
+# The implementation of `[T]::align_to`
+
+At its core, the algorithm splits the input slice into three disjoint slices. The length of the
+first slice, and offset of the 2nd slice, is calculated by another, currently unstable, function
+[`pointer::align_offset`][ao]. This function solves the following linear congruence equation for
+the variable $o$:
+
+<mathp>
+$$p + so \equiv 0 \mod a$$
+</mathp>
+
+Here $p$ is the address of the first element in the input slice, $a$ is the alignment of the output
+type `U`, $s$ is the stride of the type `T`. $o$ is therefore the “offset”, in number of elements of
+type `T`, to an aligned element of type `U`. Expressed in words, this equation says that the address
+$p$, advanced by $so$ bytes must be aligned to $a$. The formula to solve this equation for $o$
+looks like this:
+
+<mathp>
+$$
+o = \frac{a - \left(p \mod a\right)}{\operatorname{gcd}(s, a)} \times \left(\left(\frac{s}{\operatorname{gcd}(s, a)}\right)^{-1} \mod a\right)
+$$
+</mathp>
+
+$o$ obtained by solving this equation still needs extra processing as it is not guaranteed to be
+positive nor smallest positive solution for the equations. These properties are required to ensure
+that the middle slice ends up containing the greatest number of elements possible. To obtain a
+number of `T` elements satisfying these properties, it is necessary to compute $r = o \mod
+\frac{a}{\operatorname{gcd}(s, a)}$. The first slice returned by this function is then
+`input_slice[..r]`.
+
+Location of the second split is slightly less difficult to arrive at. $\operatorname{lcm}\left(t_s,
+u_s\right)$, where $t_s$ and $u_s$ are `size_of::<T>()` and `size_of::<U>()` respectively, tells us
+the necessary pointer alignment for the 3rd slice. This alignment ensures that the 2nd slice
+contains a whole number of elements and that 3rd slice begins with a proper element of type `T`.
+To ensure that the length of the middle slice is maximised, last slice should contain at most
+$\frac{u_s}{\operatorname{gcd}\left(t_s, u_s\right)}$ elements. With this information in hand,
+obtaining the offset and length of the second slice becomes trivial.
+
+Now, it is pretty clear that a large number of fairly expensive operations are involved in
+splitting the input slice into parts:
+
+* Modulo and division are well known as being a fairly expensive instructions to execute taking at
+least a few dozen of cycles to retire;
+* Algorithms for calculating the greatest common divisor and least common multiple are non-trivial;
+* Algorithm to calculate a modulo inverse ($x^{-1} \mod y$) is even more complicated…
+
+No way a naive implementation is appropriate for a function intended to be used in optimisation. In
+most cases it would take longer to execute `[T]::align_to` than to execute some algorithm for `T`s
+in the first place! Luckily, certain knowledge, such as alignments being a power of two, allow us
+to employ some tricks to implement these operations in a more efficient manner.
+
+[ao]: https://doc.rust-lang.org/nightly/std/primitive.pointer.html#method.align_offset
+
+## Modulo and division with a power of two right hand side
+
+$a \mod 2^k$ and $\frac{a}{2^k}$, can be rewritten as $a \land (2^k - 1)$ and $a \gg k$
+respectively. This exploits the binary representation of unsigned integers and will complete in
+one or two cycles, compared to a few dozen for the original operation.
+
+For the sake of example consider a 4-bit integer with bits $b_3$, $b_2$, $b_1$ and $b_0$ divided by
+$2^k$:
+
+<mathp>
+$$\frac{b_3 \times 2^3 + b_2 \times 2 ^ 2 + b_1 \times 2 ^ 1 + b_0 \times 2 ^ 0}{2^k} = b_3 \times 2^{3-k} + b_2 \times 2 ^ {2 - k} + b_1 \times 2 ^ {1 - k} + b_0 \times 2 ^ {0 - k}$$
+</mathp>
+
+Knowing that a 4-bit integers cannot represent any digits other than $b_3$ to $b_0$ and that all
+the other digits are dropped (or “truncated”), it becomes fairly easy to see why
+division by $2^k$ and right shift by $k$ positions are equivalent. This trivially extends to
+unsigned integers of any width.
+
+In order to see why a number modulo $2^k$ is equivalent to a number masked by $(2^k - 1)$, first
+consider that $2^k - 1$ will have k lowest bits set to $1$. For example:
+
+<mathp>
+$$2^3 - 1 = 7 = 111_2$$
+$$2^8 - 1 = 255 = 1111\ 1111_2$$
+$$2^16 - 1 = 65535 = 1111\ 1111\ 1111\ 1111_2$$
+</mathp>
+
+An unsigned integer, masked with a mask like this will be able to represent numbers from 0 to
+$2^k-1$, inclusive. This happens to exactly match the range of representable integers modulo $2 ^
+k$. This, much like the division optimisation, comes out from how the integers are represented in
+binary.
+
+The compiler will usually rewrite these operations to a more efficient version by itself, however
+it can only do so when it has the knowledge about values being special. In our case, the compiler
+would not necessarily have this information at its disposal, so it was necessary to apply this
+transformation manually in many cases.
+
+## $\operatorname{gcd}$ and $\operatorname{lcd}$ when one of the operands is a power of two
+
+$\operatorname{gcd}(a, b)$ where either one of $a$ or $b$ is a power of two will itself be $2^k$
+for some $k$. The number of $2$ multiples in an integer can be found by counting the number of
+consecutive unset bits starting from the least significant bit. This useful property comes from the
+binary representation of unsigned integers. Furthermore $\operatorname{lcd}(a, b) =
+\frac{ab}{\operatorname{gcd}\left(a, b\right)}$. To calculate both $\operatorname{gcd}(a, b)$ and
+$\operatorname{lcd}(a, b)$:
+
+```rust
+let k = a.trailing_zeros().min(b.trailing_zeros());
+let gcd = 1 << k;
+let lcd = (a * b) >> k;
+```
+
+Unlike the naive algorithms, this can get the job done in just a few cycles. Even some uncommon
+target machine with no native instruction for `trailing_zeros` will manage to execute this in 40
+cycles or so. Still somewhat faster than a single integer division operation, which would be
+necessary to implement other algorithms.
+
+## Modular multiplicative inverse when the modulo is a power of two
+
+The highlight: a trick to efficiently compute $a^{-1} \mod 2^k$. Normally, modular
+multiplicative inverse requires an iterative algorithm such as the extended Euclidean
+algorithm. Such algorithms involve at least a division and a modulo operation in their inner loop
+and require comparatively many iterations to complete. As a special case, $a^{-1} \mod 2^k$ can be
+computed in $\operatorname{O}(\log_2\log_2k)$ by using a fairly unknown technique described [in
+this sci.crypt post][sci.crypt]. To summarize the final algorithm:
+
+1. Start at a small modulo such as $2^i = 2^4$ for which it is cheap to either store the table of
+   inverses or compute them;
+2. Look up in a table (or compute) the inverse $g = a^{-1} \mod 2^i$;
+3. Compute $g' = a^{-1} \mod 2^{i^2} = g \left(2 - ag\right) \mod 2^{i^2}$;
+4. If $i^2 > k$, $a^{-1} \mod 2^k = g' \mod 2^k$, otherwise repeat step 3 with $g \leftarrow g'$ and $i
+   \leftarrow i^2$.
+
+Starting with $i = 4$, computation of $a ^ {-1} \mod 2^256$ needs 2 iterations only. Since
+magnitude of alignments is usually low, for the purposes of `[T]::align_to` at most one iteration will
+usually be necessary. Without this algorithm `[T]::align_to` would most likely ended up being entirely
+useless!
+
+[sci.crypt]: https://groups.google.com/forum/#!msg/sci.crypt/UI-UMbUnYGk/hX2-wQVyE3oJ
+
+# Everything together
+
+These tricks combined with compiler’s own optimisations work together to make `[T]::align_to`
+a terse list of cheap instructions, somewhat close to what one would get if written by hand, in
+highly optimised assembly. Unlike the traditional approaches to the problem which integrate
+such “splitting” into the hot loop, computing the slices up front may enable miscellaneous
+optimisations as well (e.g. iteration with pointers is easier to optimise). The compiler is able to
+move computation of separate slices around – to where it makes more sense and even remove the
+computations necessary to produce slices which ultimately end up not being used!
+
+I consider the implementation of `[T]::align_to` a great success, albeit not a personal one:
+the core formulae and tricks of this algorithm were figured out by Chris McDonald. I merely
+implemented them. I’m very proud of this function nevertheless.

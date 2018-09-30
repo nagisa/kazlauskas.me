@@ -28,10 +28,26 @@
                 div.style.position = "absolute";
                 document.body.appendChild(div);
                 if(div.offsetHeight < div.offsetWidth){
+                    window.MathJax = {
+                        delayJaxRegistration: true,
+                        jax: ['input/MathML', 'output/HTML-CSS'],
+                        "HTML-CSS": {
+                            styles: {
+                                ".MathJax_Display": {
+                                    "text-align": "center",
+                                    "margin": "0",
+                                },
+                                ".MathJax": {
+                                    "margin": "0 .5em",
+                                },
+                            },
+                        },
+                    };
+
                     script       = document.createElement("script");
                     script.async = true;
                     script.type  = "text/javascript";
-                    script.src   = "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML";
+                    script.src   = "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=MML_HTMLorMML";
                     document.head.appendChild(script);
                 }
                 document.body.removeChild(div);

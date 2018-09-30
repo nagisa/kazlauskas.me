@@ -180,7 +180,7 @@ table>caption {
     padding: .25em .5em .05em;
 }
 
-figure, table, pre, blockquote, caption {
+figure, table, pre, blockquote, caption, mathp {
     background: #eee8d5;
     max-width: 100%;
 }
@@ -207,13 +207,15 @@ pre, code {
 
 pre {
     max-width: 100%;
-    overflow: auto;
+    overflow-x: auto;
+    padding: .5em 0;
+    margin: .5em 0;
 }
 
 pre code {
     /* Banzai all the hacks! */
-    display: table;
-    padding: .5em;
+    display: inline-block;
+    padding: 0 .5em;
 }
 
 blockquote {
@@ -280,6 +282,29 @@ hr:after {
 
 math {
     font-size: 0.85em;
+}
+
+/* Math paragraph, for $$math$$ to not be considered literally its own paragraph
+ *
+ * Mostly just for display purposes.
+ * */
+mathp {
+    text-indent: 0;
+    display: block;
+    max-width: calc(100% + 1em);
+    overflow-x: auto;
+    padding: .5em 0;
+    margin: .5em -.5em;
+}
+
+mathp > math {
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+mathp > math > semantics {
+    margin: 0 .5em;
 }
 
 #metadata span {
