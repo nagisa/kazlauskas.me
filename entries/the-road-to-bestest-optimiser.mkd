@@ -1,0 +1,122 @@
+---
+title: The steps towards rustc, the great optimiser
+published: 2019-02-01
+tags: Rust, Programming
+---
+
+It has been more than 3 years now since the MIR initiative has been [accepted][mir-rfc]. Just a
+year after it has been [enabled by default][orbit] to all the users of nightly Rust. Even then, it
+was fairly clear that MIR is well positioned to enable optimisations that would, in many instances,
+result in significantly faster compilation. “This would be achieved by optimising the generic
+code”, we thought at the time, “which would make it easier, and thus faster, for LLVM to do its
+share of work on the monomorphic code”. While the idea is promising, not much has materialised
+since.
+
+Currently rustc has a number of MIR optimisations: a simple inliner, basic constant and copy
+propagation, a single instruction combination rule, a few graph simplification and clean up passes…
+The pattern here is clear – most of the optimisations we currently have are basic and limited in
+their potency. Given the pace at which we managed to bring up MIR in the first place, one would
+be right to expect… something more.
+
+As somebody who has made an attempt and failed to implement a number of [dataflow-based
+optimisations][dflow] (among other things), I consider myself fairly qualified to hazard a guess as
+to what is the reason for the current state we are at. Here it goes.
+
+# MIR is mutation-averse
+
+The [MIR data structure][mirtype] has not changed much since it was first conceived. An occasional
+enum size optimisation or new statement kind is usually the limit of modifications to the structure
+of the type.
+
+On one hand, this proves we did something right, especially given the fairly complex tooling
+such as [miri](https://github.com/solson/miri) which could be built on top of it. On the other
+hand, it has been obvious since almost the beginning that mutating the MIR to obtain a different
+looking MIR is fairly awkward. Especially when non-trivial transformations get involved. And that
+is exactly what optimisations do!
+
+Multiple issues contribute to this issue. MIR itself being made out of `Vec<T>`ors is one thing. It
+makes transformations such as removing or adding a statement inefficient and very much in your
+face. Lack of a convenient common API to transform MIR in arbitrary ways is another. Optimisation
+code is then forced to reimplement such modification by fiddling with the data structures directly.
+This in turn makes inefficient operations with vectors much more likely as well. While there is a
+[`MirPatch`][patch] approach which has been gaining some use, it does not allow to easily express
+arbitrary block transformations and it isn’t too convenient either.
+
+Having *something* that is easy and cheap to modify in arbitrary ways would go a long way towards
+enabling implementation of the more complicated optimisations. This something does not necessarily
+need to be MIR itself – it could be something specifically tailored and used for optimisation.
+
+As an aside, something transactional, with an ability to efficiently roll back the modifications to
+a previous checkpoint, would be ideal. There are quite a few optimisations (esp. those that involve
+heuristics, such as inlining) where it is not obvious whether taking certain actions would result
+in better code. For those optimisations we could as well just do the optimisation and decide
+whether it resulted in better code then and there.
+
+# Data collection is hard
+
+Most optimisations need a significant amount of information about the program, so that they could
+prove equivalence between the code being optimised and the optimised version of it. Data such as
+aliasing information and call graph have many uses in variety of different optimisations. Some
+other data collection may be done via, say, [dataflow analysis][dataflow].
+
+While solution here could be as simple as implementing common infrastructure for obtaining such
+data, if our current usage of the dataflow analysis infrastructure is anything to go by, we will
+end up with each pass doing their own analysis and, therefore, unnecessarily repeating a lot of
+the work.
+
+In practice, many optimisations tend to need similar kind of information. A good example of this is
+the triplet of constant propagation, alias propagation and terminator simplification. All these
+use exactly the same kind of data and produce transformations very similar in their nature. To
+achieve the best results it is important to share the knowledge between the passes. In fact – if
+the knowledge is not shared it may become impossible to achieve optimal code. Section 2.2. of the
+[Hoopl paper] has an example of such a scenario.
+
+Improving infrastructure here and establishing a method for sharing data between passes efficiently
+would make it significantly easier to implement the optimisations without having to care about
+either nitty or gritty. This could be done by encoding such information into MIR itself.
+
+# Getting optimisations right is hard
+
+This is somewhat in the wishlist handwavy area and something I would love to discuss more at the
+All Hands.
+
+My experience with LLVM shows that implementing the optimisations correctly and keeping them that
+way as changes occur is a significant difficulty. There are multiple sides to this issue.
+Interactions between different optimisations are non-trivial to understand, sometimes resulting in
+an optimisation that is valid in isolation but not when in combination with another one. This often
+happens when the two optimisations disagree on what code is acceptable and what is not. This
+becomes more important as optimisations are modified – this is when most of the bugs are
+introduced.
+
+Sadly, it is nigh impossible to keep the whole set of rules in the head and consider all of the
+fine points in the context of somewhat arbitrary optimisation interaction graph. All a
+document of rules ends up helping with is in resolving disagreements and assigning blame, rather
+than maintaining the optimisations.
+
+Ideally we would end up with some sort of a tool that is able to prove, with an arbitrary, but
+still reasonable, investment of time, that some optimisation yielded an equivalent optimised
+function. In general, proving this sort of thing is an undecidable problem (equivalent to the
+halting problem). To our benefit optimisers are limited to only making decidably equivalent changes
+by construction. This allows a tool to at least verify that, given a function, an optimised version
+of it and whatever rules we impose on an optimiser, the optimisation does not violate those rules.
+
+miri already verifies some of these rules, so I imagine a tool could be based on it in some way.
+The tool could be something akin to a fuzzer which attempts to find lack of equivalence between a
+non-optimal basic block and whatever that block was optimised to. This would give a fair amount of
+confidence and avoid the halting problem entirely.
+
+# rustc, the great optimiser
+
+It is heartening to see MIR optimisation receive renewed focus and be considered as one of the big
+topics of discussion at the 2019 All Hands. Regardless of decisions made there, the road ahead of
+us is long and it is important to get the first steps right. This post is an outline of what I
+believe those steps are. With the right steps, the bright future with rustc as a great optimiser
+will be upon us.
+
+[mir-rfc]: https://github.com/rust-lang/rfcs/pull/1211#issuecomment-131233893
+[orbit]: https://github.com/rust-lang/rust/pull/34096#issuecomment-236852761
+[dflow]: https://github.com/rust-lang/rust/pull/35608
+[mirtype]: https://github.com/rust-lang/rust/blob/8a0e5faec7f62e3cfd88d6625ce213d93b061305/src/librustc/mir/mod.rs#L84
+[patch]: https://github.com/rust-lang/rust/blob/63505b84a6fb0fdb6a2f2a2a884556aeca2326d4/src/librustc_mir/util/patch.rs#L19
+[dataflow]: https://github.com/rust-lang/rust/tree/63505b84a6fb0fdb6a2f2a2a884556aeca2326d4/src/librustc_mir/dataflow
+[Hoopl paper]: https://www.cs.tufts.edu/~nr/pubs/dfopt.pdf
