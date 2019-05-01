@@ -184,5 +184,4 @@ EFI_STATUS status = SystemTable->BootServices->HandleProtocol(ImageHandle, &load
 
 At this point I have a bare bones frame for my awesome kernel called “huehuehuehuehue”. From this
 point onwards the development of the kernel should not differ much from the traditional development
-of any other x64 kernel. Next, I’ll be implementing software and hardware interrupts; expect a post
-on that.
+of any other x64 kernel.
