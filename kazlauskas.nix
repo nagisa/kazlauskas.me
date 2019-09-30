@@ -1,11 +1,12 @@
-{ mkDerivation, base, binary, bytestring, containers, hakyll
-, hjsmin, hyphenation, pandoc, pandoc-types, stdenv, tagsoup, time
+{ stdenv, haskellPackages, base, binary, bytestring, containers, hakyll
+, hjsmin, hyphenation, pandoc, pandoc-types, tagsoup, time
 , xml
 }:
-mkDerivation {
+
+haskellPackages.mkDerivation {
   pname = "kazlauskas";
   version = "0.4.0.0";
-  src = ./.;
+  src = stdenv.lib.sourceFilesBySuffices ./. [ ".hs" ".cabal" "LICENCE" ];
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [
