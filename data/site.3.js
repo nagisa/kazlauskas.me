@@ -6,8 +6,6 @@
         div   ,
         mfrac ,
         script,
-        age   ,
-        ael   ,
         rcb   = function (e){ready = true; cb();},
         cb    = function(){
             /* EMail */
@@ -52,12 +50,6 @@
                 }
                 document.body.removeChild(div);
             }
-
-            /* Age */
-            age = (~~(new Date / 864E5) - 9200) / 36.525;
-            ael = document.getElementById('age');
-            if(ael) ael.innerText = ael.textContent =
-                ~~age % 10 ? ~~age / 10 : ~~(age / 10);
         };
 
     if(ready) rcb();
