@@ -34,15 +34,12 @@ hakyllConfiguration = defaultConfiguration
                    ++ " _site/ 'unkobox:/var/www/kazlauskas.me/'"
     }
 
-hyphLang = lang { hyphenatorLeftMin = 2
-                , hyphenatorRightMin = 2
-                , hyphenatorExceptions = exceptions
-                }
+hyphLang = lang { hyphenatorExceptions = exceptions }
   where
     lang = english_GB
     exceptions = foldr addException (hyphenatorExceptions lang)
         [ "si-mo-nas"
-        , "lith-u-a-ni-a"
+        , "lith-u-a-nia"
         , "dig-it-al-ocean" -- O-cean is not hyphenated as it does not satisfy
                             -- hyphenatorLeftMin
         ]
