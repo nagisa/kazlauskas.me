@@ -1,0 +1,148 @@
+---
+title: Context-preserving error handling
+published: 2020-01-26
+tags: Rust, Programming
+---
+
+Error handling story in Rust is still in flux, with people figuring out their preferred ways to get
+errors handled and propagated. At [Standard](https://standard.ai/) we’ve been implementing custom
+error types[^1] almost exclusively, for both binary and library crates, to great effect. As I’ve
+seen many people struggle to apply a similar pattern to their own code, I’m taking an opportunity
+to add to the flux by describing how we’ve made it work for us.
+
+[^1]: Creating `struct`, `enum` or a combination of both to represent possible error cases. Concept
+  is older than Rust itself and is well known to the Rust community.
+
+**Aside**: With error handling being such a hot topic, a number of crates to aid in creation of
+such types exist.  Nowadays [`thiserror`] appears to be the most popular recommendation and so I
+will be using the `thiserror` derive macro in this article. The advice here is easily portable to
+both manually implemented custom error types as well as error types implemented with the help of
+other similar crates.
+
+**Early warning**: What is being described here does _not_ result in the most concise code. If your
+ultimate goal is to limit error-related code to just `?` operator alone, you’re reading a wrong
+article.
+
+[`thiserror`]: https://github.com/dtolnay/thiserror
+
+# Context in errors
+
+Most commonly made mistake I see is done in attempt to reduce the overhead of error propagation to
+the bare minimum of a single `?` operator. In my experience this leads to unfortunate amounts of
+information loss. An example of this is:
+
+```rust
+#[derive(thiserror::Error, Debug)]
+pub enum Error {
+    #[error("An I/O error occured")]
+    Io(#[source] std::io::Error)
+    // ...
+}
+
+impl From<std::io::Error> for Error { /* ... */ }
+```
+
+In code that does more than just one single I/O operation, `Error::Io` fails to preserve
+context in which this error has occurred. “An I/O error occurred: permission denied” carries very
+little information and makes it impossible to figure out what went wrong without resorting to a
+debugger, `strace` or similar introspection tools. In this particular instance not even source code
+will help!
+
+In the land of dynamic and boxed error types this problem has already been solved with the `context`
+method as seen in libraries like [`failure`][failure_context] or [`anyhow`][anyhow_context].  Not
+as obviously, exactly the same pattern can be also applied to custom error types, just replace
+`context` with `Result::map_err`! Here’s an example of it in action:
+
+[failure_context]: https://docs.rs/failure/0.1.6/failure/trait.Fail.html#method.context
+[anyhow_context]: https://docs.rs/anyhow/1.0.26/anyhow/struct.Error.html#method.context
+
+```rust
+#[derive(thiserror::Error, Debug)]
+pub enum Error {
+    #[error("Cannot open file")]
+    OpenFile(#[source] std::io::Error)
+    #[error("Cannot read file contents")]
+    ReadFileContents(#[source] std::io::Error)
+    #[error("Cannot parse the configuration file")]
+    ParseConfig(#[source] serde::Error)
+    // ...
+}
+
+fn open_config(path: &Path) -> Result<Config, Error> {
+    let mut file = File::open(path).map_err(Error::OpenFile)?;
+    let mut data = Vec::with_capacity(1024);
+    file.read_to_end(&mut data).map_err(Error::ReadFileContents)?;
+    parse_config(&data).map_err(Error::ParseConfig)
+}
+```
+
+The main highlight to me personally here is the *inability to forget* about adding the context.
+With `anyhow` and similar libraries attaching context is optional, here not wrapping the source
+error into context will only get compiler to reject the code.
+
+Another thing I love about this approach is the obvious separation of logic and presentation
+concerns. Unlike with `context` the error message formatting is out of the way and away from the
+logic of application. The logic itself is also more concise, because `map_err(Error::Variant)` is
+often significantly shorter than the equivalent code using `context`.
+
+# Guidelines
+
+As I spent some time perfecting this way of error handling and propagation, a list of guidelines
+that I follow materialized:
+
+1. Each unique fallible expression should have at least one unique error. Note, that this doesn’t
+necessarily mean unique variant per such an expression – a variant could have a field that adds
+additional detail to make sufficiently unique. For instance in an application that binds
+multiple ports, the `Error::Bind` below is perfectly adequate to describe all the sockets
+uniquely:
+
+```rust
+enum Error {
+   #[error("Cannot bind {2} listener to port {1}")]
+   Bind(#[source] std::io::Error, u16, &'static str)
+}
+http_socket.bind(..).map_err(|e| Error::Bind(e, 80, "http"))?;
+https_socket.bind(..).map_err(|e| Error::Bind(e, 443, "https"))?;
+```
+
+2. Don’t implement `From<OtherErrorType> for Error`. These implementations make it way too easy
+   to miss violations of the guideline above. The mental overhead this implementation adds is
+   huge and is not worth it over saving a couple of `map_err`s in code.
+3. When applied in a library, consider marking the error types as `#[non_exhaustive]` or keep error
+   data mostly private. Having a unique error for each failure mode necessarily exposes (through
+   the public API) the implementation details of the library which in turn may make evolution of
+   the library difficult.
+4. When using enums-and-variants as errors, avoid duplicating `Error` or similar synonyms when
+   naming variants. I found it easiest to follow my instinct and then remove just the `Error`.
+   `Error::BindError` becomes `Error::Bind`, `Error::OpenFileError` becomes `Error::OpenFile` and
+   so on.
+
+And a couple of bonus ones applicable more broadly:
+
+5. Strive to make errors useful to an end user without an access to source code or a debugger.
+   Nobody wants to dig into code if they can avoid it. Doubly so if there’s a burning fire waiting
+   to be put out; and
+6. Never format in the error `source` into the displayed message. Users can use `Error::source` to
+   obtain the information in *their* presentation logic.
+
+Some of these guidelines were not trivial to come up. It took me months to come up with a good way
+to name variants. Months! Some other points on the list followed naturally by requirements (mostly
+context preservation) I placed on errors.
+
+# Conclusion
+
+We’ve been using this approach across multiple libraries and binaries at Standard. This scheme
+scales very well to hundreds of failure modes and the errors that surface are easy to understand
+and deal with. The improvement most appreciable when compared with backtraces we get from the likes
+of Python or JavaScript.
+
+[This pull request][memfd_pr] to port `memfd` from `error_chain` to `thiserror` is an example of
+these guidelines being applied to an open source library. Although, now that I think about it…
+manually implementing the error type probably makes more sense for a library as small as `memfd`.
+
+[memfd_pr]: https://github.com/lucab/memfd-rs/pull/7
+
+All things considered, error handling in Rust has gotten to a point where its difficult to complain
+about it anymore. I strongly doubt anything but very minor incremental improvements to ergonomics
+are possible. Which is why I will likely keep following these guidelines in my own code for a long
+time to come. You’re welcome to apply them to your code as well!
