@@ -7,10 +7,13 @@ tags: Web, Privacy
 Recently increased concern about user's privacy is observed in various parts of
 the internet. [EFF states][panoptic] that sites are able to pinpoint an user
 with high accuracy just from headers sent with every request without actually
-keeping any persistent data, like cookies, in user's computer. Some paranoid
+keeping any persistent data, like cookies, in user's computer[^1]. Some paranoid
 people find it to be a problem.
 
-[panoptic]: https://panopticlick.eff.org/index.php
+[panoptic]: https://panopticlick.eff.org/
+[^1]: Read more about fingerprinting on
+  [Wikipedia](https://en.wikipedia.org/wiki/Device_fingerprint) or [this
+  guide](https://pixelprivacy.com/resources/browser-fingerprinting/).
 
 One quiet evening realisation came that there's no way all those headers are
 compulsory to use the HTTP protocol. I was pleasantly surprised to find that
