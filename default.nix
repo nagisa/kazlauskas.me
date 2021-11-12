@@ -5,12 +5,11 @@ let
 kazlauskas = pkgs.haskellPackages.callPackage ./kazlauskas.nix {};
 
 site = pkgs.runCommand "www.kazlauskas.me" {} ''
-    cp -rv ${./pages} ./pages
-    cp -rv ${./templates} ./templates
-    cp -rv ${./images} ./images
-    cp -rv ${./entries} ./entries
-    cp -rv ${./data} ./data
-    cat ./data/sandwich.14.css
+    cp -rvp ${./pages} ./pages
+    cp -rvp ${./templates} ./templates
+    cp -rvp ${./images} ./images
+    cp -rvp ${./entries} ./entries
+    cp -rvp ${./data} ./data
     ${kazlauskas}/bin/kazlauskas build
     mkdir -p $out/srv
     mv -v _site $out/srv/http
