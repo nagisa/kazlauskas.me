@@ -122,7 +122,7 @@ And a couple of bonus ones applicable more broadly:
 5. Strive to make errors useful to an end user without an access to source code or a debugger.
    Nobody wants to dig into code if they can avoid it. Doubly so if there’s a burning fire waiting
    to be put out; and
-6. Never format in the error `source` into the displayed message. Users can use `Error::source` to
+6. Never format the error `source` into the displayed message. Users can use `Error::source` to
    obtain the information in *their* presentation logic.
 
 Some of these guidelines were not trivial to come up. It took me months to come up with a good way
