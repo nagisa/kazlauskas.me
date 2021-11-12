@@ -1,10 +1,10 @@
-{ nixpkgs ? import <nixpkgs> {} }:
+{ pkgs ? import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/2cf9db0e3d45b9d00f16f2836cb1297bcadc475e.tar.gz") { } }:
 
 let
-  kazlauskas = nixpkgs.haskellPackages.callPackage ./kazlauskas.nix {};
+  kazlauskas = pkgs.haskellPackages.callPackage ./kazlauskas.nix {};
 
-in nixpkgs.mkShell {
-    buildInputs = [
-        kazlauskas
-    ];
+in pkgs.mkShell {
+  buildInputs = [
+    kazlauskas
+  ];
 }
