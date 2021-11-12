@@ -40,17 +40,17 @@ heh…
 
 # Perspective
 
-Provided the `letsencrypt` tool indeed works as advertised (it seems there’s nothing out there
-preventing Let’s Encrypt from achieving that), I see absolutely no more reasons for a website
-without TLS support exist. On the other hand, there are plenty of reasons for non-TLS websites to
-implement TLS: other than the obvious more-security propaganda, the browser vendors are strongly
-encouraging encryption via miscellaneous means too. For example, Firefox Nightlies now represent
-website as insecure when a [password field exists on a HTTP site][passwd] and there’s some browsers
-(Chrome and Firefox, at least), that only support HTTP/2 and SPDY over TLS.
+Provided the `letsencrypt` tool indeed works as advertised – there is nothing preventing
+Let’s Encrypt from achieving that – I see absolutely no more reason for a website without TLS
+support exist. On the other hand, there are plenty of reasons for non-TLS websites to implement
+TLS: other than the “more security” propaganda, some browser vendors are strongly encouraging
+encryption via miscellaneous means too. For example, Firefox Nightlies now present website as
+insecure when a [password field exists on a HTTP site][passwd] and some browsers (Chrome and
+Firefox, at least) support HTTP/2 and SPDY over TLS only.
 
 Success of Let’s Encrypt would also strongly influence the market of SSL/TLS certificates –
-competition would be forced to provide at least a single free or very cheap (sub-€/sub-$) option to
-obtaining a certificate signed by them, as well as greatly improving UX of generating and managing
+competition would be forced to provide at least a single free or very cheap (sub-€/sub-$) option
+for obtaining a certificate signed by them and to greatly improve the UX of generating and managing
 said certificates. I hear [things aren’t in a good shape][hbleed] currently.
 
 [hbleed]: https://en.wikipedia.org/wiki/StartCom#Response_to_Heartbleed

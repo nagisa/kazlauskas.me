@@ -6,7 +6,7 @@ tags: Embedded
 
 For the ongoing project to make myself a custom mechanical keyboard, with an intention to get more
 familiar with embedded programming and soldering, I bought some blue pills (STM32F103C8T6 based
-microcontroller boards). At under €1.50 each, these extremely popular microcontrollers, seemed like
+microcontroller boards). At under €1.50 each these extremely popular microcontrollers seemed like
 a great enough deal to get 5 of them at once.
 
 The intention is to eventually have a cheap Rust-based keyboard hardware-firmware combo for custom
