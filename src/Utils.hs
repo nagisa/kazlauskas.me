@@ -19,6 +19,7 @@ import Text.HTML.TagSoup             as TS
 import Data.Maybe                       (fromJust, fromMaybe)
 import Data.List                        (partition, intercalate)
 import Data.Char                        (isSpace)
+import Data.Text                        (Text)
 
 import Configuration
 

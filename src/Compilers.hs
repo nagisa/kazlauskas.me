@@ -14,6 +14,7 @@ import Text.Jasmine           (minify)
 import Text.Pandoc            (bottomUp, Pandoc)
 import Text.Pandoc.Definition (Inline (Str))
 import Text.Pandoc.Options
+import Data.Text              as T
 
 
 pandocCompilerWithHyph :: ReaderOptions
@@ -23,7 +24,7 @@ pandocCompilerWithHyph ropt wopt =
     pandocCompilerWithTransform ropt wopt hyphenatePandoc
   where
     hyphenatePandoc = bottomUp (hyphInline :: Inline -> Inline)
-    hyphInline (Str str) = Str $ hyphText str
+    hyphInline (Str str) = Str . T.pack . hyphText . T.unpack $ str
     hyphInline a = a
 
 pandocCompilerHyph :: Compiler (Item String)
