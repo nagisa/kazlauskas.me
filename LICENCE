@@ -18,7 +18,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-NOTE: Content in this blog (files not under src directory) are licensed
-separately. If license is not spelled out explicitly in header of the article,
-then article is licensed under CC BY 3.0
+NOTE: Content in this blog (content in the entries/ and pages/ directories) are
+licensed separately. If the license is not spelled out explicitly in the header
+of an article, the license defaults to CC BY 3.0
 (http://creativecommons.org/licenses/by/3.0/deed.en_GB)
