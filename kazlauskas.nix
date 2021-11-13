@@ -6,7 +6,16 @@
 haskellPackages.mkDerivation {
   pname = "kazlauskas";
   version = "0.4.0.0";
-  src = lib.sourceFilesBySuffices ./. [ ".hs" ".cabal" "LICENCE" ];
+
+  src = lib.cleanSourceWith {
+    src = ./.;
+    filter = (name: type:
+      let relPath = lib.removePrefix (toString ./. + "/") (toString name);
+          isInteresting = path: prefix: lib.hasPrefix prefix path;
+      in lib.any (isInteresting relPath) ["kazlauskas.cabal" "Setup.hs" "src" "LICENCE"]
+    );
+  };
+
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [
