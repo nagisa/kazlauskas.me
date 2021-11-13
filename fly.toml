@@ -10,20 +10,8 @@ processes = []
 [env]
 
 [[statics]]
-  guest_path = "/srv/http/data"
-  url_prefix = "/data"
-
-[[statics]]
-  guest_path = "/srv/http/images"
-  url_prefix = "/images"
-
-[[statics]]
-  guest_path = "/srv/http/entries"
-  url_prefix = "/entries"
-
-[[statics]]
-  guest_path = "/srv/http/pages"
-  url_prefix = "/pages"
+  guest_path = "/non-existent"
+  url_prefix = "/non-existent"
 
 [experimental]
   allowed_public_ports = []

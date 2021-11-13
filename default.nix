@@ -1,36 +1,58 @@
 { pkgs ? import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/2cf9db0e3d45b9d00f16f2836cb1297bcadc475e.tar.gz") { } }:
 
 let
+lib = pkgs.lib;
+stdenv = pkgs.stdenv;
 
-kazlauskas = pkgs.haskellPackages.callPackage ./kazlauskas.nix {};
-
-site = pkgs.runCommand "www.kazlauskas.me" {} ''
-    cp -rvp ${./pages} ./pages
-    cp -rvp ${./templates} ./templates
-    cp -rvp ${./images} ./images
-    cp -rvp ${./entries} ./entries
-    cp -rvp ${./data} ./data
-    ${kazlauskas}/bin/kazlauskas build
-    mkdir -p $out/srv
-    mv -v _site $out/srv/http
-'';
-
-goStatic = pkgs.dockerTools.pullImage {
-  imageName = "pierrezemb/gostatic";
-  imageDigest = "sha256:54a6f97f5806db11cd335fec9bc79dc9d64db7d1a47c5d94f89d852290c5753c";
-  finalImageName = "gostatic";
-  finalImageTag = "latest";
-  sha256 = "sha256-8xrnZStz1T6+eBzVjy6hTJM0ijEuLb/PvDkQWa5DUok=";
-  os = "linux";
-  arch = "x86_64";
+site = stdenv.mkDerivation {
+  name = "www.kazlauskas.me";
+  src = lib.cleanSourceWith {
+    src = ./.;
+    filter = (name: type:
+      let relPath = lib.removePrefix (toString ./. + "/") (toString name);
+          isInteresting = path: prefix: lib.hasPrefix prefix path;
+      in lib.any (isInteresting relPath) [
+        "pages" "templates" "images" "entries" "data" "redirects.conf"
+      ]
+    );
+  };
+  buildInputs = [ (pkgs.haskellPackages.callPackage ./kazlauskas.nix {}) ];
+  outputs = ["images" "data" "out"];
+  buildPhase = ''
+    ls -alh
+    kazlauskas build
+  '';
+  installPhase = ''
+    mkdir -p $images/var/www $data/var/www $out/var/
+    mv -v _site/images $images/var/www/images
+    mv -v _site/data $data/var/www/data
+    mv -v _site/ $out/var/www
+  '';
 };
 
-in pkgs.dockerTools.buildImage {
-  name = "kazlauskas.me";
+nginxConf = pkgs.runCommand "nginxConf" { preferLocalBuild = true; }
+  "mkdir $out && cp -vp ${./nginx.conf} $out/nginx.conf";
+
+shadow = pkgs.dockerTools.buildImage {
+  name = "shadow";
+  runAsRoot = ''
+    #!${pkgs.runtimeShell}
+    ${pkgs.dockerTools.shadowSetup}
+    groupadd -r nginx
+    useradd -r -g nginx nginx
+    mkdir /nginx
+    mkdir -p /var/cache/nginx /var/log/nginx
+    chown nginx:nginx /nginx /var/cache/nginx /var/log/nginx
+  '';
+};
+
+in pkgs.dockerTools.streamLayeredImage {
+  name = "kazlauskas-me";
   tag = "latest";
-  fromImage = goStatic;
-  contents = site;
+  fromImage = shadow;
+  contents = [pkgs.nginx nginxConf site.images site.data site.out];
   config = {
-    Cmd = [ "/goStatic" "-port=8080" ];
+    Cmd = [ "${pkgs.nginx}/bin/nginx" "-c" "${nginxConf}/nginx.conf" "-p" "/nginx" ];
+    User = "nginx";
   };
 }
