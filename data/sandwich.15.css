@@ -48,12 +48,9 @@
 }
 
 html {
-    background: #fdf6e3;
-    color: #657b83;
     margin: 0;
     padding: 0;
 }
-
 
 body {
     margin: 0;
@@ -65,21 +62,19 @@ body {
     min-width: 300px;
 }
 
-main, footer, header {
+main, footer {
     max-width: 35em;
     max-width: 70ch;
     margin: 0 auto;
 }
 
 main {
-    border: 1px solid #073642;
-    /* box-shadow: 0px 0px 15px -5px #657b83; */
     position: relative;
     z-index: 10;
 }
 
 @media (max-width: 875px){
-    main, footer, header {
+    main, footer {
         width: 100%!important;
         max-width: none;
     }
@@ -90,17 +85,12 @@ main {
         border-bottom: none;
     }
 
-    footer {
-        background: #002b36;
-        color: #93a1a1;
-    }
 }
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
     font-weight: 700;
     margin: 0.25em .25em;
-    color: #586e75;
 }
 
 h1 {
@@ -128,8 +118,8 @@ h6 {
 }
 
 :link, :link>* {
-    color: #268bd2;
     text-decoration: none;
+    color: #268bd2;
 }
 
 :link:hover, :link:hover * {
@@ -138,6 +128,10 @@ h6 {
 
 :visited, :visited>* {
     color: #2aa198;
+}
+
+nav li a:visited {
+    color: #268bd2;
 }
 
 p {
@@ -149,7 +143,6 @@ p {
 
 strong, b {
     font-weight: 700;
-    color: #586e75;
 }
 
 p>img {
@@ -181,7 +174,6 @@ table>caption {
 }
 
 figure, table, pre, blockquote, caption, mathp {
-    background: #eee8d5;
     max-width: 100%;
 }
 
@@ -201,7 +193,7 @@ td, th {
 }
 
 pre, code {
-    font-family: "Source Code Pro";
+    font-family: "Source Code Pro", monospace;
     font-size: 0.9em;
 }
 
@@ -238,10 +230,6 @@ article>p:last-child, article>section:last-child {
 
 article>p:first-child, article>section:first-child {
     margin-top: .5em;
-}
-
-del {
-    color: #93a1a1;
 }
 
 sup, sub {
@@ -309,7 +297,6 @@ mathp > math > semantics {
 
 #metadata span {
     font-size: .85em;
-    color: #93a1a1;
 }
 
 #metadata {
@@ -326,7 +313,6 @@ mathp > math > semantics {
 }
 
 #footnotes {
-    background: #eee8d5;
     overflow: hidden;
     margin-top: .25em;
     padding-bottom: .5em;
@@ -343,10 +329,6 @@ mathp > math > semantics {
     margin: 0;
     list-style: none;
     counter-reset: footnote;
-}
-
-#footnotes li:target {
-    background: #fdf6e3;
 }
 
 #footnotes li {
@@ -368,33 +350,9 @@ mathp > math > semantics {
     margin: 0 .15em;
 }
 
-header {
-    padding: .25em 0;
-    overflow: hidden;
-}
-
-header #title::before, header #title:before {
-    content: "Kazlauskas";
-}
-
-header #title {
-    color: #93a1a1;
-    margin: 0;
-    z-index: -1;
-    width: 100%;
-    position: relative;
-    display: block;
-    margin-bottom: -.075em;
-    font-style: normal;
-    font-size: 5em;
-    line-height: 0.8em;
-    text-align: center;
-}
-
 nav {
     overflow: hidden;
     width: 100%;
-    background: #002b36;
     z-index: 20;
     margin-bottom: -.25em;
     position: relative;
@@ -421,12 +379,7 @@ nav li a {
 }
 
 nav li a:hover {
-    background: #073642;
     text-decoration: none!important;
-}
-
-nav li a:visited {
-    color: #268bd2;
 }
 
 footer {
@@ -496,14 +449,6 @@ footer {
     display: none;
 }
 
-/* non-standard */
-::-moz-selection { color: #93a1a1;  background: #002b36; }
-::selection { color: #93a1a1;  background: #002b36; }
-nav *::-moz-selection { background: #fdf6e3; color: #586e75; }
-nav *::selection { background: #fdf6e3; color: #586e75; }
-
-
-
 @media screen and (max-width: 580px){
     body { font-size: 16px; }
     header #title { font-size: 3em!important; }
@@ -511,6 +456,55 @@ nav *::selection { background: #fdf6e3; color: #586e75; }
 }
 
 
+html { background: #fdf6e3; color: #657b83; }
+h1, h2, h3, h4, h5, h6, strong, b { color: #586e75; }
+nav { background: #002b36; }
+nav li a:hover { background: #073642; }
+#footnotes li:target { background: #fdf6e3; }
+#footnotes { background: #eee8d5; }
+figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
+del, #metadata span { color: #93a1a1; }
+::-moz-selection { color: #93a1a1;  background: #002b36; }
+::selection { color: #93a1a1;  background: #002b36; }
+nav *::-moz-selection { background: #fdf6e3; color: #586e75; }
+nav *::selection { background: #fdf6e3; color: #586e75; }
+@media (max-width: 875px){
+  footer { background: #002b36; color: #93a1a1; }
+}
+
+@media (prefers-color-scheme: dark) {
+  html { background: #002b36; color: #839496; }
+  h1, h2, h3, h4, h5, h6, strong, b { color: #93a1a1; }
+  nav { background: #fdf6e3; }
+  nav li a:hover { background: #eee8d5; }
+  #footnotes li:target { background: #002b36; }
+  #footnotes { background: #073642; }
+  figure, table, pre, blockquote, caption, mathp { background: #073642; }
+  del, #metadata span { color: #586e75; }
+  ::-moz-selection { color: #586e75;  background: #fdf6e3; }
+  ::selection { color: #586e75;  background: #fdf6e3; }
+  nav *::-moz-selection { background: #002b36; color: #93a1a1; }
+  nav *::selection { background: #002b36; color: #93a1a1; }
+  @media (max-width: 875px){
+    footer { background: #fdf6e3; color: #586e75; }
+  }
+}
+
+@media not print {
+    code .kw { color: #268BD2; }
+    code .dt { color: #268BD2; }
+    code .dv,
+    code .bn,
+    code .fl { color: #D33682; }
+    code .ch { color: #DC322F; }
+    code .st { color: #2AA198; }
+    code .co { color: #93A1A1; }
+    code .ot { color: #A57800; }
+    code .al { color: #CB4B16; font-weight: bold; }
+    code .fu { color: #268BD2; }
+    code .re { }
+    code .er { color: #D30102; font-weight: bold; }
+}
 
 @media print {
     * {
@@ -554,17 +548,3 @@ nav *::selection { background: #fdf6e3; color: #586e75; }
         content: "The content in this document is licensed under";
     }
 }
-
-code .kw { color: #268BD2; }
-code .dt { color: #268BD2; }
-code .dv,
-code .bn,
-code .fl { color: #D33682; }
-code .ch { color: #DC322F; }
-code .st { color: #2AA198; }
-code .co { color: #93A1A1; }
-code .ot { color: #A57800; }
-code .al { color: #CB4B16; font-weight: bold; }
-code .fu { color: #268BD2; }
-code .re { }
-code .er { color: #D30102; font-weight: bold; }
