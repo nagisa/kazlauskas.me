@@ -55,14 +55,15 @@ html {
 body {
     margin: 0;
     padding: 0;
-    font-size: 24px;
+    font-size: 1em;
+    font-size: clamp(1em, 3.5vw, 1.5em);
     font-family: "Alegreya", "Heuristica", "Cardo", "Crimson Text", serif;
     font-kerning: normal;
     font-variant-ligatures: common-ligatures contextual;
     min-width: 300px;
 }
 
-main, footer {
+main, footer, header {
     max-width: 35em;
     max-width: 70ch;
     margin: 0 auto;
@@ -70,27 +71,12 @@ main, footer {
 
 main {
     position: relative;
-    z-index: 10;
-}
-
-@media (max-width: 875px){
-    main, footer {
-        width: 100%!important;
-        max-width: none;
-    }
-
-    main {
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
-    }
-
 }
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
     font-weight: 700;
-    margin: 0.25em .25em;
+    margin: 0.25em 0;
 }
 
 h1 {
@@ -135,7 +121,7 @@ nav li a:visited {
 }
 
 p {
-    margin: 0 .5em;
+    margin: 0;
     text-indent: 2.25em;
     line-height: 1.25em;
     text-align: justify;
@@ -150,7 +136,6 @@ p>img {
     max-width: 100%;
     max-width: calc(100% + 1em);
     margin: .5em 0;
-    margin: .5em calc(0em - .5em);
 }
 
 figure>img {
@@ -212,7 +197,7 @@ pre code {
 
 blockquote {
     margin: .25em 0;
-    padding: .25em 1em;
+    padding: .25em .5em;
 }
 
 blockquote p {
@@ -221,7 +206,7 @@ blockquote p {
 
 article ol, article ul {
     margin: .5em 0;
-    padding: 0 .5em 0 2em;
+    padding: 0 0 0 2.25em;
 }
 
 article>p:last-child, article>section:last-child {
@@ -282,7 +267,7 @@ mathp {
     max-width: calc(100% + 1em);
     overflow-x: auto;
     padding: .5em 0;
-    margin: .5em -.5em;
+    margin: .5em 0;
 }
 
 mathp > math {
@@ -315,7 +300,7 @@ mathp > math > semantics {
 #footnotes {
     overflow: hidden;
     margin-top: .25em;
-    padding-bottom: .5em;
+    padding-bottom: .25em;
 }
 
 #footnotes p {
@@ -325,15 +310,17 @@ mathp > math > semantics {
 }
 
 #footnotes ol {
-    padding: 0;
+    padding: 0 .5em 0 0;
     margin: 0;
     list-style: none;
     counter-reset: footnote;
 }
 
 #footnotes li {
-    padding: .25em .5em .25em 0;
+    padding: .25em 0 .25em 0;
     overflow: hidden;
+    border: 0 solid transparent;
+    border-width: 0 .25em 0 .25em;
 }
 
 #footnotes li::before, #footnotes li:before {
@@ -350,20 +337,25 @@ mathp > math > semantics {
     margin: 0 .15em;
 }
 
-nav {
-    overflow: hidden;
-    width: 100%;
-    z-index: 20;
-    margin-bottom: -.25em;
-    position: relative;
+header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#title {
+    white-space: nowrap;
+    padding: .5em;
+    flex-grow: 1;
+    font-weight: 700;
 }
 
 nav ul {
+    display: flex;
     list-style: none;
-    padding: 0 .5em;
+    padding: 0;
     margin: 0;
-    width: 100%;
-    font-size: .85em;
     text-align: center;
 }
 
@@ -388,7 +380,7 @@ footer {
 }
 
 #generator, #copy {
-    font-size: 0.85em;
+    font-size: 0.75em;
 }
 
 #generator {
@@ -407,13 +399,120 @@ footer {
     content: "The content in this page is licensed under";
 }
 
-@media screen and (max-width: 45em){
+/* 35em * 1.5em maximum font size */
+@media screen and (max-width: 52.5em) {
+    main, footer {
+        width: 100% !important;
+        max-width: none;
+    }
+    .entries li { padding: .5em 0 !important; }
+}
+
+/* 70ch * 1.5em maximum font size */
+@media screen and (max-width: 105ch) {
+    main, footer {
+        width: 100% !important;
+        max-width: none;
+    }
+    .entries li { padding: .5em 0 !important; }
+}
+
+@media screen and (max-width: 35em){
     #copy::before, #copy:before {
         content: "©";
     }
 
     #generator::before, #generator:before{
         content: "";
+    }
+}
+
+html { background: #fdf6e3; color: #657b83; }
+h1, h2, h3, h4, h5, h6, strong, b { color: #586e75; }
+#hdr { background: #002b36; color: #839496; }
+nav li a:hover { background: #073642; }
+#footnotes li:target { background: #fdf6e3; border-color: #eee8d5; }
+#footnotes { background: #eee8d5; }
+figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
+del, #metadata span { color: #93a1a1; }
+::-moz-selection { color: #93a1a1;  background: #002b36; }
+::selection { color: #93a1a1;  background: #002b36; }
+#hdr *::-moz-selection { background: #fdf6e3; color: #586e75; }
+#hdr *::selection { background: #fdf6e3; color: #586e75; }
+
+@media (prefers-color-scheme: dark) {
+  html { background: #002b36; color: #839496; }
+  h1, h2, h3, h4, h5, h6, strong, b { color: #93a1a1; }
+  #hdr { background: #fdf6e3; color: #657b83; }
+  nav li a:hover { background: #eee8d5; }
+  #footnotes li:target { background: #002b36; border-color: #073642; }
+  #footnotes { background: #073642; }
+  figure, table, pre, blockquote, caption, mathp { background: #073642; }
+  del, #metadata span { color: #586e75; }
+  ::-moz-selection { color: #586e75;  background: #fdf6e3; }
+  ::selection { color: #586e75;  background: #fdf6e3; }
+  #hdr *::-moz-selection { background: #002b36; color: #93a1a1; }
+  #hdr *::selection { background: #002b36; color: #93a1a1; }
+}
+
+@media not print {
+    code .kw { color: #268BD2; }
+    code .dt { color: #268BD2; }
+    code .dv,
+    code .bn,
+    code .fl { color: #D33682; }
+    code .ch { color: #DC322F; }
+    code .st { color: #2AA198; }
+    code .co { color: #93A1A1; }
+    code .ot { color: #A57800; }
+    code .al { color: #CB4B16; font-weight: bold; }
+    code .fu { color: #268BD2; }
+    code .re { }
+    code .er { color: #D30102; font-weight: bold; }
+}
+
+@media print {
+    * {
+        background: transparent !important;
+    }
+
+    main, header, footer {
+        width: auto;
+        max-width: none;
+    }
+
+    html, body{
+        font-size: initial !important;
+        color: #000;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #000;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #generator {
+        display: none;
+    }
+
+    main {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+    }
+
+    #title {
+        color: #000;
+        text-align: center;
+        font-size: 2em;
+    }
+
+    #copy::before, #copy:before {
+        content: "The content in this document is licensed under";
     }
 }
 
@@ -447,104 +546,4 @@ footer {
 
 .entries time {
     display: none;
-}
-
-@media screen and (max-width: 580px){
-    body { font-size: 16px; }
-    header #title { font-size: 3em!important; }
-    .entries li { padding: .5em 0; }
-}
-
-
-html { background: #fdf6e3; color: #657b83; }
-h1, h2, h3, h4, h5, h6, strong, b { color: #586e75; }
-nav { background: #002b36; }
-nav li a:hover { background: #073642; }
-#footnotes li:target { background: #fdf6e3; }
-#footnotes { background: #eee8d5; }
-figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
-del, #metadata span { color: #93a1a1; }
-::-moz-selection { color: #93a1a1;  background: #002b36; }
-::selection { color: #93a1a1;  background: #002b36; }
-nav *::-moz-selection { background: #fdf6e3; color: #586e75; }
-nav *::selection { background: #fdf6e3; color: #586e75; }
-@media (max-width: 875px){
-  footer { background: #002b36; color: #93a1a1; }
-}
-
-@media (prefers-color-scheme: dark) {
-  html { background: #002b36; color: #839496; }
-  h1, h2, h3, h4, h5, h6, strong, b { color: #93a1a1; }
-  nav { background: #fdf6e3; }
-  nav li a:hover { background: #eee8d5; }
-  #footnotes li:target { background: #002b36; }
-  #footnotes { background: #073642; }
-  figure, table, pre, blockquote, caption, mathp { background: #073642; }
-  del, #metadata span { color: #586e75; }
-  ::-moz-selection { color: #586e75;  background: #fdf6e3; }
-  ::selection { color: #586e75;  background: #fdf6e3; }
-  nav *::-moz-selection { background: #002b36; color: #93a1a1; }
-  nav *::selection { background: #002b36; color: #93a1a1; }
-  @media (max-width: 875px){
-    footer { background: #fdf6e3; color: #586e75; }
-  }
-}
-
-@media not print {
-    code .kw { color: #268BD2; }
-    code .dt { color: #268BD2; }
-    code .dv,
-    code .bn,
-    code .fl { color: #D33682; }
-    code .ch { color: #DC322F; }
-    code .st { color: #2AA198; }
-    code .co { color: #93A1A1; }
-    code .ot { color: #A57800; }
-    code .al { color: #CB4B16; font-weight: bold; }
-    code .fu { color: #268BD2; }
-    code .re { }
-    code .er { color: #D30102; font-weight: bold; }
-}
-
-@media print {
-    * {
-        background: transparent !important;
-    }
-
-    main, header, footer {
-        width: auto;
-        max-width: none;
-    }
-
-    html, body{
-        font-size: 12pt;
-        color: #000;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        color: #000;
-    }
-
-    nav {
-        display: none;
-    }
-
-    #generator {
-        display: none;
-    }
-
-    main {
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        box-shadow: none;
-    }
-
-    #title {
-        color: #000;
-    }
-
-    #copy::before, #copy:before {
-        content: "The content in this document is licensed under";
-    }
 }
