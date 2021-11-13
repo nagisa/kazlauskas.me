@@ -33,26 +33,19 @@ site = stdenv.mkDerivation {
 nginxConf = pkgs.runCommand "nginxConf" { preferLocalBuild = true; }
   "mkdir $out && cp -vp ${./nginx.conf} $out/nginx.conf";
 
-shadow = pkgs.dockerTools.buildImage {
-  name = "shadow";
-  runAsRoot = ''
-    #!${pkgs.runtimeShell}
-    ${pkgs.dockerTools.shadowSetup}
-    groupadd -r nginx
-    useradd -r -g nginx nginx
-    mkdir /nginx
-    mkdir -p /var/cache/nginx /var/log/nginx
-    chown nginx:nginx /nginx /var/cache/nginx /var/log/nginx
-  '';
+nginxBase = pkgs.dockerTools.pullImage {
+  imageName = "nginx";
+  finalImageTag = "alpine";
+  imageDigest = "sha256:f51b557cbb5e8dfd8c5e416ae74b58fe823efe52d9f9fed3f229521844a509e2";
+  sha256 = "sha256-WBzZtRoBLwo5lUTwhMySMFMc4D4Y1tM2X43098G7FTQ=";
 };
 
 in pkgs.dockerTools.streamLayeredImage {
   name = "kazlauskas-me";
   tag = "latest";
-  fromImage = shadow;
-  contents = [pkgs.nginx nginxConf site.images site.data site.out];
+  fromImage = nginxBase;
+  contents = [nginxConf site.images site.data site.out];
   config = {
-    Cmd = [ "${pkgs.nginx}/bin/nginx" "-c" "${nginxConf}/nginx.conf" "-p" "/nginx" ];
-    User = "nginx";
+    Cmd = [ "nginx" "-c" "${nginxConf}/nginx.conf" ];
   };
 }
