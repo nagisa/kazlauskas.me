@@ -1,5 +1,5 @@
 ---
-title: Black Magic driven development of Blue 💊s
+title: Black Magic driven development of Blue Pills
 published: 2017-08-02
 tags: Embedded
 ---
