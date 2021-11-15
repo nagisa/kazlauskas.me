@@ -77,6 +77,8 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     font-weight: 700;
     margin: 0.25em 0;
+    padding: 0 .5em;
+    padding: 0 .5rem;
 }
 
 h1 {
@@ -122,7 +124,8 @@ nav li a:visited {
 
 p {
     margin: 0;
-    text-indent: 2.25em;
+    padding: 0 .5em;
+    text-indent: 1.75em;
     line-height: 1.25em;
     text-align: justify;
 }
@@ -197,11 +200,7 @@ pre code {
 
 blockquote {
     margin: .25em 0;
-    padding: .25em .5em;
-}
-
-blockquote p {
-    text-indent: 1.25em;
+    padding: .25em 0;
 }
 
 article ol, article ul {
@@ -267,7 +266,7 @@ mathp {
     max-width: calc(100% + 1em);
     overflow-x: auto;
     padding: .5em 0;
-    margin: .5em 0;
+    margin: .5em -.5em;
 }
 
 mathp > math {
@@ -305,36 +304,23 @@ mathp > math > semantics {
 
 #footnotes p {
     text-indent: 0;
-    display: block;
-    margin-left: 2em;
+    margin: 0;
+    padding: 0;
 }
 
 #footnotes ol {
-    padding: 0 .5em 0 0;
     margin: 0;
-    list-style: none;
-    counter-reset: footnote;
+    padding: 0 .25em 0 2em;
+    padding-left: 4ch;
 }
 
 #footnotes li {
-    padding: .25em 0 .25em 0;
-    overflow: hidden;
-    border: 0 solid transparent;
-    border-width: 0 .25em 0 .25em;
+    padding: 0 .25em;
 }
 
-#footnotes li::before, #footnotes li:before {
-    counter-increment:footnote;
-    content: counters(footnote, "") ".";
-    float: left;
-    width: 2em;
-    text-align: center;
-}
-
-
-#footnotes li a:last-child {
+#footnotes .footnote-back {
     float: right;
-    margin: 0 .15em;
+    margin: 0 0 0 .15em;
 }
 
 header {
