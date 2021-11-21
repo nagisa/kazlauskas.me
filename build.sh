@@ -14,6 +14,7 @@ do
   fi
 done
 
-sh "$workdir/install" --no-channel-add --daemon --daemon-user-count 32
+mkdir -p /nix
+sh "$workdir/install" --no-channel-add
 
 nix-build
