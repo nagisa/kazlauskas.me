@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -xe
+
 workdir=$(mktemp -d)
 trap 'rm -rf "$workdir"' EXIT
 
@@ -14,7 +16,7 @@ do
   fi
 done
 
-mkdir -p /nix
+mkdir -m 0755 /nix && chown buildbot /nix
 sh "$workdir/install" --no-channel-add
 
 nix-build
