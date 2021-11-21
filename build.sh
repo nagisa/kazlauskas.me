@@ -18,5 +18,6 @@ done
 
 mkdir -m 0755 /nix && chown buildbot /nix
 sh "$workdir/install" --no-channel-add
+source $HOME/.nix-profile/etc/profile.d/nix.sh
 
 nix-build
