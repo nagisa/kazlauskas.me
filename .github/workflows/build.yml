@@ -18,4 +18,6 @@ jobs:
         with:
           name: site
           path: ${{ steps.build.outputs.RESULT }}
-          retention-days: 1
+          retention-ays: 1
+      - name: Trigger a deploy
+        run: curl ${{ secrets.CF_DEPLOY_HOOK_URL }}
