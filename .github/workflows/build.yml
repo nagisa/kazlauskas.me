@@ -12,9 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
       - uses: cachix/install-nix-action@v15
-      - run: nix-build
+      - id: build
+        run: echo "::set-output name=RESULT::$(nix-build)'
       - uses: actions/upload-artifact@v2
         with:
           name: site
-          path: result/
+          path: ${{ steps.build.outputs.RESULT }}
           retention-days: 1
