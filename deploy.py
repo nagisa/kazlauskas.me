@@ -4,6 +4,7 @@ import json
 import zipfile
 import shutil
 import os
+import datetime
 
 gh_token = os.environ['GH_TOKEN']
 headers={
@@ -16,7 +17,12 @@ req = rq.Request(
 )
 print(f"Figuring out what to download...")
 with rq.urlopen(req, timeout=20) as artifact:
-    artifact = json.load(artifact)['artifacts'][-1]['archive_download_url']
+    artifacts = json.load(artifact)['artifacts']
+    artifact = max(
+        artifacts,
+        key=lambda o: datetime.datetime.fromisoformat(o["created_at"].replace("Z", "+00:00"))
+    )
+    artifact = artifact["archive_download_url"]
 print(f"Downloading {artifact}...")
 req = rq.Request(url=artifact, headers=headers)
 with rq.urlopen(req, timeout=20) as input, open("artifact.zip", "wb") as output:
