@@ -1,0 +1,20 @@
+name: Build
+
+on:
+  push:
+    paths-ignore:
+      - 'LICENCE'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: cachix/install-nix-action@v15
+      - run: nix-build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: site
+          path: result/
+          retention-days: 1
