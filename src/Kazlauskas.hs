@@ -31,8 +31,8 @@ main = do
             route   idRoute
             compile jsCompiler
 
-        match "redirects.conf" $ do
-            route $ constRoute ".redirects.conf"
+        match "_redirects" $ do
+            route $ constRoute "_redirects"
             compile copyFileCompiler
 
         match "entries/**.mkd" $ do
