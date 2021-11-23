@@ -14,7 +14,7 @@ stdenv.mkDerivation {
       let relPath = lib.removePrefix (toString ./. + "/") (toString name);
           isInteresting = path: prefix: lib.hasPrefix prefix path;
       in lib.any (isInteresting relPath) [
-        "pages" "templates" "images" "entries" "data" "redirects.conf"
+        "pages" "templates" "images" "entries" "data" "_redirects" "_headers"
       ]
     );
   };
