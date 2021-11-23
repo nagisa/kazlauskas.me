@@ -1,14 +1,2 @@
-https://:project.pages.dev/*
-  X-Robots-Tag: noindex
-
-/*
-  Cache-Control: public, max-age=3600
-  X-CC: public, max-age=3600
-
-/data/*
-  Cache-Control: public, max-age=432000
-  X-CC: public, max-age=432000
-
-/images/*
-  Cache-Control: public, max-age=432000
-  X-CC: public, max-age=432000
+/entries/:title
+  x-entry-name: You are reading ":title"
