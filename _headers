@@ -1,8 +1,11 @@
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
 /*
-  Cache-Control: max-age=3600
+  Cache-Control: public, max-age=3600
+  X-CC: public, max-age=3600
 /data/*
-  Cache-Control: max-age=432000
+  Cache-Control: public, max-age=432000
+  X-CC: public, max-age=432000
 /images/*
-  Cache-Control: max-age=432000
+  Cache-Control: public, max-age=432000
+  X-CC: public, max-age=432000
