@@ -1,0 +1,8 @@
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+/*
+  Cache-Control: max-age=3600
+/data/*
+  Cache-Control: max-age=432000
+/images/*
+  Cache-Control: max-age=432000

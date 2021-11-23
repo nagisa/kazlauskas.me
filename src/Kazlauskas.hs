@@ -35,6 +35,10 @@ main = do
             route $ constRoute "_redirects"
             compile copyFileCompiler
 
+        match "_headers" $ do
+            route $ constRoute "_headers"
+            compile copyFileCompiler
+
         match "entries/**.mkd" $ do
             route $ setExtension "html"
             compile $ fmap demoteHeaders <$> entryCompiler
