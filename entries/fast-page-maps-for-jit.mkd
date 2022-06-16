@@ -1,0 +1,419 @@
+---
+title: Fast page maps for JIT
+published: 2022-06-14
+tags: Programming, Linux
+---
+
+I have been thinking about ways to optimize a workload that utilizes a WebAssembly runtime with JIT
+code generation capabilities a lot recently. This runtime implementation utilizes a fairly typical
+construction for a JIT-based engine, however the workload utilizes the runtime in somewhat an
+unusual manner. Every time some function within a module is invoked, it will be within a fresh
+instance. Furthermore, the invocations are user-generated and will involve reasonably randomized
+set of WemAssembly modules, precluding the application of a cache which would otherwise help
+significantly in this sort of situation. This workload definitely poses a fair share of interesting
+challenges for
+me to beat!
+
+To give a brief overview of the workload and the runtime’s construction:
+
+1. A random blob of WebAssembly code is transmitted to the machine running this workload;
+2. The blob is parsed, validated and the machine code is generated for the module;
+3. The machine code is loaded into a region of memory;
+4. Relocations are applied and functions provided by the embedder are linked in;
+5. The memory region is made executable;
+6. An instance of this is created and the code within the module is executed.
+
+Machine code generation is by far the most expensive step here. Fortunately, given a large enough
+disk a fair amount of the generated machine code can be cached, and this cache helps the throughput
+tremendously. Same cannot be said about the next most expensive step in this workload – loading,
+relocation and linking. There isn't a machine with enough memory for a cache of linked machine code
+to be effective. That calls for making the operation itself faster. Much faster.
+
+# Naïveté
+
+In order to load some executable code into the memory a typical runtime implementation will request
+some writeable memory pages using the `mmap` (or `VirtualAlloc` on Windows) system call, copy the
+executable code over, apply any fix-ups (relocation, linking) and then adjust the mapping such that
+its contents become executable. Once the module is discarded, the mapping is returned to the kernel
+for recycling.
+
+The runtime I am working on is no different. Here’s a rough sketch of what a code loading routine
+looks like. This code is written in a form of a benchmark that could be easily profiled with
+`criterion`’s `--profile-time` flag:
+
+```rust
+benchmark.iter(|| {
+    let map_size = ceil_to_page(module_size);
+    let map = io::mmap_anonymous(
+        ptr::null_mut(),
+        map_size,
+        ProtFlags::READ | ProtFlags::WRITE,
+        MapFlags::PRIVATE,
+    )?;
+    write_module(map, module_size);
+    io::mprotect(
+        map,
+        size,
+        MprotectFlags::READ | MprotectFlags::EXEC
+    )?;
+    execute_module(map, module_size);
+    io::munmap(map, map_size)?;
+})
+```
+
+<!-- TODO: publish the repository -->
+
+I used the `rustix` crate to interface with the kernel here. The APIs exposed by this library are
+largely mirrors of the C API for these functionalities, with [some minor
+conveniences][mmap_anonymous]. The `write_module` function models the process of copying the
+machine code from disk to memory, applying relocations, linking and such. For the purposes of these
+benchmark this function will only write a function return sequence at the beginning of each page.
+`execute_module` then takes the populated mapping and calls the function at the beginning of each
+page once. If you would like to follow along, the implementation for these functions, as well as an
+easily runnable benchmark suite can be found [on GitHub][repo][^portability]. Let’s run the
+benchmark under `perf` and see what the hot spots look like:
+
+[repo]: https://github.com/nagisa/jit-mmap-benchmarks
+
+
+<figure class="fullwidth">
+<object type="image/svg+xml" width="100%" data="/images/safe-rwx-maps/naive.svg">
+<img src="/images/safe-rwx-maps/naive.svg" />
+</object>
+<figcaption>Flamegraph for the `naive` benchmark[^overhead]</figcaption>
+</figure>
+
+I had anticipated to see a lot of time being spent in the kernel land – the model is invoking the
+`mmap`, `mprotect` and `munmap` system calls in a pretty tight loop here. What I did not expect was
+the 30% of the time spent in the kernel as a result of the `write_module` function which does not
+call into the kernel in any way. Out of curiosity, as a sanity check, I also ran a similar
+benchmark on other UNIX-like systems such as FreeBSD and OpenBSD. The genereal shape of the
+flamegraph was reproducible there just as well.
+
+[mmap_anonymous]: https://docs.rs/rustix/0.34.8/rustix/io/fn.mmap_anonymous.html
+[^portability]: Beware: no effort went into making the benchmarks runnable outside x86_64-linux.
+[^overhead]: Note that `perf_event` frames are profiling overhead. I couldn't find a nice way to
+  get `perf` to exclude them. Those frames should largely be ignored.
+
+# Reduce, \[Reuse], Recycle
+
+Let’s construct some hypotheses. First, these are all UNIX-like systems that rely on memory
+overcommitment to operate well. It is most likely that `mmap` will not actually cause any physical
+memory pages to be allocated (faulted in) eagerly, at least not without additional flags. The
+allocation will only happen when these memory pages are accessed for the first time. Second, the
+pages returned by `mmap` are guaranteed to be initialized with every byte set to 0. This
+initialization needs to happen somewhere and it is quite plausible that this _could_ also be a part
+of an explanation why page faults are so prominent[^1].
+
+[^1]: Linux at least might already have some mechanism to zero these pages out more eagerly, in
+  the background, with
+  [PG_zero](https://lore.kernel.org/lkml/20200412090728.GA19572@open-light-1.localdomain/). This
+  work does not appear to have made its way to the upstream kernel yet, though.
+
+If these hypotheses turn out to be true, then it must be the case that reusing the old `mmap`
+allocation would result in neither of these operations occuring more than once during the entire
+lifetime of the mapping. The physical memory pages will have been paged in by the `module_write`
+call executed during the very first benchmark iteration, and the kernel no longer needs to zero out
+these pages again! Not to mention, the time spent handling repeated `mmap` and `munmap` system
+calls would also go away. Some adjustments later:
+
+```rust
+let map_size = ceil_to_page(module_size);
+let map = io::mmap_anonymous(
+    ptr::null_mut(),
+    map_size,
+    ProtFlags::empty(),
+    MapFlags::PRIVATE
+)?;
+benchmark.iter(|| {
+    io::mprotect(
+        map,
+        map_size,
+        MprotectFlags::READ | MprotectFlags::WRITE
+    )?;
+    write_module(map, module_size);
+    io::mprotect(
+        map,
+        map_size,
+        MprotectFlags::READ | MprotectFlags::EXEC
+    )?;
+    execute_module(map, module_size);
+    Ok(())
+})
+io::munmap(map, map_size);
+```
+
+With the benchmark iteration time decreasing to less than 50% (from 4.6µs/iteration down to
+2.2µs/it[^system]) of the original naive benchmark, the improvement is definitely very appreciable.
+Notwithstanding, a significant chunk of the time is still being spent inside the kernel. `mprotect`
+is one thing – no work has gone into improving it yet – but why is `write_module` still causing
+such a significant number of page faults?
+
+[^system]: Benchmarks were executed on a system running a Ryzen 1700 processor, running a Linux
+  5.15, with plenty of available pages.
+
+<figure class="fullwidth">
+<object type="image/svg+xml" width="100%" data="/images/safe-rwx-maps/reuse.svg?s=asm_exc_page_fault">
+<img src="/images/safe-rwx-maps/reuse.svg" />
+</object>
+<figcaption>Flamegraph for the `reuse` benchmark</figcaption>
+</figure>
+
+# CoW-culator
+
+A long look at the Linux source code seemed to suggest that every time this mapping was made
+writable by the `mprotect` call, the kernel would walk through all the affected pages and mark them
+to be copied out into a new page the next time there’s a write to the page. This mechanism is
+widely known as Copy-on-Write, abbreviated as CoW, and is crucial piece of what makes operations
+such as [`fork(2)` ~~super~~ fast
+enough](https://www.microsoft.com/en-us/research/publication/a-fork-in-the-road/).
+
+However in our case we're holding the only reference to the physical memory region, and the kernel
+_knows_ that. Each kernel page has an associated reference count which is necessary to ensure that
+pages shared between virtual mappings aren’t recycled for a different mapping while still in use.
+My intuition suggests that all of the CoW business overhead observed in the benchmark above could
+be entirely avoided if only kernel had consulted that reference count. There must be a good
+reason why it didn’t, but it is beyond me to find out what that reason might be. Whatever the case
+may be, I need my stuff to go fast last week, not next kernel LTS release.
+
+Taking stock of the learnings so far: the benchmark is now reusing _some_ resources, but one of the
+resources we were hoping to reuse are still being recycled. This recycling takes a form of
+pages being copied around each iteration severely impacting the throughput in a negative way.
+Taking some guesses, POSIX systems provide a mechanism to ensure pages stay allocated in physical
+memory and are not moved to swap or otherwise paged out via `mlock`. `mmap` exposes this mechanism
+directly via the `LOCKED` flag as well. Maybe this would help? The benchmark code is largely the
+same as in the `reuse` case, with this small change to the `mmap` flags:
+
+```diff
+ let map = io::mmap_anonymous(
+     ptr::null_mut(),
+     map_size,
+     ProtFlags::empty(),
+-    MapFlags::PRIVATE
++    MapFlags::PRIVATE | MapFlags::LOCKED // ← here
+ )?;
+```
+
+Running the adapted benchmark reveals a decrease in iteration time from 2.2µs/it down to 1.9µs/it.
+More importantly, lo-and-behold, page faults are no more! Yay! Spoiler alert: the kernel is still
+recycling the pages, even if it is doing so faster in this neatly tucked away call to
+`populate_vma_page_range`. Yikes.
+
+<figure class="fullwidth">
+<object type="image/svg+xml" width="100%" data="/images/safe-rwx-maps/reuse_lock.svg?s=populate_vma_page_range">
+<img src="/images/safe-rwx-maps/reuse_lock.svg" />
+</object>
+<figcaption>Flamegraph for the `reuse_lock` benchmark</figcaption>
+</figure>
+
+# Write, Read and Execute
+
+At this point, establishing the absolute fastest implementation that could possibly be had would be
+nice. If only to learn just how much overhead is still waiting to be eliminated. A mapping that is
+readable, writeable _and_ executable all at once would likely fit the bill. No `mprotect` calls
+between `write_module` and `execute_module`, the mapping is still reused and there are no
+apparent cracks for the party-ruining kernel to squeze through:
+
+```rust
+let map_size = ceil_to_page(module_size);
+let result = io::mmap_anonymous(
+    ptr::null_mut(),
+    map_size,
+    ProtFlags::READ | ProtFlags::WRITE | ProtFlags::EXEC,
+    MapFlags::PRIVATE,
+);
+benchmark.iter(|| {
+    write_module(map, module_size);
+    execute_module(map, module_size);
+});
+io::munmap(map, map_size);
+```
+
+At 100 nanoseconds, more than 15 times faster than `reuse_lock`, this benchmark spends majority of
+its time doing the Actually Useful Work. This is so fast, the overheads from `criterion` become
+quite prominent in the flamegraph, with the actual benchmark representing just 80% of the samples.
+
+<figure class="fullwidth">
+<object type="image/svg+xml" width="100%" data="/images/safe-rwx-maps/rwx.svg?s=mmap_benchmarks::main::{{closure}}::{{closure}}">
+<img src="/images/safe-rwx-maps/rwx.svg" />
+</object>
+<figcaption>Flamegraph for the `rwx` benchmark</figcaption>
+</figure>
+
+Time for trade-offs! Read-write-execute maps have a fatal flaw that makes then unusable as is.
+Maintaining an invariant that all pages in the process are either writable or executable and never
+both is an important and very potent defense-in-depth strategy. This mitigation single-handedly can
+prevent attacker’s memory write gadgets from very quickly escalating into a trivial arbitrary code
+execution exploits. With all pages either writable or executable, an attacker may be able to write
+all the arbitrary code they want, but large majority of those writes will never get executed no
+matter what. This mitigation is so useful and prevalent that some major computer hardware vendors
+figured it’d be the prime time to enforce `W^X` at the hardware level. Even if RWX pages weren’t a
+scary enough concept by themselves, sacrificing support for hardware with a significant market
+share definitely makes this an uninteresting option.
+
+# HugeTLB
+
+The review of the kernel code did reveal another interesting tidbit. Handling of the huge pages
+(`MAP_HUGETLB`) branch out into an entirely different module. The code along this other path seemed
+different enough to suggest it might be worth trying out. Having fewer pages to slog through cannot
+hurt either way, so I felt _compelled_ to find out what would it take for me to get some of these
+sweet and fancy pages. Quite a lot, it turns out.
+
+In order to use huge pages in an userspace process, the huge page pool must be set up and filled up
+with some of these pages first. While there is a mechanism to do so at any time – by writing the
+desired number of huge pages to the `vm.nr_hugepages` sysctl, this is not guaranteed to succeed at
+all. If the machine was running for long enough to significantly fragment the memory, this
+allocation can and will fail, leaving `vm.nr_hugepages` at 0. If the stars align right, it might
+even succeed in part with `vm.nr_hugepages` becoming anything between 0 and the requested
+number. The only way to set up the pool reliably turned out to involve adjusting kernel’s boot
+parameters and rebooting.
+
+It is important to note that this pool is also a global resource shared across all processes on the
+system. Heavy reliance on huge pages can expose an application to weird, non-deterministic and
+difficult to reproduce performance problems that only show up in scenarios where this resource is
+exhausted[^pkey]. Well… trying it out won’t hurt:
+
+[^pkey]: For what it is worth, there is another global resource related to map permissions – pkeys.
+  These are supposedly much, much faster but do require hardware I don't have access to, so I won't
+  be covering them here. You can read about them in the `pkeys(7)` manual entry.
+
+```rust
+let map_size = ceil_to_page(module_size, 2 * 1024 * 1024);
+let map = io::mmap_anonymous(
+    ptr::null_mut(),
+    map_size,
+    ProtFlags::empty(),
+    MapFlags::PRIVATE | MapFlags::HUGETLB | MapFlags::HUGE_2MB,
+)?;
+benchmark.iter(|| {
+    io::mprotect(
+        map,
+        map_size,
+        MprotectFlags::READ | MprotectFlags::WRITE
+    )?;
+    write_module(map, module_size);
+    io::mprotect(
+        map,
+        map_size,
+        MprotectFlags::READ | MprotectFlags::EXEC
+    )?;
+    execute_module(map, module_size);
+    Ok(())
+});
+io::munmap(map, map_size);
+```
+
+Running this benchmark yields a significant improvement over the `reuse_lock` benchmark with the
+iteration time decreasing to 1.2µs/it. Unfortunately, this benchmark also marks the second
+coming of the `write_module` page faults. Any attempts to combine the `MapFlags::LOCKED` and
+`MapFlags::HUGETLB` flags would result in a deluge of undocumented `EWOULDBLOCK` errors for reasons
+I still don’t understand. The complex setup to use HugeTLB make this approach inapplicable for most
+use-cases where a JIT engine is employed – including my own – so digging any further didn’t seem
+worthwhile. I'll spare you from yet another flamegraph for this one.
+
+# What was that about privacy?
+
+There is actually a sanctioned way to entirely circumvent the Copy-on-write semantics that I had
+missed despite reading through the `mmap(2)` page multiple times over – the `SHARED` mapping type.
+So far all of the benchmarks have utilized the `PRIVATE` mapping type. The purpose of this type is
+to ensure any changes to the mapped memory or file do not escape the specific mapping, through
+which these changes were introduced. For JIT purposes this is an important property – things would
+Crash and Burn and Explode if perchance something else overwrote some code that was being executed
+by the process running The Workload. The copy-on-write semantics ensure that this cannot happen
+even in the offchance the process decided to self-identify as a prokaryote and `fork`s itself. If
+`fork` is of no concern, a `SHARED` mapping is definitely the type to consider. Replacing the
+`mmap` function in one of the benchmarks above as such…
+
+``` {.diff .rust}
+ let result = io::mmap_anonymous(
+     ptr::null_mut(),
+     size,
+     ProtFlags::empty(),
+-    MapFlags::PRIVATE,
++    MapFlags::SHARED, // ← here
+ );
+```
+
+…and running the adapted benchmark will reveal a sizable improvement to the throughput, with each
+iteration taking ~1.2µs. While this code is still spending a significant amount of time in the
+kernel, all of that work _seems_ to be doing something useful – flipping permissions back &
+forth, flushing the TLBs and, most importantly, none of the stuff it shouldn’t be doing.
+
+<figure class="fullwidth">
+<object type="image/svg+xml" width="100%" data="/images/safe-rwx-maps/reuse_shared.svg">
+<img src="/images/safe-rwx-maps/reuse_shared.svg" />
+</object>
+<figcaption>Flamegraph for the `reuse_shared` benchmark</figcaption>
+</figure>
+
+
+# Pseudo read-write-execute maps
+
+We’ve already established it is possible to go even faster! More than 10 times faster, in fact.
+Turns out, that by combining the worst parts of the other approaches, we can construct an
+implementation that works on the shiny new Apple systems, does not need to deal with heavily
+limited global resource pools and is as fast as a proper read-write-execute mapping, all without
+exposing an attack surface as large as the naive read-write-execute option.
+
+In addition to diabling the CoW semantics, `SHARED` `mmap`s also allow creation of multiple
+mappings to the same underlying region of memory. If we cannot have the blazing-fast RWX mappings,
+maybe it would be possible to set up _two_ mappings, where one is readable and executable, while
+the other is writable? It that doesn’t sound promising, I don’t know what does!
+
+Here are some things that are necessary for a shared mapping: a file descriptor representing the
+region of memory we want to create a mapping to. And… that’s it! On Linux a `memfd` can serve as a
+straightforward mechanism to come up with such a file descriptor, but `shm_open` could be used as a
+reasonably portable alternative. Performance wise, it probably doesn’t matter which one is used
+and, as one of the maintainers of the `memfd-rs`, I’m more familiar with `memfd`. So `memfd` it is:
+
+```rust
+let map_size = ceil_to_page(module_size);
+let memfd = fs::memfd_create("gotta_go_fast", MemfdFlags::CLOEXEC)?;
+fs::ftruncate(&memfd, map_size as u64)?;
+let executable_map = io::mmap(
+    ptr::null_mut(),
+    map_size,
+    ProtFlags::READ | ProtFlags::EXEC,
+    MapFlags::SHARED,
+    &memfd,
+    0,
+)?;
+let write_map = io::mmap(
+    ptr::null_mut(),
+    map_size,
+    ProtFlags::WRITE,
+    MapFlags::SHARED,
+    &memfd,
+    0,
+)?;
+benchmark.iter(|| {
+    write_module(write_map, module_size);
+    execute_module(executable_map, module_size);
+    Ok(())
+})
+io::munmap(map, map_size);
+```
+
+As hoped, this implementation hits the 100ns/iteration north star, matching the throughput of the
+fastest benchmark we had till now. No significant time is spent in the kernel at all:
+
+<figure class="fullwidth">
+<object type="image/svg+xml" width="100%" data="/images/safe-rwx-maps/memfd.svg">
+<img src="/images/safe-rwx-maps/memfd.svg" />
+</object>
+<figcaption>Flamegraph for the `memfd` benchmark</figcaption>
+</figure>
+
+Yes, this implementation is still technically constructing a region of memory that’s readable,
+writable and executable at the same time, but it actually is not as terrible as it sounds. Think
+about it this way: the JIT-compiled machine code will typically stay in a writable memory for a
+long time (according to computer time scales, anyway) before it is copied over into an executable
+region of memory. Placing a write-only view into some executable memory at some random offset
+within 256TiBs of 48-bit address space can’t make that status quo much worse. For the particularly
+paranoid, re-creating the view at a different random location every couple executions would likely
+generate enough chaos in the system to thwart anybody looking to find this mapping in the first
+place, let alone exploit it.
+
+Of course, I’m not suggesting that taking such chances would be appropriate in workloads where
+lives are on the line. Such systems should keep all the airbags they can. For my specific workload
+where things just _need_ to go fast? Well, a seatbelt may have to do.
