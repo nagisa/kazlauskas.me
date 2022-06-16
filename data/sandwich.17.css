@@ -1,44 +1,45 @@
-@font-face{
-    font-family:'Alegreya';
-    font-style:normal;
-    font-weight:400;
-    src:local('Alegreya'),
-        local('Alegreya-Regular'),
-    url(/data/alegreya/400.woff) format('woff');
+@font-face {
+    font-family: 'Source Code Pro';
+    font-weight: 200 900;
+    font-style: normal;
+    src: local('Source Code Pro'),
+         url(/data/source-code-variable-roman.woff2) format('woff2'),
+         url(/data/source-code-variable-roman.woff) format('woff'),
+         url(/data/source-code-variable-roman.ttf) format('truetype');
+    font-display: fallback;
 }
 
-@font-face{
-    font-family:'Alegreya';
-    font-style:italic;
-    font-weight:400;
-    src:local('Alegreya Italic'),
-        local('Alegreya-Italic'),
-        url(/data/alegreya/400i.woff) format('woff');
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: bold;
+    font-style: italic;
+    src: local('Source Serif 4 Variable Bold Italic'),
+         url(/data/source-serif-italic.woff2) format('woff2'),
+         url(/data/source-serif-italic.woff) format('woff'),
+         url(/data/source-serif-italic.ttf) format('truetype');
+    font-display: fallback;
 }
 
-@font-face{font-family:'Alegreya';
-    font-style:normal;
-    font-weight:700;
-    src:local('Alegreya Bold'),
-        local('Alegreya-Bold'),
-        url(/data/alegreya/700.woff) format('woff');
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: normal;
+    font-style: italic;
+    src: local('Source Serif 4 Variable Italic'),
+         url(/data/source-serif-italic.woff2) format('woff2'),
+         url(/data/source-serif-italic.woff) format('woff'),
+         url(/data/source-serif-italic.ttf) format('truetype');
+    font-display: fallback;
 }
 
-@font-face{font-family:'Alegreya';
-    font-style:italic;
-    font-weight:700;
-    src:local('Alegreya Bold Italic'),
-        local('Alegreya-BoldItalic'),
-        url(/data/alegreya/700i.woff) format('woff');
-}
-
-@font-face{font-family:'Source Code Pro';
-    font-style:normal;
-    font-weight:400;
-    src:local('Source Code Pro Regular'),
-        local('SourceCodePro-Regular'),
-        local('Source Code Pro'),
-        url(/data/sourcecodepro/400.woff) format('woff');
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 200 900;
+    font-style: normal;
+    src: local('Source Serif 4 Variable'),
+         url(/data/source-serif.woff2) format('woff2'),
+         url(/data/source-serif.woff) format('woff'),
+         url(/data/source-serif.ttf) format('truetype');
+    font-display: fallback;
 }
 
 * {
@@ -56,17 +57,41 @@ body {
     margin: 0;
     padding: 0;
     font-size: 1em;
-    font-size: clamp(1em, 3.5vw, 1.5em);
-    font-family: "Alegreya", "Heuristica", "Cardo", "Crimson Text", serif;
+    font-size: clamp(1em, 3.5vw, 1.33em);
+    font-family: 'Source Serif', serif;
     font-kerning: normal;
-    font-variant-ligatures: common-ligatures contextual;
+    font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
     min-width: 300px;
 }
 
-main, footer, header {
-    max-width: 35em;
-    max-width: 70ch;
+footer,
+header,
+article p,
+article ul,
+article ol,
+figure,
+table,
+pre,
+blockquote,
+caption,
+mathp,
+#footnotes {
+    max-width: 980px;
     margin: 0 auto;
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+    max-width: 980px;
+}
+
+.fullwidth {
+    width: 100%;
+    max-width: unset;
 }
 
 main {
@@ -75,8 +100,8 @@ main {
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
-    font-weight: 700;
-    margin: 0.25em 0;
+    font-weight: bold;
+    margin: 0.25em auto;
     padding: 0 .5em;
     padding: 0 .5rem;
 }
@@ -110,7 +135,7 @@ h6 {
     color: #268bd2;
 }
 
-:link:hover, :link:hover * {
+:link:hover {
     text-decoration: underline;
 }
 
@@ -131,14 +156,14 @@ p {
 }
 
 strong, b {
-    font-weight: 700;
+    font-weight: bold;
 }
 
 p>img {
     display: block;
     max-width: 100%;
     max-width: calc(100% + 1em);
-    margin: .5em 0;
+    margin: .5em -.5em;
 }
 
 figure>img {
@@ -148,7 +173,7 @@ figure>img {
 }
 
 figure {
-    margin: .5em 0;
+    margin: .5em auto;
     padding: 0;
 }
 
@@ -161,35 +186,29 @@ table>caption {
     padding: .25em .5em .05em;
 }
 
-figure, table, pre, blockquote, caption, mathp {
-    max-width: 100%;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: .5em 0;
+    margin: .5em auto;
     table-layout: fixed;
 }
 
 th {
-  border-bottom: 1px solid #073642;
+    border-bottom: 1px solid #073642;
 }
 
 td, th {
-  padding: 0 .75ex;
+    padding: 0 .75ex;
 }
 
 pre, code {
     font-family: "Source Code Pro", monospace;
-    font-size: 0.9em;
 }
 
 pre {
-    max-width: 100%;
     overflow-x: auto;
     padding: .5em 0;
-    margin: .5em 0;
+    margin: .5em auto;
 }
 
 pre code {
@@ -199,13 +218,18 @@ pre code {
 }
 
 blockquote {
-    margin: .25em 0;
+    margin: .25em auto;
     padding: .25em 0;
 }
 
 article ol, article ul {
-    margin: .5em 0;
+    margin: .5em auto;
     padding: 0 0 0 2.25em;
+}
+
+article ol ul, article ul ul, article ol ol, article ul ul {
+    margin: 0;
+    padding: 0 0 0 1.5em;
 }
 
 article>p:last-child, article>section:last-child {
@@ -320,7 +344,6 @@ mathp > math > semantics {
 
 #footnotes .footnote-back {
     float: right;
-    margin: 0 0 0 .15em;
 }
 
 header {
@@ -334,7 +357,7 @@ header {
     white-space: nowrap;
     padding: .5em;
     flex-grow: 1;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 nav ul {
@@ -374,7 +397,7 @@ footer {
 }
 
 #generator::before, #generator:before{
-    content: "Proudly";
+    content: "Made with";
 }
 
 #copy {
@@ -385,25 +408,11 @@ footer {
     content: "The content in this page is licensed under";
 }
 
-/* 35em * 1.5em maximum font size */
-@media screen and (max-width: 52.5em) {
-    main, footer {
-        width: 100% !important;
-        max-width: none;
-    }
+@media screen and (max-width: 400px) {
     .entries li { padding: .5em 0 !important; }
 }
 
-/* 70ch * 1.5em maximum font size */
-@media screen and (max-width: 105ch) {
-    main, footer {
-        width: 100% !important;
-        max-width: none;
-    }
-    .entries li { padding: .5em 0 !important; }
-}
-
-@media screen and (max-width: 35em){
+@media screen and (max-width: 400px){
     #copy::before, #copy:before {
         content: "©";
     }
@@ -420,7 +429,8 @@ nav li a:hover { background: #073642; }
 #footnotes li:target { background: #fdf6e3; border-color: #eee8d5; }
 #footnotes { background: #eee8d5; }
 figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
-del, #metadata span { color: #93a1a1; }
+#metadata span { color: #93a1a1; }
+:link>del, :visited>del, del { color: #93a1a1; text-decoration: line-through; }
 ::-moz-selection { color: #93a1a1;  background: #002b36; }
 ::selection { color: #93a1a1;  background: #002b36; }
 #hdr *::-moz-selection { background: #fdf6e3; color: #586e75; }
@@ -434,7 +444,7 @@ del, #metadata span { color: #93a1a1; }
   #footnotes li:target { background: #002b36; border-color: #073642; }
   #footnotes { background: #073642; }
   figure, table, pre, blockquote, caption, mathp { background: #073642; }
-  del, #metadata span { color: #586e75; }
+  del, :link>del, :visited>del, #metadata span { color: #586e75; }
   ::-moz-selection { color: #586e75;  background: #fdf6e3; }
   ::selection { color: #586e75;  background: #fdf6e3; }
   #hdr *::-moz-selection { background: #002b36; color: #93a1a1; }
@@ -442,25 +452,31 @@ del, #metadata span { color: #93a1a1; }
 }
 
 @media not print {
-    code .kw { color: #268BD2; }
-    code .dt { color: #268BD2; }
-    code .dv,
-    code .bn,
-    code .fl { color: #D33682; }
-    code .ch { color: #DC322F; }
-    code .st { color: #2AA198; }
-    code .co { color: #93A1A1; }
-    code .ot { color: #A57800; }
-    code .al { color: #CB4B16; font-weight: bold; }
-    code .fu { color: #268BD2; }
-    code .re { }
-    code .er { color: #D30102; font-weight: bold; }
+    code span.kw { color: #859900; }
+    code span.dt { color: #b58900; }
+    code span.dv, code span.fl, code span.st, code span.ch,
+    code span.sc, code span.ss, code span.vs, code span.bn { color: #2aa198; }
+    code span.at, code span.op { color: #dc322f; }
+    code span.co { color: #839496; }
+    code span.cv { color: #839496; font-weight: bold; font-style: italic; }
+    code span.do { color: #839496; }
+    code span.ot, code span.cf, code span.im { color: #859900; }
+    code span.va { color: #2aa198; }
+    code span.fu { color: #268bd2; }
+    code span.al, code span.er { color: #d33682; font-weight: bold; } /* Alert */
+    code span.an { color: #6c71c4; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.in, code span.wa { color: #b58900; font-weight: bold; font-style: italic; }
+    code.diff span.st { color: #dc322f; }
+    code.diff span.va { color: #859900; }
+    @media (prefers-color-scheme: dark) {
+        code span.co { color: #657b83; }
+        code span.cv { color: #657b83; font-weight: bold; font-style: italic; }
+        code span.do { color: #657b83; }
+    }
 }
 
 @media print {
-    * {
-        background: transparent !important;
-    }
+    * { background: transparent !important; }
 
     main, header, footer {
         width: auto;
@@ -506,7 +522,7 @@ del, #metadata span { color: #93a1a1; }
 .years, .entries {
     list-style: none;
     padding: 0 .5em;
-    margin: 1em 0 .5em;
+    margin: 1em auto .5em;
 }
 
 .entries {
@@ -516,7 +532,7 @@ del, #metadata span { color: #93a1a1; }
 
 .years>li:before {
     content: attr(data-year) "";
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .entries li {

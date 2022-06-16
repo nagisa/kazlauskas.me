@@ -7,6 +7,7 @@ module Configuration
 
 import Hakyll
 import Text.Pandoc.Options
+import Text.Pandoc.Highlighting    (pygments)
 import Text.Hyphenation            (english_GB, Hyphenator(..))
 import Text.Hyphenation.Exception  (addException)
 
@@ -23,6 +24,7 @@ siteWriterOptions :: WriterOptions
 siteWriterOptions = defaultHakyllWriterOptions
     { writerHTMLMathMethod = MathML
     , writerSectionDivs = True
+    , writerHighlightStyle = Just pygments
     }
 
 hakyllConfiguration = defaultConfiguration
