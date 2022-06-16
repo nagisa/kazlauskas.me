@@ -48,7 +48,7 @@ the projects:
 [stm32loader]: https://github.com/jsnyder/stm32loader
 [^1]: clang and lldb could also be used, but using them is out of scope for this post.
 
-```
+```bash
 arm-none-eabi-gcc --version # should print something
 git clone https://github.com/jsnyder/stm32loader.git
 git clone https://github.com/blacksphere/blackmagic.git
@@ -57,7 +57,7 @@ git clone https://github.com/blacksphere/blackmagic.git
 The usual build of Black Magic Probe consists of two binaries, which I couldn’t easily program with
 stm32loader, so some extra preparation was necessary after the build:
 
-```
+```bash
 cd blackmagic
 make -j PROBE_HOST=stlink
 cp src/blackmagic_dfu.bin ./

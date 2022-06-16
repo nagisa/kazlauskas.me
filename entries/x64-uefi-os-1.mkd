@@ -79,7 +79,7 @@ efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
 However, compiling this code correctly is not as trivial. Following three commands are necessary to
 produce a working UEFI application:
 
-```bash
+``` {.bash .fullwidth}
 clang -I/usr/include/efi -I/usr/include/efi/x86_64 -I/usr/include/efi/protocol -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DHAVE_USE_MS_ABI -c -o src/main.o src/main.c
 ld -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic -L /usr/lib /usr/lib/crt0-efi-x86_64.o src/main.o -o huehuehuehuehue.so -lefi -lgnuefi
 objcopy -j .text -j .sdata -j .data -j .dynamic -j .dynsym  -j .rel -j .rela -j .reloc --target=efi-app-x86_64 huehuehuehuehue.so huehuehuehuehue.efi
@@ -141,25 +141,35 @@ efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
     // Initialize graphics
     EFI_GRAPHICS_OUTPUT_PROTOCOL *graphics;
     EFI_GUID graphics_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
-    status = SystemTable->BootServices->LocateProtocol(&graphics_proto, NULL, (void **)&graphics);
+    status = SystemTable->BootServices->LocateProtocol(
+        &graphics_proto, NULL, (void **)&graphics
+    );
     if(status != EFI_SUCCESS) return status;
     status = init_graphics(graphics);
     if(status != EFI_SUCCESS) return status;
 
     // Figure out the memory map (should be identity mapping)
-    boot_state.memory_map = LibMemoryMap(&boot_state.memory_map_size,
-                                         &boot_state.map_key,
-                                         &boot_state.descriptor_size,
-                                         &boot_state.descriptor_version);
+    boot_state.memory_map = LibMemoryMap(
+        &boot_state.memory_map_size,
+        &boot_state.map_key,
+        &boot_state.descriptor_size,
+        &boot_state.descriptor_version
+    );
     // Exit the boot services...
-    SystemTable->BootServices->ExitBootServices(ImageHandle, boot_state.map_key);
+    SystemTable->BootServices->ExitBootServices(
+        ImageHandle, boot_state.map_key
+    );
     // and set up the memory map we just found.
-    SystemTable->RuntimeServices->SetVirtualAddressMap(boot_state.memory_map_size,
-                                                       boot_state.descriptor_size,
-                                                       boot_state.descriptor_version,
-                                                       boot_state.memory_map);
+    SystemTable->RuntimeServices->SetVirtualAddressMap(
+        boot_state.memory_map_size,
+        boot_state.descriptor_size,
+        boot_state.descriptor_version,
+        boot_state.memory_map
+    );
     // Once we’re done we power off the machine.
-    SystemTable->RuntimeServices->ResetSystem(EfiResetShutdown, EFI_SUCCESS, 0, NULL);
+    SystemTable->RuntimeServices->ResetSystem(
+        EfiResetShutdown, EFI_SUCCESS, 0, NULL
+    );
     for(;;) __asm__("hlt");
 }
 ```
@@ -177,7 +187,9 @@ application’s own `EFI_HANDLE`, the `HandleProtocol` method should be used ins
 ```c
 EFI_LOADED_IMAGE *loaded_image = NULL;
 EFI_GUID loaded_image_protocol = LOADED_IMAGE_PROTOCOL;
-EFI_STATUS status = SystemTable->BootServices->HandleProtocol(ImageHandle, &loaded_image_protocol, &loaded_image);
+EFI_STATUS status = SystemTable->BootServices->HandleProtocol(
+    ImageHandle, &loaded_image_protocol, &loaded_image
+);
 ```
 
 # Next steps
