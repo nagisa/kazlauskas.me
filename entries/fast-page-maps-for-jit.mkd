@@ -9,7 +9,7 @@ code generation capabilities a lot recently. This runtime implementation utilize
 construction for a JIT-based engine, however the workload utilizes the runtime in somewhat an
 unusual manner. Every time some function within a module is invoked, it will be within a fresh
 instance. Furthermore, the invocations are user-generated and will involve reasonably randomized
-set of WemAssembly modules, precluding the application of a cache which would otherwise help
+set of WebAssembly modules, precluding the application of a cache which would otherwise help
 significantly in this sort of situation. This workload definitely poses a fair share of interesting
 challenges for
 me to beat!
@@ -87,7 +87,7 @@ I had anticipated to see a lot of time being spent in the kernel land – the mo
 `mmap`, `mprotect` and `munmap` system calls in a pretty tight loop here. What I did not expect was
 the 30% of the time spent in the kernel as a result of the `write_module` function which does not
 call into the kernel in any way. Out of curiosity, as a sanity check, I also ran a similar
-benchmark on other UNIX-like systems such as FreeBSD and OpenBSD. The genereal shape of the
+benchmark on other UNIX-like systems such as FreeBSD and OpenBSD. The general shape of the
 flamegraph was reproducible there just as well.
 
 [mmap_anonymous]: https://docs.rs/rustix/0.34.8/rustix/io/fn.mmap_anonymous.html
@@ -111,7 +111,7 @@ of an explanation why page faults are so prominent[^1].
   work does not appear to have made its way to the upstream kernel yet, though.
 
 If these hypotheses turn out to be true, then it must be the case that reusing the old `mmap`
-allocation would result in neither of these operations occuring more than once during the entire
+allocation would result in neither of these operations occurring more than once during the entire
 lifetime of the mapping. The physical memory pages will have been paged in by the `module_write`
 call executed during the very first benchmark iteration, and the kernel no longer needs to zero out
 these pages again! Not to mention, the time spent handling repeated `mmap` and `munmap` system
@@ -212,7 +212,7 @@ At this point, establishing the absolute fastest implementation that could possi
 nice. If only to learn just how much overhead is still waiting to be eliminated. A mapping that is
 readable, writeable _and_ executable all at once would likely fit the bill. No `mprotect` calls
 between `write_module` and `execute_module`, the mapping is still reused and there are no
-apparent cracks for the party-ruining kernel to squeze through:
+apparent cracks for the party-ruining kernel to squeeze through:
 
 ```rust
 let map_size = ceil_to_page(module_size);
@@ -320,7 +320,7 @@ to ensure any changes to the mapped memory or file do not escape the specific ma
 which these changes were introduced. For JIT purposes this is an important property – things would
 Crash and Burn and Explode if perchance something else overwrote some code that was being executed
 by the process running The Workload. The copy-on-write semantics ensure that this cannot happen
-even in the offchance the process decided to self-identify as a prokaryote and `fork`s itself. If
+even in the off chance the process decided to self-identify as a prokaryote and `fork`s itself. If
 `fork` is of no concern, a `SHARED` mapping is definitely the type to consider. Replacing the
 `mmap` function in one of the benchmarks above as such…
 
@@ -355,7 +355,7 @@ implementation that works on the shiny new Apple systems, does not need to deal 
 limited global resource pools and is as fast as a proper read-write-execute mapping, all without
 exposing an attack surface as large as the naive read-write-execute option.
 
-In addition to diabling the CoW semantics, `SHARED` `mmap`s also allow creation of multiple
+In addition to disabling the CoW semantics, `SHARED` `mmap`s also allow creation of multiple
 mappings to the same underlying region of memory. If we cannot have the blazing-fast RWX mappings,
 maybe it would be possible to set up _two_ mappings, where one is readable and executable, while
 the other is writable? It that doesn’t sound promising, I don’t know what does!
