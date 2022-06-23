@@ -276,10 +276,6 @@ hr:after {
     line-height: 2.05em;
 }
 
-math {
-    font-size: 0.85em;
-}
-
 /* Math paragraph, for $$math$$ to not be considered literally its own paragraph
  *
  * Mostly just for display purposes.
