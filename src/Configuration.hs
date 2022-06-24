@@ -3,6 +3,8 @@ module Configuration
     , siteWriterOptions
     , hakyllConfiguration
     , hyphLang
+    , fontRanges
+    , fontRangesCss
     ) where
 
 import Hakyll
@@ -10,6 +12,7 @@ import Text.Pandoc.Options
 import Text.Pandoc.Highlighting    (pygments)
 import Text.Hyphenation            (english_GB, Hyphenator(..))
 import Text.Hyphenation.Exception  (addException)
+import Data.List                   (intercalate)
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -45,3 +48,37 @@ hyphLang = lang { hyphenatorExceptions = exceptions }
         , "dig-it-al-ocean" -- O-cean is not hyphenated as it does not satisfy
                             -- hyphenatorLeftMin
         ]
+
+-- Obtained with glyphs.py
+fontRangeList = [ "0-7f"
+             , "a9"
+             , "ad"
+             , "ae"
+             , "b5"
+             , "b7"
+             , "bd"
+             , "d7"
+             , "e9"
+             , "ef"
+             , "14d"
+             , "3b3"
+             , "2013"
+             , "2014"
+             , "2019"
+             , "201c"
+             , "201d"
+             , "2026"
+             , "2032"
+             , "20ac"
+             , "2190"
+             , "21a9"
+             , "2212"
+             , "2227"
+             , "2248"
+             , "2261"
+             , "226b"
+             , "fe0e"]
+fontRanges :: String
+fontRanges = intercalate "," fontRangeList
+fontRangesCss :: String
+fontRangesCss = intercalate "," $ map ("U+" ++) fontRangeList

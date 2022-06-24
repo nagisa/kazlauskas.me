@@ -3,43 +3,104 @@
     font-weight: 200 900;
     font-style: normal;
     src: local('Source Code Pro'),
-         url(/data/source-code-variable-roman.woff2) format('woff2'),
-         url(/data/source-code-variable-roman.woff) format('woff'),
-         url(/data/source-code-variable-roman.ttf) format('truetype');
+         url(/data/scvr.a.woff2) format('woff2'),
+         url(/data/scvr.a.ttf) format('truetype');
     font-display: fallback;
 }
 
 @font-face {
-    font-family: 'Source Serif';
-    font-weight: bold;
-    font-style: italic;
-    src: local('Source Serif 4 Variable Bold Italic'),
-         url(/data/source-serif-italic.woff2) format('woff2'),
-         url(/data/source-serif-italic.woff) format('woff'),
-         url(/data/source-serif-italic.ttf) format('truetype');
-    font-display: fallback;
-}
-
-@font-face {
-    font-family: 'Source Serif';
-    font-weight: normal;
-    font-style: italic;
-    src: local('Source Serif 4 Variable Italic'),
-         url(/data/source-serif-italic.woff2) format('woff2'),
-         url(/data/source-serif-italic.woff) format('woff'),
-         url(/data/source-serif-italic.ttf) format('truetype');
-    font-display: fallback;
-}
-
-@font-face {
-    font-family: 'Source Serif';
+    font-family: 'Source Code Pro';
     font-weight: 200 900;
     font-style: normal;
-    src: local('Source Serif 4 Variable'),
-         url(/data/source-serif.woff2) format('woff2'),
-         url(/data/source-serif.woff) format('woff'),
-         url(/data/source-serif.ttf) format('truetype');
+    src: local('Source Code Pro'),
+         url(/data/scvr.c.woff2) format('woff2'),
+         url(/data/scvr.c.ttf) format('truetype');
     font-display: fallback;
+    unicode-range: var(--common-unicode-range);
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 700;
+    font-style: italic;
+    src: local('Source Serif 4 Bold Italic'),
+         url(/data/ss4-bit.a.woff2) format('woff2'),
+         url(/data/ss4-bit.a.ttf) format('truetype');
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 700;
+    font-style: italic;
+    src: local("Source Serif 4 Bold Italic"),
+         url(/data/ss4-bit.c.woff2) format('woff2'),
+         url(/data/ss4-bit.c.ttf) format('truetype');
+    font-display: fallback;
+    unicode-range: var(--common-unicode-range);
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 400;
+    font-style: italic;
+    src: local('Source Serif 4 Italic'),
+         url(/data/ss4-it.a.woff2) format('woff2'),
+         url(/data/ss4-it.a.ttf) format('truetype');
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 400;
+    font-style: italic;
+    src: local("Source Serif 4 Italic"),
+         url(/data/ss4-it.c.woff2) format('woff2'),
+         url(/data/ss4-it.c.ttf) format('truetype');
+    font-display: fallback;
+    unicode-range: var(--common-unicode-range);
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+    src: local('Source Serif 4 Bold'),
+         url(/data/ss4-b.a.woff2) format('woff2'),
+         url(/data/ss4-b.a.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+    src: local('Source Serif 4 Bold'),
+         url(/data/ss4-b.c.woff2) format('woff2'),
+         url(/data/ss4-b.c.ttf) format('truetype');
+    unicode-range: var(--common-unicode-range);
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+    src: local('Source Serif 4'),
+         url(/data/ss4-r.a.woff2) format('woff2'),
+         url(/data/ss4-r.a.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Source Serif';
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+    src: local('Source Serif 4'),
+         url(/data/ss4-r.c.woff2) format('woff2'),
+         url(/data/ss4-r.c.ttf) format('truetype');
+    unicode-range: var(--common-unicode-range);
 }
 
 * {
@@ -51,16 +112,16 @@
 html {
     margin: 0;
     padding: 0;
-}
-
-body {
-    margin: 0;
-    padding: 0;
     font-size: 1em;
     font-size: clamp(1em, 3.5vw, 1.33em);
     font-family: 'Source Serif', serif;
     font-kerning: normal;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+}
+
+body {
+    margin: 0;
+    padding: 0;
     min-width: 300px;
 }
 

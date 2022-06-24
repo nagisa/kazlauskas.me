@@ -22,7 +22,7 @@ executable kazlauskas
                , bytestring == 0.10.*
                , hyphenation >= 0.7 && <= 0.9
                , hjsmin == 0.2.*
-               , pandoc >= 1.14 && < 2.15
+               , pandoc >= 1.14 && < 2.18
                , pandoc-types >= 1.17 && <= 1.23
                , binary == 0.8.*
                , xml == 1.3.*

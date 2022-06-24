@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -eux
+
+TEMP=$(mktemp -d)
+trap 'rm -rf $TEMP' EXIT
+cat - > $TEMP/file.ttf
+woff2_compress $TEMP/file.ttf >&2
+woff2_info $TEMP/file.woff2 >&2
+cat $TEMP/file.woff2

@@ -8,16 +8,17 @@ module Contexts
     ) where
 
 import Control.Applicative ((<|>), (<$>), empty)
-import Data.Monoid         (mconcat, (<>))
 import Control.Monad       (forM, (<=<))
+import Data.List           (groupBy)
+import Data.Monoid         (mconcat, (<>))
 import Data.Time.Calendar  (toGregorian)
 import Data.Time.Clock     (utctDay)
-import Data.List           (groupBy)
 import Data.Time.Format    (defaultTimeLocale)
 import Hakyll
 import Text.Pandoc.Options
 
 import Utils (splitFootnotes)
+import Configuration
 
 entryContext = mconcat [ footnotesField "footnotes"
                        , bodyField' "body"
@@ -58,7 +59,9 @@ entriesByYearContext key yK aK aC entries = listField key yearGroup entries'
 
 
 baseContext = {- defaultField "copy" "CC BY 3.0" <> defaultContext -}
-    constField "copy" "CC BY 3.0" <> defaultContext
+    constField "copy" "CC BY 3.0" <>
+    constField "common-unicode-ranges" fontRangesCss <>
+    defaultContext
 
 maybeField :: String -> (Item a -> Compiler (Maybe String)) -> Context a
 maybeField key value = field key $ maybe empty return <=< value

@@ -1,6 +1,6 @@
-{ stdenv, lib, haskellPackages, base, binary, bytestring, containers, hakyll
-, hjsmin, hyphenation, pandoc, pandoc-types, tagsoup, time
-, xml
+{ stdenv, lib, makeWrapper
+, woff2, harfbuzz
+, haskellPackages
 }:
 
 haskellPackages.mkDerivation {
@@ -18,10 +18,21 @@ haskellPackages.mkDerivation {
 
   isLibrary = false;
   isExecutable = true;
-  executableHaskellDepends = [
+  executableHaskellDepends = with haskellPackages; [
     base binary bytestring containers hakyll hjsmin hyphenation pandoc
     pandoc-types tagsoup time xml
   ];
+  buildTools = [ makeWrapper ];
+
+  postInstall = ''
+    mkdir -p $out/bin
+    install src/make-it-woff2 $out/bin/make-it-woff2
+    wrapProgram $out/bin/make-it-woff2 \
+      --prefix PATH : ${lib.makeBinPath [ woff2 ]}
+    wrapProgram $out/bin/kazlauskas \
+      --prefix PATH : ${lib.makeBinPath [ harfbuzz.dev ]}
+  '';
+
   homepage = "http://kazlauskas.me";
   description = "My hakyll blog";
   license = lib.licenses.mit;
