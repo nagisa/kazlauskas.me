@@ -103,6 +103,43 @@
     unicode-range: var(--common-unicode-range);
 }
 
+:root {
+    font-size: clamp(1em, 2.5vw, 1.3333em);
+}
+
+@media not print {
+    :root {
+        --bg: #fdf6e3;
+        --bghl: #eee8d5;
+        --fg: #586e75;
+        --fglc: #839496;
+        --ibg: #002b36;
+        --ibghl: #073642;
+        --ifg: #93a1a1;
+
+        --yl: #b58900;
+        --or: #cb4b16;
+        --rd: #dc322f;
+        --mg: #d33682;
+        --vl: #6c71c4;
+        --bl: #268bd2;
+        --cn: #2aa198;
+        --gr: #859900;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #002b36;
+            --bghl: #073642;
+            --fg: #93a1a1;
+            --fglc: #657b83;
+            --ibg: #fdf6e3;
+            --ibghl: #eee8d5;
+            --ifg: #586e75;
+        }
+    }
+}
+
 * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -112,11 +149,11 @@
 html {
     margin: 0;
     padding: 0;
-    font-size: 1em;
-    font-size: clamp(1em, 3.5vw, 1.33em);
     font-family: 'Source Serif', serif;
     font-kerning: normal;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+    background: var(--bg);
+    color: var(--fg);
 }
 
 body {
@@ -135,10 +172,17 @@ table,
 pre,
 blockquote,
 caption,
+figcaption,
 mathp,
-#footnotes {
+.footnotes,
+#metadata {
     max-width: 980px;
     margin: 0 auto;
+}
+
+table, pre, blockquote, caption, mathp {
+    border: var(--bghl) solid;
+    border-width: 0 .25rem;
 }
 
 article h1,
@@ -160,11 +204,9 @@ main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    text-align: center;
     font-weight: bold;
-    margin: 0.25em auto;
-    padding: 0 .5em;
-    padding: 0 .5rem;
+    margin: 0 auto;
+    padding: .5rem;
 }
 
 h1 {
@@ -193,26 +235,25 @@ h6 {
 
 :link, :link>* {
     text-decoration: none;
-    color: #268bd2;
+    color: var(--bl);
 }
 
 :link:hover {
     text-decoration: underline;
 }
 
-:visited, :visited>* {
-    color: #2aa198;
+:link>del, :visited>del, del {
+    color: var(--fglc);
+    text-decoration: line-through;
 }
 
-nav li a:visited {
-    color: #268bd2;
+:visited, :visited>* {
+    color: var(--cn);
 }
 
 p {
-    margin: 0;
     padding: 0 .5em;
     text-indent: 1.75em;
-    line-height: 1.25em;
     text-align: justify;
 }
 
@@ -227,24 +268,27 @@ p>img {
     margin: .5em -.5em;
 }
 
-figure>img {
+figure>img, figure>object {
     margin: 0 auto;
     display: block;
     max-width: 100%;
+    border-bottom: solid var(--bghl) .25rem;
 }
 
 figure {
-    margin: .5em auto;
+    margin: .25em auto;
     padding: 0;
 }
 
 figcaption, caption {
-    padding: .05em .5em .25em;
-    text-align: center;
+    text-align: left;
+    padding: .25rem;
+    border: solid var(--bghl);
+    border-width: 0 .25rem;
 }
 
 table>caption {
-    padding: .25em .5em .05em;
+    padding: .25em .25rem .05em;
 }
 
 table {
@@ -255,7 +299,7 @@ table {
 }
 
 th {
-    border-bottom: 1px solid #073642;
+    border-bottom: .25rem solid var(--bghl);
 }
 
 td, th {
@@ -268,19 +312,46 @@ pre, code {
 
 pre {
     overflow-x: auto;
-    padding: .5em 0;
-    margin: .5em auto;
+    padding: .25rem 0;
+    margin: .25rem auto;
 }
 
 pre code {
     /* Banzai all the hacks! */
     display: inline-block;
-    padding: 0 .5em;
+    padding: 0 .25rem;
 }
 
+code span.kw { color: var(--gr); }
+code span.dt { color: var(--yl); }
+code span.dv, code span.fl, code span.st, code span.ch,
+code span.sc, code span.ss, code span.vs, code span.bn { color: var(--cn); }
+code span.at, code span.op { color: var(--rd); }
+code span.co { color: var(--fglc); }
+code span.cv { color: var(--fglc); font-weight: bold; font-style: italic; }
+code span.do { color: var(--fglc); }
+code span.ot, code span.cf, code span.im { color: var(--gr); }
+code span.va { color: var(--cn); }
+code span.fu { color: var(--bl); }
+code span.al, code span.er { color: var(--mg); font-weight: bold; } /* Alert */
+code span.an { color: var(--vl); font-weight: bold; font-style: italic; } /* Annotation */
+code span.in, code span.wa { color: var(--yl); font-weight: bold; font-style: italic; }
+code.diff span.st { color: var(--rd); }
+code.diff span.va { color: var(--gr); }
+@media (prefers-color-scheme: dark) {
+    code span.co { color: var(--fglc); }
+    code span.cv { color: var(--fglc); font-weight: bold; font-style: italic; }
+    code span.do { color: var(--fglc); }
+}
+
+
 blockquote {
-    margin: .25em auto;
-    padding: .25em 0;
+    margin: .25rem auto;
+    padding: .25rem 0;
+}
+
+blockquote p {
+    padding: 0 .25rem;
 }
 
 article ol, article ul {
@@ -299,10 +370,6 @@ article>p:last-child, article>section:last-child {
 
 article>p:first-child, article>section:first-child {
     margin-top: .5em;
-}
-
-sup, sub {
-    line-height: 0.5;
 }
 
 @supports(font-variant-position:sub){
@@ -324,17 +391,14 @@ sup, sub {
 
 hr {
     border: none;
-    margin: .25em 0;
     text-align: center;
-    height: .5em;
 }
 
-hr:after {
-    content: '· · ·';
-    position: relative;
-    top: -1em;
+hr::after, hr:after {
+    content: '· · · · ·';
     font-size: 2em;
-    line-height: 2.05em;
+    height: .75em;
+    line-height: .75em;
 }
 
 /* Math paragraph, for $$math$$ to not be considered literally its own paragraph
@@ -360,47 +424,77 @@ mathp > math > semantics {
     margin: 0 .5em;
 }
 
-#metadata span {
-    font-size: .85em;
+#metadata {
+    margin: 1em auto;
+    padding: 0 .5rem;
 }
 
-#metadata {
-    text-align: center;
-    margin-bottom: 1em;
+#metadata time {
+    font-size: .75em;
+    color: var(--fglc);
 }
 
 #metadata h1 {
-    margin-bottom: 0em;
+    line-height: 1em;
+    padding: 0;
 }
 
-.footnoteRef sup {
-    padding: 0 0.15em 0 0
+.footnote-ref sup:before {
+    content: "[^";
+}
+.footnote-ref sup:after {
+    content: "]";
 }
 
-#footnotes {
+.footnotes {
     overflow: hidden;
-    margin-top: .25em;
-    padding-bottom: .25em;
+    padding: .25em 0;
+    border: solid var(--bghl);
+    border-width: 0 .25rem;
 }
 
-#footnotes p {
+.footnotes p {
     text-indent: 0;
     margin: 0;
     padding: 0;
 }
 
-#footnotes ol {
+.footnotes ol {
     margin: 0;
     padding: 0 .25em 0 2em;
     padding-left: 4ch;
 }
 
-#footnotes li {
+.footnotes li {
     padding: 0 .25em;
 }
 
-#footnotes .footnote-back {
+.footnotes li:target {
+    background: var(--bg);
+    border-color: var(--bghl);
+}
+
+.footnotes .footnote-back {
     float: right;
+}
+
+.footnotes hr {
+    height: initial;
+    text-align: initial;
+    padding: .25rem .5rem .5rem;
+    margin: 0;
+}
+
+.footnotes hr::after, .footnotes hr:after  {
+    content: "Footnotes";
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.25em;
+    color: var(--fg);
+}
+
+#hdr {
+    background: var(--bghl);
 }
 
 header {
@@ -438,6 +532,11 @@ nav li a {
 
 nav li a:hover {
     text-decoration: none!important;
+    background: var(--bg);
+}
+
+nav li a:visited {
+    color: var(--bl);
 }
 
 footer {
@@ -465,10 +564,6 @@ footer {
     content: "The content in this page is licensed under";
 }
 
-@media screen and (max-width: 400px) {
-    .entries li { padding: .5em 0 !important; }
-}
-
 @media screen and (max-width: 400px){
     #copy::before, #copy:before {
         content: "©";
@@ -479,62 +574,7 @@ footer {
     }
 }
 
-html { background: #fdf6e3; color: #657b83; }
-h1, h2, h3, h4, h5, h6, strong, b { color: #586e75; }
-#hdr { background: #002b36; color: #839496; }
-nav li a:hover { background: #073642; }
-#footnotes li:target { background: #fdf6e3; border-color: #eee8d5; }
-#footnotes { background: #eee8d5; }
-figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
-#metadata span { color: #93a1a1; }
-:link>del, :visited>del, del { color: #93a1a1; text-decoration: line-through; }
-::-moz-selection { color: #93a1a1;  background: #002b36; }
-::selection { color: #93a1a1;  background: #002b36; }
-#hdr *::-moz-selection { background: #fdf6e3; color: #586e75; }
-#hdr *::selection { background: #fdf6e3; color: #586e75; }
-
-@media (prefers-color-scheme: dark) {
-  html { background: #002b36; color: #839496; }
-  h1, h2, h3, h4, h5, h6, strong, b { color: #93a1a1; }
-  #hdr { background: #fdf6e3; color: #657b83; }
-  nav li a:hover { background: #eee8d5; }
-  #footnotes li:target { background: #002b36; border-color: #073642; }
-  #footnotes { background: #073642; }
-  figure, table, pre, blockquote, caption, mathp { background: #073642; }
-  del, :link>del, :visited>del, #metadata span { color: #586e75; }
-  ::-moz-selection { color: #586e75;  background: #fdf6e3; }
-  ::selection { color: #586e75;  background: #fdf6e3; }
-  #hdr *::-moz-selection { background: #002b36; color: #93a1a1; }
-  #hdr *::selection { background: #002b36; color: #93a1a1; }
-}
-
-@media not print {
-    code span.kw { color: #859900; }
-    code span.dt { color: #b58900; }
-    code span.dv, code span.fl, code span.st, code span.ch,
-    code span.sc, code span.ss, code span.vs, code span.bn { color: #2aa198; }
-    code span.at, code span.op { color: #dc322f; }
-    code span.co { color: #839496; }
-    code span.cv { color: #839496; font-weight: bold; font-style: italic; }
-    code span.do { color: #839496; }
-    code span.ot, code span.cf, code span.im { color: #859900; }
-    code span.va { color: #2aa198; }
-    code span.fu { color: #268bd2; }
-    code span.al, code span.er { color: #d33682; font-weight: bold; } /* Alert */
-    code span.an { color: #6c71c4; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.in, code span.wa { color: #b58900; font-weight: bold; font-style: italic; }
-    code.diff span.st { color: #dc322f; }
-    code.diff span.va { color: #859900; }
-    @media (prefers-color-scheme: dark) {
-        code span.co { color: #657b83; }
-        code span.cv { color: #657b83; font-weight: bold; font-style: italic; }
-        code span.do { color: #657b83; }
-    }
-}
-
 @media print {
-    * { background: transparent !important; }
-
     main, header, footer {
         width: auto;
         max-width: none;
@@ -542,11 +582,6 @@ figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
 
     html, body{
         font-size: initial !important;
-        color: #000;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        color: #000;
     }
 
     nav {
@@ -565,14 +600,21 @@ figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
     }
 
     #title {
-        color: #000;
-        text-align: center;
         font-size: 2em;
     }
 
     #copy::before, #copy:before {
         content: "The content in this document is licensed under";
     }
+}
+
+::-moz-selection {
+    color: var(--ifg);
+    background: var(--ibg);
+}
+::selection {
+    color: var(--ifg);
+    background: var(--ibg);
 }
 
 /* Specific pages */
@@ -605,4 +647,8 @@ figure, table, pre, blockquote, caption, mathp { background: #eee8d5; }
 
 .entries time {
     display: none;
+}
+
+@media screen and (max-width: 400px) {
+    .entries li { padding: .5em 0; }
 }
