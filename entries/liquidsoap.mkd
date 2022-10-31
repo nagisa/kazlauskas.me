@@ -164,9 +164,8 @@ decoding implementations used, as long as the prerequisite dependencies are inst
 particular it supports two other industry-standard media toolkits – ffmpeg and GStreamer – out of
 the box, and both are pretty easy to switch to. I chose `ffmpeg` somewhat arbitrarily…
 
-```
+```ocaml
 flac = %ffmpeg(format="ogg", %audio(codec="flac", channels=2, ar=48000))
-# Had to switch to icecast too, as `output.harbor` doesn’t combine with `%ffmpeg` based encoders?
 output.icecast(flac, host="::1", port=2049, password="x", format="application/ogg", mount="flac", radio)
 
 opus = %ffmpeg(format="ogg", %audio(codec="libopus", channels=2, ar=48000, b="256k"))
