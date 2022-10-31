@@ -1,0 +1,206 @@
+---
+title: A beets driven FLAC web radio with liquidsoap
+published: 2022-11-01
+tags:
+---
+
+My computers are setup in a way that most would consider awkward. Inspired somewhat by the
+idea of a large mainframe with thin terminals accessing it, the most (and only) capable computer
+I own is a headless home server. This server is responsible for compiling all the code I work on,
+running all of the services I depend on (wireguard, dns, etc.) and storing the all of my files. My
+extensive music library, most of it encoded in FLAC, is stored on this machine as well.
+
+Until quite recently I never really found myself wanting to access the music stored on the server
+from devices other than my laptop. As thus, sharing the entire music library with any devices that
+might need to access it via the SMB protocol made a fair bit of sense. I would then run a standard
+media player such as quodlibet to play the music on the laptop. Janky? Yes. But it did work okay
+for a long time.
+
+Then, I found myself wanting to access this music library from a phone, Steam Deck or, heck, a
+rooted robot vacuum too. As far as the phone is concerned, I could still use Google’s unmaintained,
+but serviceable, [samba-documents-provider] to mount and access the music library on my phone, much
+the same way I was accessing it on the laptop. While I couldn’t really find a full-featured media
+player that would work well with this setup, I could still point mpv at specific tracks I wanted it
+to play. It worked surprisingly well for how clunky the setup really was. Until the release of
+Android 13, that is, which broke samba-documents-provider entirely.
+
+While there are alternatives to the broken app – [cifs-documents-provider] is one – this breakage
+was a great opportunity to explore how I could streamline the experience. I tend to leave it up to
+the media player to pick the albums to play, and my library too large to keep track of it anyhow,
+so my very own web radio seemed like a promising avenue to explore.
+
+[cifs-documents-provider]: https://github.com/wa2c/cifs-documents-provider
+[samba-documents-provider]: https://github.com/google/samba-documents-provider
+
+# Icecast, IceS, Ezstream
+
+Resources on the internet will readily point anybody who’s looking to set up a web radio to
+Icecast. Many of these resources will often provide some basic examples with `ezstream` or perhaps
+`ices`, and indeed, these examples are enough to get a very basic setup that can play a song. But
+that’s no radio, not yet.
+
+As I was experimenting with these tools, further limitations kept surfacing. Ezstream does not
+support outputting FLAC in any shape or form, for example. IceS supposedly does support FLAC, but
+it not being packaged in [nixpkgs] made it a non-option. I really have better things to do than
+taking on maintenance of one more nixpkgs package.
+
+But most importantly, it wasn’t at all clear how to get a proper web radio with playlists and all
+other basic functions going with this tooling. Writing heaps of bash to glue these pieces together
+somehow didn’t really sound like my definition of fun. At all.
+
+[nixpkgs]: https://github.com/NixOS/nixpkgs
+
+# Liquidsoap
+
+Liquidsoap is a tool originally build precisely to handle requirements of web radios and has since
+evolved into a more general media stream generator. It has many different features such as correct
+input failover, blank detection and stripping. Many of these features are, admittedly, of little
+relevance to me. What really drew me to this project is its’ promise that having a FLAC-streaming
+web radio is going to be no harder to achieve than a more traditional Vorbis- or MP3-based variant.
+
+This project comes with a well written and easy to digest [book][ls-book]. This book takes time to
+explain the story behind this project, the underlying concepts and will hand-hold the readers
+through building their very own web radio. Liquidsoap is an extremely flexible tool. A lot of it
+stems from the functional OCaml-inspired programming/configuration language that liquidsoap comes
+with. This can seem daunting at first[^1] but the resources are of high quality and copy-pasting
+snippets from the book might be just enough to achieve a serviceable result for many.
+
+[^1]: Liquidsoap definitely seemed intimidating to me at first, despite the fact that I had been
+  hacking on [another OCaml project] just a week before.
+
+[liquidsoap]: https://www.liquidsoap.info/
+[ls-book]: https://www.liquidsoap.info/doc-dev/book.html
+[another ocaml project]: https://github.com/WebAssembly/spec/tree/main/interpreter
+
+Side note: it is a lucky accident that I managed to discover [liquidsoap] during my research. I’m
+pretty sure that none of the keyword combinations I tried would coax the search engines to return a
+link to this project or any resource referencing this project even remotely. Hopefully this post
+has sufficient concentration of keywords to help with the discoverability of this project.
+
+# Building a web radio with liquidsoap
+
+```ocaml
+settings.root.max_latency.set(60.)
+settings.frame.duration.set(0.25)
+settings.tag.encodings.set(["UTF-8"])
+
+def beets(id) =
+  queue = ref([])
+
+  def next()
+    while list.is_empty(!queue) do
+      album = string.trim(process.read("beet random -a -p"))
+      queue := playlist.files(album)
+    end
+    song = list.hd(!queue)
+    queue := list.tl(!queue)
+    request.create(song)
+  end
+
+  request.dynamic(id=id, retry_delay=1., next)
+end
+```
+
+I’m using [beets] to tag and manage my library, so it was a pleasant surprise when I found a
+[snippet of code][beets-cookbook] suggesting use of beets as a playlist driver. For the time being
+I have chosen to keep this simple and have beets pick random albums (this is all I really need
+anyhow, though I already have ideas on how I would improve this.)
+
+```ocaml
+radio = beets("random");
+radio = buffer(buffer=1., radio)
+
+default_replaygain = lin_of_dB(-6.);
+normalized = amplify(id="replaygain", override="replaygain_album_gain", default_replaygain, radio)
+radio = mksafe(normalized)
+```
+
+The snippet to apply replaygain volume normalization comes from the book, as do the “directives” to
+output the audio streams (I added opus just because I could! Might come handy if I find myself in a
+bandwidth constrained environment.)
+
+```ocaml
+flac = %flac(samplerate=48000)
+output.harbor(flac, port=2048, mount="flac", radio)
+
+opus = %opus(samplerate=48000)
+output.harbor(opus, port=2048, mount="opus", radio)
+```
+
+These three snippets combined make up the entire configuration file I fed to liquidsoap for the
+first iteration. Things seemed out to be working great at first. I could open the streams in
+Firefox and they were playing music. Problems didn’t take long to surface, though. For example, mpv
+and half of other players I tried would bail or hang when pointed at the FLAC stream.
+
+Blindly copying snippets of code led me to a major oversight. Unable to figure out the problem, I
+even resorted to reimplementing this entire web radio thing with GStreamer (which is a can of worms
+of its own, but that’s a story for another time.). See, the book has this to say about
+`%flac`:
+
+> The FLAC encoding format comes in two flavors:
+>
+> * `%flac` is the native flac format, useful for file output but not for streaming purpose,
+> * `%ogg(%flac)` is the Ogg/flac format, which can be used to broadcast data with Icecast.
+>
+> Note that contrarily to most other codecs, the two are not exactly the same.
+
+I had missed this note entirely and only realized this was the case when GStreamer flipped out at
+me for trying to combine `flacenc` with `shout2send` without an `oggmux` in between. Welp!
+
+```diff
+-flac = %flac(samplerate=48000)
++flac = %ogg(%flac(samplerate=48000))
+```
+
+Now that the streams are working, I could listen to my music from anywhere. All that’s left is to
+turn in for the day.
+
+A proverb along the lines of “trouble doesn’t travel alone” seems aptly fitting here: I found the
+radio dead silent next morning. A SIGSEGV had taken it down. It turned out that the `ocaml-opus`
+and `ocaml-flac` bindings to the encoders that `liquidsoap` uses by default were mishandling my
+media in [some way][opus-sigsegv] or [another][flac-sigsegv]. While these issues seem scary,
+the book will make it pretty clear that `liquidsoap` is actually very agnostic to the encoding and
+decoding implementations used, as long as the prerequisite dependencies are installed. In
+particular it supports two other industry-standard media toolkits – ffmpeg and GStreamer – out of
+the box, and both are pretty easy to switch to. I chose `ffmpeg` somewhat arbitrarily…
+
+```
+flac = %ffmpeg(format="ogg", %audio(codec="flac", channels=2, ar=48000))
+# Had to switch to icecast too, as `output.harbor` doesn’t combine with `%ffmpeg` based encoders?
+output.icecast(flac, host="::1", port=2049, password="x", format="application/ogg", mount="flac", radio)
+
+opus = %ffmpeg(format="ogg", %audio(codec="libopus", channels=2, ar=48000, b="256k"))
+output.icecast(opus, host="::1", port=2049, password="x", format="application/ogg", mount="opus", radio)
+```
+
+…and my radio has been rock-stable since. At the time of writing, this radio has been running for
+the past 3 weeks without a hitch.
+
+[opus-sigsegv]: https://github.com/savonet/ocaml-opus/issues/8
+[flac-sigsegv]: https://github.com/savonet/ocaml-flac/pull/12
+[beets-cookbook]: https://www.liquidsoap.info/doc-dev/beets.html
+[beets]: https://beets.io/
+
+# Future directions
+
+There seems to be a lot of value having access to the media player at a level as low as this. In
+the past I found myself wanting a better shuffle algorithm at times. One that would
+prioritize more recently added albums, for example. Now that `liquidsoap` just invokes a command to
+figure out the next album to play, there’s nothing stopping me from implementing arbitrarily
+complex logic to figure out what the most appropriate next album to play is.
+
+Liquidsoap also provides a lot of control of track transitions. Rather than unconditionally
+playing tracks in sequence, it is now _feasible_ for me to explore DJ-style auto-mix algorithms and
+anything of similar sorts. This is something I definitely wouldn’t have bothered with when limited
+by a local media player. With a radio the results of such explorations would be universally
+available across all devices I might want to listen music on. I probably still won’t ever get to
+_this_ side project, but hey, options.
+
+Liquidsoap also allows exposing a control web interface and API endpooints. These can be used to
+enable arbitrarily complicated external control of the radio. For example, it might make sense to
+add a method to skip tracks (something most media players come with out of the box), enqueue a
+youtube/soundcloud/bandcamp track, album or perhaps everything matching a specific beets query
+(something average media players most definitely do _not_ support).
+
+Ultimately, I’m really happy with liquidsoap so far and I can really recommend trying it out as
+well if a webradio (even if a personal one) seems like something you’d like to have.
