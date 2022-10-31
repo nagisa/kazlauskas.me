@@ -134,7 +134,7 @@ and half of other players I tried would bail or hang when pointed at the FLAC st
 
 Blindly copying snippets of code led me to a major oversight. Unable to figure out the problem, I
 even resorted to reimplementing this entire web radio thing with GStreamer (which is a can of worms
-of its own, but that’s a story for another time.). See, the book has this to say about
+of its own, but that’s a story for another time.) See, the book has this to say about
 `%flac`:
 
 > The FLAC encoding format comes in two flavors:
