@@ -73,4 +73,4 @@ main = do
       route   $ idRoute
       compile $ setItemsIdVersions Nothing . take 25
                 <$> loadAllSorted ("entries/*" .&&. hasVersion "for-atom")
-                >>= renderAtom feedConfiguration feedContext
+                >>= renderAtom feedConfiguration feedContext . take 10
