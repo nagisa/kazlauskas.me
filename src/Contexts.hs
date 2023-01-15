@@ -9,7 +9,8 @@ module Contexts
 
 import Control.Applicative ((<|>), (<$>), empty)
 import Control.Monad       (forM, (<=<))
-import Data.List           (groupBy)
+import Data.List           (groupBy, stripPrefix)
+import Data.Maybe          (fromMaybe)
 import Data.Monoid         (mconcat, (<>))
 import Data.Time.Calendar  (toGregorian)
 import Data.Time.Clock     (utctDay)
@@ -26,6 +27,7 @@ entryContext = mconcat
     , dateField "date" "%Y-%m-%d"
     , dateField "list-date" "%m-%d"
     , modificationTimeField "updated" "%Y-%m-%d"
+    , prettyUrlField "url"
     , defaultContext
     ]
 
@@ -33,6 +35,7 @@ entryContext = mconcat
 feedContext = mconcat
     [ bodyField "description"
     , modificationTimeField "updated" "%Y-%m-%dT%TZ"
+    , prettyUrlField "url"
     , defaultContext
     ]
 
@@ -84,3 +87,10 @@ bodyField' key = field key (return . fst . splitFootnotes . itemBody)
 
 footnotesField :: String -> Context String
 footnotesField key = maybeField key (return . snd . splitFootnotes . itemBody)
+
+-- Not that I care, but cloudflare redirects all `.html` to pages without `.html`, which is… nasty
+-- to say the least. The downside is that hakyll's built-in server no longer works? Yikes.
+prettyUrlField :: String -> Context a
+prettyUrlField key = mapContext (stripSuffix ".html") $ urlField key
+  -- bah!
+  where stripSuffix a b = fromMaybe b $ reverse <$> stripPrefix (reverse a) (reverse b)
