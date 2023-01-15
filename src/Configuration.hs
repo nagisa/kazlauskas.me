@@ -16,11 +16,11 @@ import Data.List                   (intercalate)
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
-    { feedTitle       = "Simonas Kazlauskas"
+    { feedTitle       = "Simonas Kazlauskas’ blog"
     , feedDescription = "kazlauskas.me blog entries"
     , feedAuthorName  = "Simonas Kazlauskas"
     , feedAuthorEmail = "web@kazlauskas.me"
-    , feedRoot        = "http://www.kazlauskas.me"
+    , feedRoot        = "https://kazlauskas.me"
     }
 
 siteWriterOptions :: WriterOptions
