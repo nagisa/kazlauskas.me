@@ -20,23 +20,30 @@ import Text.Pandoc.Options
 import Utils (splitFootnotes)
 import Configuration
 
-entryContext = mconcat [ footnotesField "footnotes"
-                       , bodyField' "body"
-                       , dateField "date" "%Y-%m-%d"
-                       , dateField "list-date" "%m-%d"
-                       , modificationTimeField "updated" "%Y-%m-%d"
-                       , defaultContext
-                       ]
+entryContext = mconcat
+    [ footnotesField "footnotes"
+    , bodyField' "body"
+    , dateField "date" "%Y-%m-%d"
+    , dateField "list-date" "%m-%d"
+    , modificationTimeField "updated" "%Y-%m-%d"
+    , defaultContext
+    ]
 
 
-feedContext = mconcat [ bodyField "description"
-                      , modificationTimeField "updated" "%Y-%m-%dT%TZ"
-                      , defaultContext
-                      ]
+feedContext = mconcat
+    [ bodyField "description"
+    , modificationTimeField "updated" "%Y-%m-%dT%TZ"
+    , defaultContext
+    ]
+
+baseContext = mconcat
+    [ constField "common-unicode-ranges" fontRangesCss
+    , defaultContext
+    , constField "copy" "CC BY 3.0"
+    , constField "description" "I am Simonas Kazlauskas, a software engineer based in Vilnius, Lithuania. This is my blog."
+    ]
 
 entryListContext = listField "entries" entryContext
-
-
 
 entriesByYearContext :: String -> String -> String -> Context String
                      -> Compiler [Item String] -> Context a
@@ -57,11 +64,6 @@ entriesByYearContext key yK aK aC entries = listField key yearGroup entries'
     yearGroup = field yK (return . show . fst . itemBody) <>
         listFieldWith aK aC (return . snd . itemBody)
 
-
-baseContext = {- defaultField "copy" "CC BY 3.0" <> defaultContext -}
-    constField "copy" "CC BY 3.0" <>
-    constField "common-unicode-ranges" fontRangesCss <>
-    defaultContext
 
 maybeField :: String -> (Item a -> Compiler (Maybe String)) -> Context a
 maybeField key value = field key $ maybe empty return <=< value
