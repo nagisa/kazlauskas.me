@@ -1,6 +1,7 @@
 ---
 title: Comments are welcome
 published: 2013-02-23 16:00:00
+description: This website does not allow one to submit comments easily. You can chat with me in some of these other ways.
 tags: Meta
 ---
 

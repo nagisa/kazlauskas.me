@@ -1,6 +1,7 @@
 ---
 title: Browsing without user agent
 published: 2013-03-29 00:00:00+0200
+description: I tried browsing the web without the `User-Agent` header.
 tags: Web, Privacy
 ---
 

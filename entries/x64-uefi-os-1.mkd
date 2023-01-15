@@ -1,6 +1,7 @@
 ---
 title: A x64 OS #1: UEFI
 published: 2016-03-03
+description: I briefly cover what it takes to start writing a kernel which bootstraps in UEFI, as opposed to BIOS.
 tags: OS
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Hyphenation hints and justification
 published: 2013-02-18
+description: "Use `text-align: justify;` in your websites without making words spaced out too weirdly."
 tags: Design, Web
 ---
 

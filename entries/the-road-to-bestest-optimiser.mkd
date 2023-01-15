@@ -1,6 +1,7 @@
 ---
 title: The steps towards rustc, the great optimiser
 published: 2019-02-01
+description: In preparation for the Rust All-Hands 2019 hosted in Berlin I wrote down my thoughts about the issues and pain points in the implementation of the compiler.
 tags: Rust, Programming
 ---
 

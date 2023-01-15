@@ -1,6 +1,7 @@
 ---
 title: What makes [T]::align_to work
 published: 2018-09-30
+description: The `align_to` function introduced to the Rust standard library has complicated implementation details, which this page attempts to clarify.
 tags: Rust, Programming
 ---
 

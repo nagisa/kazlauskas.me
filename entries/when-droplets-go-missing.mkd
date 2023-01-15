@@ -1,6 +1,7 @@
 ---
 title: When droplets go missing
 published: 2014-05-12
+description: DigitalOcean VMs require kernel modules specific to them. This can lead to unbootable instances if you force a kernel upgrade.
 tags: Server Administration
 ---
 

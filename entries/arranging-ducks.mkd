@@ -1,6 +1,7 @@
 ---
 title: Arranging ducks
 published: 2013-01-19
+description: Python’s `range` function is not duck-typed like the rest of the language. There are workarounds though!
 tags: Python
 ---
 

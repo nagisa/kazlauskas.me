@@ -40,7 +40,6 @@ baseContext = mconcat
     [ constField "common-unicode-ranges" fontRangesCss
     , defaultContext
     , constField "copy" "CC BY 3.0"
-    , constField "description" "I am Simonas Kazlauskas, a software engineer based in Vilnius, Lithuania. This is my blog."
     ]
 
 entryListContext = listField "entries" entryContext

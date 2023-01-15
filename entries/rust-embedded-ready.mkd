@@ -1,6 +1,7 @@
 ---
-title: "Transcript: Should you Rust in embedded yet?"
+title: "Transcript: Should you Rust in embedded in 2018?"
 published: 2018-02-22
+description: A transcript of the talk I given in 2018 about the state of embedded programming in Rust.
 tags: Rust, Embedded
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: How to write build.rs scripts properly
 published: 2017-05-14
+description: build.rs scripts afford a great power. With great power comes great responsibility. And plenty of pitfalls.
 tags: Rust
 ---
 

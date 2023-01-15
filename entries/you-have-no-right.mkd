@@ -1,6 +1,7 @@
 ---
 title: You have no right
 published: 2013-03-15
+description: Google killed off the best service on the internet. You might not have any say in it.
 tags: Internet
 ---
 
