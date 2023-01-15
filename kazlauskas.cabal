@@ -19,10 +19,10 @@ executable kazlauskas
   -- other-modules:
   build-depends: base >= 4.8 && < 5.0
                , hakyll >= 4.9.0.0 && < 4.16
-               , bytestring == 0.10.*
+               , bytestring >= 0.10 && < 0.12
                , hyphenation >= 0.7 && <= 0.9
                , hjsmin == 0.2.*
-               , pandoc >= 1.14 && < 2.18
+               , pandoc >= 1.14 && < 2.20
                , pandoc-types >= 1.17 && <= 1.23
                , binary == 0.8.*
                , xml == 1.3.*

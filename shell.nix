@@ -1,4 +1,4 @@
-{ pkgs ? import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/f4b359f751dada1c26ec3b8d62b7fe52ca44b2a6.tar.gz") { } }:
+{ pkgs ? import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/469aec905bab3be98838c7eb996ceffb2ea44404.tar.gz") { } }:
 
 let
   kazlauskas = pkgs.haskellPackages.callPackage ./kazlauskas.nix {};
