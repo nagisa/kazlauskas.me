@@ -62,7 +62,7 @@ This is where the factory pattern comes in. I could set up the configuration typ
 factory for some analysis type which would run according to the constructing configuration. At the
 same time I could also introduce a special `NoConfig` type that would manufacture instances of an
 analysis that does nothing at all. This could all be made to operate on statically known types and
-use static dispatch, setting up the compiler for removal of code pertinent to the disabled
+use static dispatch, setting the compiler up for removal of code pertinent to the disabled
 analysis. When enabled, the analysis would also execute without any additional overhead compared to
 the factory-free approach! In `finite-wasm` analyses’ contexts are created for each individual
 function in a module, and hold a reference to the configuration and module-level facts analysis may
