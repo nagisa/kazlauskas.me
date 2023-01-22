@@ -3,6 +3,7 @@ title: Black Magic driven development of Blue Pills
 published: 2017-08-02
 description: You can flash firmware to your STMs without an expensive programmer with just a Blue Pill development board and some software.
 tags: Embedded
+copy: CC BY 3.0
 ---
 
 For the ongoing project to make myself a custom mechanical keyboard, with an intention to get more

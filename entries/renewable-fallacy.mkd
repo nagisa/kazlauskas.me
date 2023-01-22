@@ -3,6 +3,7 @@ title: The renewable energy fallacy
 published: 2013-03-09
 description: A joke post about the renewable energy label being a hoax on an infinite time scale.
 tags: Natural Sciences
+copy: CC BY 3.0
 ---
 
 It is widely accepted to label energy produced from sources such as sunlight,

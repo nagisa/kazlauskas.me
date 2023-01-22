@@ -3,6 +3,7 @@ title: A beets driven FLAC web radio with liquidsoap
 published: 2022-11-01
 description: Setting up a web radio that broadcasts FLAC, rather than the usual MP3 files.
 tags:
+copy: CC BY 3.0
 ---
 
 My computers are setup in a way that most would consider awkward. Inspired somewhat by the

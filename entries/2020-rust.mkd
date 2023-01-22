@@ -3,6 +3,7 @@ title: Rust in 2020
 published: 2019-11-17
 description: My response to the call for ideas on what Rust should look like in after 2020.
 tags: Rust, Programming
+copy: CC BY 3.0
 ---
 
 This is my response to [the call for blog posts][call2020] on what Rust development focus ought to

@@ -3,6 +3,7 @@ title: "Review of Sunrider: Mask of Arcadius"
 published: 2014-11-12T12:00:00Z
 description: "A review of a free game called Sunrider: Mask of Arcadius."
 url: http://steamcommunity.com/id/nagisachan/recommended/313730
+copy: CC BY 3.0
 ---
 
 Sunrider: Mask of Arcadius is an indie visual novel with a catch. Depending on

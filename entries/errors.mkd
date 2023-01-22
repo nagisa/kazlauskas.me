@@ -3,6 +3,7 @@ title: Context-preserving error handling
 published: 2020-01-26
 description: Herein I describe how I define error types in my Rust codebases such that their retain context all while being reasonably usable still.
 tags: Rust, Programming
+copy: CC BY 3.0
 ---
 
 Error handling story in Rust is still in flux, with people figuring out their preferred ways to get

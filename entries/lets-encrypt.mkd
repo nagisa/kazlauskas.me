@@ -3,6 +3,7 @@ title: Let’s Encrypt!
 published: 2015-10-23
 description: A blog post about `letsencrypt`, a then very new service to obtain free SSL certificates.
 tags: Meta
+copy: CC BY 3.0
 ---
 
 Almost a year ago, an initiative to deliver a free, secure and easy SSL/TLS to everybody on the

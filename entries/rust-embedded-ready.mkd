@@ -3,6 +3,7 @@ title: "Transcript: Should you Rust in embedded in 2018?"
 published: 2018-02-22
 description: A transcript of the talk I given in 2018 about the state of embedded programming in Rust.
 tags: Rust, Embedded
+copy: CC BY 3.0
 ---
 
 This is a transcript of a talk I gave at the Vilnius Rust meetup. You can download slides

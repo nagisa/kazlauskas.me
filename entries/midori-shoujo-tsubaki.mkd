@@ -2,6 +2,7 @@
 title: "Midori: Shōjo Tsubaki"
 published: 2014-01-02T20:37:00Z
 description: A review of a pretty weird anime movie, that appears to be banned in Japan?
+copy: CC BY 3.0
 ---
 
 It’s Japanese. You know those memes of crazy Japanese video game show stunts floating around the

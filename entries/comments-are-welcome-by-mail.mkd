@@ -3,6 +3,7 @@ title: Comments are welcome
 published: 2013-02-23 16:00:00
 description: This website does not allow one to submit comments easily. You can chat with me in some of these other ways.
 tags: Meta
+copy: CC BY 3.0
 ---
 
 A comment section is an expected feature of a modern web site and it is hard to

@@ -3,6 +3,7 @@ title: The steps towards rustc, the great optimiser
 published: 2019-02-01
 description: In preparation for the Rust All-Hands 2019 hosted in Berlin I wrote down my thoughts about the issues and pain points in the implementation of the compiler.
 tags: Rust, Programming
+copy: CC BY 3.0
 ---
 
 It has been more than 3 years now since the MIR initiative has been [accepted][mir-rfc]. Just a

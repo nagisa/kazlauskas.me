@@ -3,6 +3,7 @@ title: A case against tabs
 published: 2013-01-23
 description: Various native applications might be better off by replacing tabs with individual windows.
 tags: Design
+copy: CC BY 3.0
 ---
 
 A long time (12 years or so) ago certain two browsers were fighting over

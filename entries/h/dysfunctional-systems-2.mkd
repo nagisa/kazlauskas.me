@@ -3,6 +3,7 @@ title: Dysfunctional systems and small miscalculations
 published: 2013-04-05
 description: A review of a visual novel game called dysfunctional systems (the spoilers portion.)
 tags: Natural Sciences, Otaku Jinsei
+copy: CC BY 3.0
 ---
 
 **This article spoils the game I've

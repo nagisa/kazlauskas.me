@@ -41,8 +41,10 @@ feedContext = mconcat
 
 baseContext = mconcat
     [ constField "common-unicode-ranges" fontRangesCss
+    , copyField
+    , copyUrlField
+    , copyTitleField
     , defaultContext
-    , constField "copy" "CC BY 3.0"
     ]
 
 entryListContext = listField "entries" entryContext
@@ -94,3 +96,19 @@ prettyUrlField :: String -> Context a
 prettyUrlField key = mapContext (stripSuffix ".html") $ urlField key
   -- bah!
   where stripSuffix a b = fromMaybe b $ reverse <$> stripPrefix (reverse a) (reverse b)
+
+
+copyrightInfo :: String -> Compiler (String, String)
+copyrightInfo "CC BY 3.0" = return ("Creative Commons Attribution 3.0 Unported", "https://creativecommons.org/licenses/by/3.0/deed.en_GB")
+copyrightInfo name = fail $ "Unknown copyright ID: " ++ name
+
+copyField' :: String -> (String -> Compiler String) -> Context a
+copyField' key mapping = field key $ \item -> do
+    let itemId = itemIdentifier item
+        empty' = noResult $ "No copyright information for item " ++ show itemId
+    value <- getMetadataField itemId "copy"
+    maybe empty' mapping value
+
+copyField = copyField' "copy" return
+copyUrlField = copyField' "copyUrl" (fmap snd . copyrightInfo)
+copyTitleField = copyField' "copyTitle" (fmap fst . copyrightInfo)

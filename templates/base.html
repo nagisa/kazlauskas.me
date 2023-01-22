@@ -28,10 +28,12 @@
             <div id="generator">
                 <a href="http://jaspervdj.be/hakyll" class="hakyll">Hakyll</a>
             </div>
+            $if(copy)$
             <span id="copy">
                 <!-- TODO -->
-                <a href="http://creativecommons.org/licenses/by/3.0/deed.en_GB" title="Creative Commons Attribution 3.0 Unported">CC BY 3.0</a>
+                <a href="$copyUrl$" title="$copyTitle$">$copy$</a>
             </span>
+            $endif$
         </footer>
     </body>
 </html>

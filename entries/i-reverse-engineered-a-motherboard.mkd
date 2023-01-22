@@ -3,6 +3,7 @@ title: I reverse engineered a motherboard
 published: 2017-04-15
 description: Wherein I looked into controlling the RGB header on my motherboard without any access to public documentation.
 tags: Programming, OS
+copy: CC BY 3.0
 ---
 
 Recently, feeling restricted by the hardware on my laptop, I built myself a desktop computer based

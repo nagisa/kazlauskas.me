@@ -3,6 +3,7 @@ title: Fast page maps for JIT
 published: 2022-06-14
 description: Managing page map permissions can be a source of significant overhead in JIT VMs. I explore why that’s the case and the possible work-arounds.
 tags: Programming, Linux
+copy: CC BY 3.0
 ---
 
 I have been thinking about ways to optimize a workload that utilizes a WebAssembly runtime with JIT

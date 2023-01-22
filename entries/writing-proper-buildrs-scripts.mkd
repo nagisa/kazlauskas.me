@@ -3,6 +3,7 @@ title: How to write build.rs scripts properly
 published: 2017-05-14
 description: build.rs scripts afford a great power. With great power comes great responsibility. And plenty of pitfalls.
 tags: Rust
+copy: CC BY 3.0
 ---
 
 In Rust ecosystem it is fairly popular for a FFI binding library declare the “native” libraries it

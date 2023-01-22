@@ -3,6 +3,7 @@ title: "Design for mobile: Browser viewport"
 published: 2013-11-03 15:00:00+0200
 description: It is easy to mess up handling of a browser viewport in SPAs, especially when targetting smartphones.
 tags: Design, Web
+copy: CC BY 3.0
 ...
 
 In the corporate environment there's a common misconception converting a design
