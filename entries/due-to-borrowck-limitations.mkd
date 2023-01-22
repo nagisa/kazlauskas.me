@@ -1,0 +1,296 @@
+---
+title: Due to limitations in the borrow checker, this implies a 'static lifetime
+published: 2023-01-21
+description: Experienced Rust developers encounter borrowck errors that almost make them cry too. This one is particularly opaque, but may have an easy fix!
+tags: Rust, Programming
+copy: CC BY 3.0
+---
+
+For the past six months or so I have been working on `finite-wasm`, a project aimed at enforcing
+deterministic resource limits (in time and space) in a runtime agnostic and Easy to Reason About
+way. This project produces a specification (or rather additions to the [WebAssembly specification])
+detailing how these limits should be enforced and analyses implementing the specification. Last
+week I finally published the very first version of this code on `crates.io`, but didn't feel
+comfortable making the repository public quite yet – I had a fair bit of improvements I wanted to
+make first. I’ll try to make a point of writing more about this project at a later date, when the
+project is fully public.
+
+[WebAssembly specification]: https://github.com/WebAssembly/spec
+
+That said, as I was working on the improvements I encountered a perplexing limitation in `rustc`
+that manifests itself as a <code>note: due to current limitations in the borrow checker, this
+implies a `'static` lifetime</code> diagnostic. It seemed great opportunity for a stand-alone blog
+post, if not to document a [possible workaround](#workaround), then to serve as a proof that
+even experienced Rust developers aren’t immune to “fighting the borrow checker” woes. But also
+because this diagnostic message is quite opaque and is hardly documented (I could only find this
+[internals thread][irlo]) and writing my experience down seemed possibly useful to the next
+unfortunate soul to encounter a similar problem. Perhaps this might even inform a change in
+`rustc`?
+
+[irlo]: https://internals.rust-lang.org/t/is-due-to-current-limitations-in-the-borrow-checker-overzealous/17818
+
+# Factory pattern for a no-compromise API
+
+In `finite-wasm` two independent analyses are provided: `max_stack` (space) and `gas` (time). The
+most straightforward way to run them is to use the `analyze` function, which will take the
+binary encoding of a WebAssembly module, parse it and collect the module-level structures relevant
+to the analyses before running all of the analyses on each of the function defined within the
+module:
+
+```rust
+fn analyze(
+    wasm: &[u8],
+    stack_config: impl StackConfig,
+    gas_config: impl GasConfig
+) -> Result<Outcome> { ... }
+```
+
+This is as close as it can get to an ideal interface, but in its quest for ease-of-use, this
+function also ends up making some opinionated choices on user’s behalf. What if they want just the
+gas analysis and don’t care about the stack consumption? This interface provides no way to achieve
+this.
+
+Executing these analyses conditionally is by no means difficult. A boolean argument could be added
+to control execution of each analysis. Or, perhaps, each of the configuration arguments could have
+been an `Option<_>` to keep the number of arguments low and the interface more type-safe. These and
+similar straightforward approaches suffer from a common problem, though. They all introduce
+additional runtime overhead, either by forcing a branch or some dynamic dispatch. The analysis loop
+can get quite hot, meaning this sort of forced runtime overhead would only serve to reduce the
+overall throughput in the common case where both analyses are run.
+
+This is where the factory pattern comes in. By using a factory pattern, I could set up the
+configuration types to act as a factory for an analysis type which runs according to the
+configuration. At the same time I could also introduce a special `Config` type that would
+manufacture instances of a no-op analysis. This is all operating on statically known types and is
+using static dispatch. The compiler has a free reign to optimize code pertinent to the disabled
+analysis to nothing and, when enabled, the analysis would still execute without much overhead as
+well! In `finite-wasm` analyses’ contexts are created for each individual function in a module, and
+hold a reference to the configuration and module-level facts analysis may need to refer to (e.g.
+what types are available?). With that in mind, I ended up with the following definition of the
+`Factory` trait:
+
+```rust
+trait Factory<'a> {
+    type Analysis;
+    fn manufacture(&'a self, state: &'a State) -> Self::Analysis;
+}
+
+// Given any user-defined `Config`, manufacture an effectful analysis
+impl<'a, C: Config + 'a> Factory<'a> for C {
+    type Analysis = Analysis<'a, C>;
+    fn manufacture(&'a self, state: &'a State) -> Self::Analysis {
+        Analysis { state, config: self )
+    }
+}
+
+// No `Config` for this analysis, it won’t run
+pub struct NoConfig;
+impl<'a> Factory<'a> for NoConfig {
+    type Analysis = NoAnalysis;
+    fn manufacture(&'a self, _: &'a State) -> Self::Analysis {
+        NoAnalysis
+    }
+}
+```
+
+With this new infrastructure in place, adjusting the `run_analysis` function with a combination of
+auto-pilot, and compiler diagnostics led me to the following function with a generic lifetime:
+
+```rust
+// NOTE: For demonstrative purposes I simplified the example to
+// just one kind of analysis
+fn run_analysis<'a, F: Factory<'a> + 'a>(code: &[u8], f: F) {
+    let state = State;
+    for function in functions(code) {
+        let _analysis = f.manufacture(&state);
+        todo!("run analysis and collect results");
+    }
+}
+```
+
+This [doesn’t work at all][a]. The compiler complains that neither `f`, nor `state` live long
+enough in this function. I wouldn’t be able to explain what’s the deal with `f`, but `state` is
+quite easy to grok. Consider that a caller can call `run_analysis::<'static, _>`, substituting the
+`'a` lifetime with `'static`. `F` becomes `Factory<'static>` and `Factory::<'static>::manufacture`
+requires that its `state` argument is `'static'` too. This is provably not the case – `state` is
+only alive for the duration of the `run_analysis` function! But I digress.
+
+Rust has a mechanism – higher-ranked trait bounds or HRTBs[^1] – to say that a trait bound must be
+valid `for` any lifetime, letting the function body operate on `F` with _its_ desired lifetime
+substitutions, rather than giving this control to the caller of the function. Removing the `'a`
+lifetime generic and adjusting the `F` trait bound to use a HRTB yields:
+
+[^1]: Explaining how HRTBs work is probably somewhat out of scope for this blog post, especially
+  given the target audience being people who have gotten into trouble with `rustc` over them in the
+  first place, but I’ll modify this post with a link to a good tutorial if I find one.
+
+```rust
+fn run_analysis<F: for<'a> Factory<'a>>(code: &[u8], f: F) {
+    let state = State;
+    for function in functions(code) {
+        let _analysis = f.manufacture(&state);
+        todo!("run analysis and collect results");
+    }
+}
+```
+
+And indeed, this [works][b] swimmingly! The analyses are statically instantiated, and get full
+optimizations for this somewhat hot code. The API is still really convenient, flexible and
+extensible. If I had to come up with a downside, it is the need for some extra documentation to
+guide users towards implementing the `Config` trait rather than `Factory`, but that’s a fee I’m
+willing to stomach.
+
+# Type Erasure? Dynamic Dispatch? References?
+
+The involved user-facing traits, especially `Config`, are usable as dynamic objects. If there is
+any reason for the user to resort to type erased configurations, even at the expense of slower
+execution, who am I to stand in their way? Lack of an implementation allowing use of a
+`&impl Config + ?Sized` as regular `Config` is a blocker, but that’s an easy fix:
+
+```rust
+impl<P: Config + ?Sized> Config for &P {}
+```
+
+With type erased `Config`s as a supported use-case, it wouldn’t be a terrible idea to write a test
+down too:
+
+```diff
+     // Somewhere in the code…
++    run_analysis(b"\0wasm", &my_config as &dyn Config);
+```
+
+Done, and done. Does it work? Of course it does… _[not][c]?!_ `rustc`’s evaluation of my new test
+case is as follows:
+
+```
+error[E0597]: `my_config` does not live long enough
+  --> src/main.rs:55:29
+   |
+55 |     run_analysis(b"\0wasm", &my_config as &dyn Config);
+   |     ------------------------^^^^^^^^^^----------------
+   |     |                       |
+   |     |                       borrowed value does not live long enough
+   |     argument requires that `my_config` is borrowed for `'static`
+56 | }
+   |  - `my_config` dropped here while still borrowed
+   |
+note: due to current limitations in the borrow checker, this implies a `'static` lifetime
+  --> src/main.rs:41:24
+   |
+41 | pub fn run_analysis<F: for<'a> Factory<'a>>(code: &[u8], f: F) {
+   |                        ^^^^^^^^^^^^^^^^^^^
+```
+
+“Betrayal with capital B! There’s no way `rustc` would slight me like this!” I thought. I threw a
+fit (and all solutions I could think of) at it; I pleaded, cried and did puppy eyes. `rustc` was
+having none of it.
+
+At that point a depressed myself figured it was a great time to take my dog out for a walk. Walking
+is a nice, relaxing activity, it helps with maintaining the bare minimum physical activity levels,
+and for whatever reason the only time I come up with good ideas is during these walks. Might have
+something to do with high CO₂ PPM levels making humanity go stupid[^research], but I digress
+_again_. What matters is that this walk was exactly what I needed to come up with a workaround.
+
+[^research]: Research on this topic is really conflicting, with some experiments showing a strong
+  correlation between increasing levels of CO₂ and a decrease in cognitive ability, and others
+  finding no correlation whatsoever. My self-introspection would suggest a strong support towards
+  this idea, but it might be confirmation bias too.
+
+# `Box<dyn Trait>: 'static`? {#workaround}
+
+Dynamic objects require some indirection to become `Sized`. This is not a particularly novel
+requirement. But then, references aren’t the _only_ way to introduce indirection. `Box<T>` is a
+common choice too! With its implementations of `Deref` and `DerefMut`, it is easy to use it as both
+a plain and mutable reference within the function body. Most importantly `Box<T>` it is (most of
+the time) `'static`! That error message was complaining about `'static` so might a `Box<dyn
+Config>` work as an alternative too?
+
+```diff
++impl<P: Config + ?Sized> Config for Box<P> {}
+
+-    run_analysis(b"\0wasm", &my_config as &dyn Config);
++    run_analysis(b"\0wasm", Box::new(my_config) as Box<dyn Config>);
+```
+
+Indeed [this works great][d], it builds and behaves as one would expect! Depending on the use-case
+there are some other smart pointer containers that could be applicable. An unfortunate limitation
+of a `Box` is that the ownership of the `Config` needs to be passed into the `analysis` function,
+which isn’t strictly necessary in absence of compiler limitations. In my case doing so isn’t that
+big of a deal – running `analysis` even with a really small module is heavy enough internally that
+a `clone` or two to invoke the function will never become a pain point. Not to mention that `Arc`
+could work great as a way to mitigate this cost of `clone`, at least where configurations do not
+require mutable reference access to self.
+
+So there you have it, if you are dealing with the error message about borrow checked limitations,
+consider an option of replacing your `&T` references with `Box`es, `Arc`s or some other owning
+smart pointers.
+
+[a]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=84cbe00f81da2533e03f2b5613c5c8b9
+[b]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=3407333c8bcd79faf4c9584c615680ac
+[c]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=226c7dcf0c5e8200720feacca27ee6c6
+[d]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=a5ec399cbe1dbfb938148db49c0ed60d
+
+<!--
+
+<code>
+/// Public-facing API – users configure the analysis
+/// through this trait.
+pub trait Config {}
+
+/// If they have a reference to the config, its still
+/// a config.
+impl<P: Config + ?Sized> Config for &P {}
+impl<P: Config + ?Sized> Config for Box<P> {}
+
+
+
+pub struct State;
+/// A factory to produce an analysis given some config (self) and state.
+pub trait Factory<'a> {
+    type Analysis;
+    fn manufacture(&'a self, state: &'a State) -> Self::Analysis;
+}
+
+pub struct Analysis<'a, Config> {
+    state: &'a State,
+    config: &'a Config,
+}
+
+/// Given any user-defined `Config`, manufacture an effectful analysis.
+impl<'a, C: Config + 'a> Factory<'a> for C {
+    type Analysis = Analysis<'a, C>;
+    fn manufacture(&'a self, state: &'a State) -> Self::Analysis {
+        Analysis { state, config: self }
+    }
+}
+
+/// No Config for this analysis, meaning it will not run.
+pub struct NoConfig;
+pub struct NoAnalysis;
+impl<'a> Factory<'a> for NoConfig {
+    type Analysis = NoAnalysis;
+    fn manufacture(&'a self, _: &'a State) -> Self::Analysis {
+        NoAnalysis
+    }
+}
+
+
+pub fn run_analysis<F: for<'a> Factory<'a>>(code: &[u8], f: F) {
+    let state = State;
+    for _function in code {
+        let _analysis = f.manufacture(&state);
+        todo!("run analysis and collect results");
+    }
+}
+
+// In user code...
+fn main() {
+    struct MyConfig;
+    impl Config for MyConfig {}
+
+    let my_config = MyConfig;
+    run_analysis(b"\0wasm", Box::new(my_config) as Box<dyn Config>);
+}
+</code>
+
+-->
