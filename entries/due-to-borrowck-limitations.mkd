@@ -1,6 +1,6 @@
 ---
 title: Due to limitations in the borrow checker, this implies a 'static lifetime
-published: 2023-01-21
+published: 2023-01-22
 description: Experienced Rust developers encounter borrowck errors that almost make them cry too. This one is particularly opaque, but may have an easy fix!
 tags: Rust, Programming
 copy: CC BY 3.0
