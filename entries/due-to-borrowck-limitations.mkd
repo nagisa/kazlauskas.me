@@ -201,7 +201,7 @@ _again_. What matters is that this walk was exactly what I needed to come up wit
 Dynamic objects require some indirection to become `Sized`. This is not a particularly novel
 requirement. But then, references aren’t the _only_ way to introduce indirection. `Box<T>` is a
 common choice too! With its implementations of `Deref` and `DerefMut`, it is easy to use it as both
-a plain and mutable reference within the function body. Most importantly `Box<T>` it is (most of
+a plain and mutable reference within the function body. Most importantly `Box<T>` is (most of
 the time) `'static`! That error message was complaining about `'static` so might a `Box<dyn
 Config>` work as an alternative too?
 
