@@ -181,7 +181,7 @@ note: due to current limitations in the borrow checker, this implies a `'static`
    |                        ^^^^^^^^^^^^^^^^^^^
 ```
 
-“Betrayal with capital B! There’s no way `rustc` would slight me like this!” I thought. I threw a
+“Betrayal with a capital B! There’s no way `rustc` would slight me like this!” I thought. I threw a
 fit (and all solutions I could think of) at it; I pleaded, cried and did puppy eyes. `rustc` was
 having none of it.
 
