@@ -58,16 +58,16 @@ additional runtime overhead, either by forcing a branch or some dynamic dispatch
 can get quite hot, meaning this sort of forced runtime overhead would only serve to reduce the
 overall throughput in the common case where both analyses are run.
 
-This is where the factory pattern comes in. By using a factory pattern, I could set up the
-configuration types to act as a factory for an analysis type which runs according to the
-configuration. At the same time I could also introduce a special `Config` type that would
-manufacture instances of a no-op analysis. This is all operating on statically known types and is
-using static dispatch. The compiler has a free reign to optimize code pertinent to the disabled
-analysis to nothing and, when enabled, the analysis would still execute without much overhead as
-well! In `finite-wasm` analyses’ contexts are created for each individual function in a module, and
-hold a reference to the configuration and module-level facts analysis may need to refer to (e.g.
-what types are available?). With that in mind, I ended up with the following definition of the
-`Factory` trait:
+This is where the factory pattern comes in. I could set up the configuration types to act as a
+factory for some analysis type which would run according to the constructing configuration. At the
+same time I could also introduce a special `NoConfig` type that would manufacture instances of an
+analysis that does nothing at all. This could all be made to operate on statically known types and
+use static dispatch, setting up the compiler for removal of code pertinent to the disabled
+analysis. When enabled, the analysis would also execute without any additional overhead compared to
+the factory-free approach! In `finite-wasm` analyses’ contexts are created for each individual
+function in a module, and hold a reference to the configuration and module-level facts analysis may
+need to refer to (e.g. what types are available?) With that in mind, I ended up with the following
+definition of the `Factory` trait:
 
 ```rust
 trait Factory<'a> {
