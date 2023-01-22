@@ -11,7 +11,7 @@ deterministic resource limits (in time and space) in a runtime agnostic and Easy
 way. This project produces a specification (or rather additions to the [WebAssembly specification])
 detailing how these limits should be enforced and analyses implementing the specification. Last
 week I finally published the very first version of this code on `crates.io`, but didn't feel
-comfortable making the repository public quite yet – I had a fair bit of improvements I wanted to
+comfortable making the repository public quite yet – I have a fair bit of improvements I want to
 make first. I’ll try to make a point of writing more about this project at a later date, when the
 project is fully public.
 
