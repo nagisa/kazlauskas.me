@@ -108,7 +108,7 @@ fn run_analysis<'a, F: Factory<'a> + 'a>(code: &[u8], f: F) {
 }
 ```
 
-This [doesn’t work at all][a]. The compiler complains that neither `f`, nor `state` live long
+[This doesn’t work at all][a]. The compiler complains that neither `f`, nor `state` live long
 enough in this function. I wouldn’t be able to explain what’s the deal with `f`, but `state` is
 quite easy to grok. Consider that a caller can call `run_analysis::<'static, _>`, substituting the
 `'a` lifetime with `'static`. `F` becomes `Factory<'static>` and `Factory::<'static>::manufacture`
@@ -134,7 +134,7 @@ fn run_analysis<F: for<'a> Factory<'a>>(code: &[u8], f: F) {
 }
 ```
 
-And indeed, this [works][b] swimmingly! The analyses are statically instantiated, and get full
+And indeed, [this works swimmingly][b]! The analyses are statically instantiated, and get full
 optimizations for this somewhat hot code. The API is still really convenient, flexible and
 extensible. If I had to come up with a downside, it is the need for some extra documentation to
 guide users towards implementing the `Config` trait rather than `Factory`, but that’s a fee I’m
@@ -159,7 +159,7 @@ down too:
 +    run_analysis(b"\0wasm", &my_config as &dyn Config);
 ```
 
-Done, and done. Does it work? Of course it does… _[not][c]?!_ `rustc`’s evaluation of my new test
+Done, and done. Does it work? [Of course it does… _not_][c]_?!_ `rustc`’s evaluation of my new test
 case is as follows:
 
 ```
