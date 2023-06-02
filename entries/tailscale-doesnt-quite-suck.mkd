@@ -1,7 +1,7 @@
 ---
-title: Tailscale doesn’t suck as much as it could
+title: Tailscale doesn’t quite suck
 published: 2023-06-01
-description: An addendum to the “Tailscale sucks” post from the tailscale.dev blog
+description: A response to the “Tailscale sucks” post from the tailscale.dev blog
 tags:
 copy: CC BY 3.0
 ---
