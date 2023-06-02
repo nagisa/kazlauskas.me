@@ -1,0 +1,119 @@
+---
+title: Tailscale doesn’t suck as much as it could
+published: 2023-06-01
+description: An addendum to the “Tailscale sucks” post from the tailscale.dev blog
+tags:
+copy: CC BY 3.0
+---
+
+Sometime last year I found myself needing to spend all of the fake Amazon money that I keep
+receiving with every business trip. With doggo’s fur shedding season right aruond the corner, a
+vacuum robot definitely seemed like an appropriate way to consume at the time.
+
+But wait… there's a snag! Well built vacuums at a reasonable price point all happen to be China
+Export variety of Internet of Trash. I would never put anything of the sort anywhere near my LAN
+in the first place, but even if it did somehow manage to get on there, the device would find itself
+quite alone and isolated in its very own VLAN. What good is a vacuum robot without a way to request
+it to ensure a basic level of hygiene in Room D?
+
+Turns out somebody else had much the same concerns well before me and came up with [Valetudo]. A
+couple broken plastic tabs off the plastic cover later – electronics’ disassembly is not my strong
+suit – I’m a proud owner of a ssh session to a reasonably standard looking Linux environment on
+wheels. It doesn’t take long for peculiarities to crop up, though. Neither Tailscale, nor vanilla
+wireguard would agree to run on this device, for instance. Both depend on at least `iptables` which
+is not available in this environment. A closer look reveals that this kernel was built with
+`CONFIG_NETFILTER=y` and even `CONFIG_NETFILTER_ADVANCED=y` options, but
+`CONFIG_NETFILTER_XTABLES` that’s required for `iptables` didn’t make the cut for whatever reason.
+Weird, huh? There went all my hopes of controlling this wonderful new device from across the planet
+through my usual infrastructure.
+
+[Valetudo]: https://github.com/Hypfer/Valetudo
+
+Then just last month [somebody claimed Tailscale sucks][tailscale-sucks], all while providing
+a step-by-step set up of Tailscale with [userspace networking][userspace] (TIL). On a vacuum robot.
+That’s running Valetudo. Well now, isn’t this exactly the setup I have?! Behold another tailnet
+with a vacuum robot… Or so I wished. This wouldn’t be a blog post response, if there wasn’t
+something lacking with the setup as described, would it?
+
+[tailscale-sucks]: https://tailscale.dev/blog/tailscale-sucks
+[userspace]: https://tailscale.com/kb/1112/userspace-networking/
+
+See, following these instructions does indeed put a Tailscale on a vacuum robot,
+but the kernel on the robot has no idea about any of it. This is not a concern when the connections
+are all inbound. As suggested by the blog post, it is possible to access Valetudo frontend via
+HTTP, and you can even SSH into the robot from the outside. But a proper setup of the robot for
+home automation will use neither of these methods. The communication method of choice here would be
+[MQTT], which unlike the other two, expects the *robot* to initiate the outbound connection rather
+than the other way around. Since this Tailscale setup is entirely in the user-space, any
+`connect(2)` and similar such calls will still use the usual kernel’s view of how the network is
+setup; any attempts to connect to an MQTT broker over the tailnet will fail!
+
+[MQTT]: https://en.wikipedia.org/wiki/MQTT
+
+To enable these sorts of use-cases, Tailscale is able to set up a SOCKS5 proxy. This likely works
+alright for most typical containerized server applications, but Valetudo is not internally proxy
+aware. Workarounds it is, then! [proxychains](https://www.kali.org/tools/proxychains-ng/) comes up
+as the very first option to try, but as far as I can tell, this won’t work with static binaries,
+which Valetudo (and others, for that matter) are. By my evaluation an overall simpler solution is a
+simple binary that would set up a socket listening on localhost, and then forward any
+packets coming in over the SOCKS5 proxy exposed by Tailscale. I could then point the Valetudo’s
+MQTT client to this localhost socket and reap *all* the profit!
+
+I described this idea in depth on [this Tailscale feature
+request](https://github.com/tailscale/tailscale/issues/8035#issue-1694647594). I can’t wait for it
+to get implemented though, my floor are still dirty *now*! I then rediscovered a commonplace tool
+called `socat` can do almost exactly this. The upstream `socat` might not support SOCKS5 at
+the time of writing, but [a kind soul has produced a branch](https://github.com/runsisi/socat) with
+this functionality in place. All that’s left is to build `socat` and get it onto the robot! One
+caveat: I also wanted a recent release of `socat` (for no other reason than it being fresh; you
+might not need it), so I cloned the upstream repository, rebased the SOCKSv5 patches on top and
+built the thing manually:
+
+```
+git clone 'git://repo.or.cz/socat.git'
+cd socat
+git remote add socksv5 'https://github.com/runsisi/socat.git'
+git fetch socksv5
+git checkout socksv5/master
+git rebase origin/master
+autoconf
+env CC=aarch64-unknown-linux-gnu-gcc CFLAGS=-static LDFLAGS=-static \
+  ./configure --disable-openssl --disable-readline \
+              --disable-system --disable-pty --disable-sctp
+make socat -j
+```
+
+One important thing to note about the build process above: just like with tailscale we want a
+static binary without dependencies. `glibc` does not support some of the networking related
+functionality in such builds and you will see some warnings to that effect during the build
+process. However, for this use-case none of the affected functions are used – `socat` will work
+fine regardless. That said, make sure to obtain/install the static glibc libraries for aarch64 in
+addition to the cross-compiler itself.
+
+I also made a couple of opinionated choices here. For instance I disabled support for `openssl` and
+`readline`. These sound like they might depend on external libraries. Obtaining them is a major
+pain and they would make the binary larger for no good reason. An even leaner `socat` might be
+possible if further protocols are disabled (see `./configure --help`).
+
+Anyway, copy over `socat` onto the robot, `chmod +x` it, and adjust `_root_postboot.sh` so that it
+contains:
+
+```
+if [[ -f /data/tailscaled ]]; then
+    mkdir -p /data/tailscale-state /tmp/tailscale
+    STATE_DIRECTORY=/tmp/tailscale /data/tailscaled \
+        --tun=userspace-networking \
+        --socks5-server=localhost:1055 \
+        --socket=/tmp/tailscale/tailscaled.sock \
+        --statedir=/data/tailscale-state > /dev/null 2>&1 &
+fi
+if [[ -f /data/socat ]]; then
+    /data/socat TCP-LISTEN:1883,fork \
+        SOCKS5:127.0.0.1:[mqtt broker's tail name]:1883,socks5port=1055 &
+fi
+```
+
+Here the `tailscale` command has been modified since the original blog post to introduce the
+`--socks5-server=localhost:1055` flag. The last remaining step is to modify the Valetudo’s MQTT
+configuration to point at the localhost socket created by `socat` and appreciate Tailscale’s futile
+efforts in keeping the floor free of fur.
