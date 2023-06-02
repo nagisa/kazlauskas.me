@@ -69,7 +69,7 @@ caveat: I also wanted a recent release of `socat` (for no other reason than it b
 might not need it), so I cloned the upstream repository, rebased the SOCKSv5 patches on top and
 built the thing manually:
 
-```
+```sh
 git clone 'git://repo.or.cz/socat.git'
 cd socat
 git remote add socksv5 'https://github.com/runsisi/socat.git'
@@ -98,7 +98,7 @@ possible if further protocols are disabled (see `./configure --help`).
 Anyway, copy over `socat` onto the robot, `chmod +x` it, and adjust `_root_postboot.sh` so that it
 contains:
 
-```
+```sh
 if [[ -f /data/tailscaled ]]; then
     mkdir -p /data/tailscale-state /tmp/tailscale
     STATE_DIRECTORY=/tmp/tailscale /data/tailscaled \
