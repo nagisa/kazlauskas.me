@@ -1,0 +1,367 @@
+---
+title: Rack-mount N100-based firewall at 10W idle from CWWK
+published: 2025-01-01
+description: 1U rack-mount firewall appliances are rare, and reviews for them - even more so.
+tags: Hardware
+copy: CC BY 3.0
+---
+
+For a couple years now the main compute in my homelab rack has been served by an EPYC 7642-based
+server. It has been responsible every single task I have for short- and long-running compute at
+home: home automation utilities, media center, network-attached storage with a relatively
+fault-tolerant disk setup, a build server… and most notably for the topic at hand the networking
+tasks at the edge of my network: routing, firewall and WAN interface duties.
+
+Back when I was building this machine, one of my main requirements were for it to use ECC memory.
+I'm a ZFS addict and although I haven't had any trouble with regular memory so far, I felt it to be
+a good opportunity to do things “right”. This requirement narrowed the options very significantly,
+and a recent 48 core server CPU from AMD for just €500 seemed like a great deal, especially when
+paired with the super cheap stock-clearance DDR4 RDIMMs. I loved it! Plenty of cores (48c/96t) have
+handled the compiles I threw at it without breaking a sweat. LTO running out of memory used to be a
+pain point to me that I never thought about again with 256G of memory. Not having to scour an
+entire AliExpress in order to find a PCIe card that fits into the last open PCIe 1x slot on the
+motherboard was liberating.
+
+A small snag though: over a longer period the machine turned out to be doing an average 3 cores
+worth of work and for that I'm feeding it 150 watts! 90W of those go to the CPU itself, and this is
+when it is doing comparatively nothing. I knew EPYC wasn't an epitome of idle efficiency, but
+seeing actual numbers really drove a point of a poor fit to my application. I tried a number of
+things to minimize the power consumption here, but nothing I would do would help. In mostly idle
+homelab scenarios such as mine, this platform literally doubles the baseline load of the entire
+house.
+
+And so the time has come to replace this beast with something less wasteful of the solar energy. I
+already have a plan for the NAS and media center duties: this will be handled by a Ryzen Pro 4650G
+with ECC memory to go with it. The networking tasks, however, have some unique requirements the
+Ryzen platform doesn't have sufficient left-over I/O for: minimum of two SFP+ ports and at least 4
+copper NICs of which minimum of two were to be 2.5GbE or better. So this would have to be a
+separate machine.
+
+An obvious place to look for an energy and cost efficient device would be in purpose-built
+ARM-based appliances, such as Mikrotik's RB5009: a wonderfully priced device purpose-built to
+handle routing tasks with a side bonus of an ability to run arbitrary utilities in containers.
+Unfortunately it has only one of 2.5GbE and SFP ports each; not to mention RAM is a little tight
+for the services I want this device to handle. The next step-up from Mikrotik is double the price
+and still no 2.5G ports. The next commonplace solution I have heard of was to use one of the many
+mini PCs available on the market today – they are all the rage over at STH. The mini PC form factor
+isn't exactly my cup of tea though. I barely have 1U of space in my rack, and I would rather keep
+my rack “clean” regardless. After evaluating the market offerings the list narrowed down to:
+
+* QOTOM based on an Atom C-series from 2018. Has five 2.5GbE ports and 4 SFP+. Wonderful
+connectivity options at an enticing price ([STH review here][qotom-sth]);
+* Designs from gowin solutions, widely discussed over at [r/R86SNetworking][gowin]; Based on the
+N100 or N305 chip: has two 1GbE ports, two 2.5GbE ports, a PoE powered port, and two SFP+ cages.
+Some of the fancier models even come with 25G SFP cages – at a price;
+* A number of branded and rebranded versions of the same 12th gen N100/N305 based CWWK server with
+four 2.5GbE ports and 2 SFP+ cages ([affiliate-free link here][cwwk]);
+
+[qotom-sth]: https://www.servethehome.com/everything-homelab-node-goes-1u-rackmount-qotom-intel-review/
+[gowin]: https://www.reddit.com/r/R86SNetworking/
+[cwwk]: https://cwwk.net/products/12th-generation-n100-i3-n305-dual-10g-optical-port-4-power-4-power-network-security-industrial-computer-support-iqiyi-security-gateway-firewall-bastion-host-ac-control-online-behavior-management?variant=46634226680040
+
+The QOTOM device would've been a slam dunk had it been built around a processor less ancient than
+2017. The internet seemed to suggest Atoms struggle somewhat bridging 10GbE, let alone doing the
+same while processing firewall rules and running a bucket-load of random utilities at the
+same time. The gowin solution seemed enticing for its PoE port, but I was never able to reach the
+person responsible for selling these units and put an order in. Communication seems to be a
+[recurring pain point for gowin][gowin comms].
+
+[gowin comms]: https://www.reddit.com/r/R86SNetworking/comments/1gxuriv/no_communication_after_order_for_3_weeks/
+
+Which left me with the CWWK device – this device seems to have no reviews *anywhere* on the
+internet yet, but the people selling these machines are quite responsive to questions about their
+products (so far,) and it is actually possible to get one shipped out. Not to mention the pricing
+is enticing: at the time of writing the import taxes and shipping fees are *inclusive* of the
+listed price (388 USD) for a barebone with SFP+ card for EU customers such as myself!
+
+The device shipped out next day after ordering on the 13th of December. The server was in Lithuania
+10 days later, but due to the Christmas festivities I only had this server on my table on the 30th.
+
+# Construction and components
+
+The information on this device available across the CWWK's website and Aliexpress stores is anemic,
+so it is pretty hard to know what to expect. Opening the server up is not a streamlined experience.
+6 Phillips screws hold the top panel in place. With rack ears installed (initially in the
+accessories box), there are 4 extra on each side as well. I was greeted with this view:
+
+![The internals of this server, with the PSU cover intact](/images/10w-n100-server/open-view.jpg)
+
+Starting at the top left, the power supply included with the server is two units of what looks to
+be a Meanwell EPS-65-12-C. These supplies feed into what looks to be a fail-over or perhaps a
+balancing board for redundant supply. From there a 12V and GND wires are connected to the
+motherboard. Looking at the specifications for the power supply suggests it is quite high quality,
+but at the same time I do not have access to tooling to measure power quality properties such as
+its output ripple. Regardless, I'm glad this power supply is from a reputable brand and not a
+no-name grab bag of fire hazard clearance caps.
+
+![The PSU area with PSU cover removed](/images/10w-n100-server/psu.jpg)
+
+The motherboard and the extension board are both custom designs by CWWK. CWWK does sell
+[replacement extension boards][extboards], at least right now, but it seems unlikely that replacing
+them with a standard PCIe device would be possible. For most intents and purposes this device is
+as-delivered.
+
+The SFP+ addon board is based on the old Intel 82599ES controller that's known to have *some*
+issues with ASPM, but that turned out to be easy to work-around for me in practice, so I wasn't
+particularly worried.
+
+[extboards]: https://cwwk.net/products/cwwk-n100-n200-i3-n305-pcie-expansion-network-card-2-intel-i226-i210-expansion-10g-port-82599-dual-10g-1-pcie-to-4-m-2-adapter-card-1?variant=45603718496488
+
+All of the fans in the device are 3-pin. The CPU fan is plugged into the SYS header and the exhaust
+fans in the back are plugged into the CPU header. Though this doesn't matter as the board cannot
+control DC voltage for the fans anyway – they run at 100% all the time. The fan on the SFP board is
+*very* audible even to my hard-of-hearing ear. The motherboard has an IT8613 Super I/O chip for
+controlling the fan speeds, but this only works for PWM fans. Replacing these 3-pins with PWM fans
+is going to be both very expensive *and* clunky due to their form factor. An alternative would be
+to keep the fans and add something like the [Noctua NA-FH1], [PH-PWHUB_02] or a [Phobya
+transformer][phobya] which can control DC fans based on the PWM signal. It isn't clear to me if any
+of these are able to stop the fans entirely, though. Another alternative is to 3D print some
+airflow guides and replace the small fans with a 120mm PWM fan installed sideways.
+
+[Noctua NA-FH1]: https://noctua.at/en/na-fh1
+[phobya]: https://www.aquatuning.com/en/cable/fan-cable-and-adapter/lz-phobya-4pin-pwm-to-3pin-transformer-single-eol
+[PH-PWHUB_02]: https://legacy.phanteks.com/PH-PWHUB_02.html#manual
+
+Besides the rack ears mentioned earlier, the accessory box also contains two of the chosen (US
+or EU) power cables, rubber feet and cables to use SATA. The SATA power cable is wired for +12V and
++5V only. And yet you would be wrong if you thought that you would be able to use your left-over
+2.5 inch SATA disk here. The board is wired up to use the mSATA connector only. To the best of my
+knowledge the CF card will not work either. Supposedly there is some resistor somewhere on the
+board that you should be able to desolder and replace on different pads to switch over to the SATA connector.
+For me – it was easier to grab a used mSATA SSD off the marketplace for 15€. Had I been aware of
+this, I would have ordered the server with storage (and memory) included. Regardless, no space for
+redundant storage here. Though, if you want to go super cheap, you could use the internal USB
+(2.0?) port and boot off some storage plugged into it.
+
+Board also appears to have a SIM slot and a Mini PCIe connector for a WWAN. However, much like with
+SATA, I find it unlikely it is actually going to work: out of the 9 PCIe lanes available out of the
+CPU, 8 of them are allocated between the addon board (4x) and the copper nics (1x each.) While
+there is 1 lane still available that *could* be routed to this slot, `lspci` only reveals 5 PCI
+bridges: all of them already occupied.
+
+The GPIO pins available on the board are prominently marketed in specsheets found on the AliExpress
+listings, but these are routed to the IT8613 Super I/O chip rather than the CPU itself. While you
+can usefully use these GPIO pins as an output, they are worthless as an input – there is no way to
+receive an interrupt on the pin state change. This foiled my plan to add a PPS GPS time device to
+this server. I'll experiment with GPS regardless, but the PPS will have to come through the
+conveniently available USB port inside the case. Another thing to keep in mind is that IT8613 is
+not supported out-of-the-box on Linux. You need to force a module load with a different ID.
+
+The board appears to have headers not only for VGA that's exposed to outside the chassis, but also
+HDMI and DisplayPort. Figuring out the pin-out and upgrading the port on the chassis might be an
+interesting future project (especially with the [JetKVM] coming my way.)
+
+[JetKVM]: https://jetkvm.com/
+
+An overarching theme here is that documentation for the most part is woefully absent. All you get
+is what's printed on the silkscreen of the motherboard: some descriptions of the jumper pin
+functions (e.g. there's a jumper for whether the server should turn on after power loss) & brief
+names of the headers is all you get.
+
+# Out of the box experience
+
+Turning the server on for the first time I was greeted by AMI Aptio suggesting there is no bootable
+media available (see notes on SATA above.) Options exposed here are a fairly random grab-bag of
+the most common options and options that aren't particularly interesting in this type of a device.
+Some examples of not particularly useful options: you can modify the fan curve (despite the device
+shipping with 3-pin fans), some GPU overclocking options (in a network appliance?), power loss
+behaviour (despite it being controlled by a jumper on the board instead.) At the same time many of
+the options that would otherwise be very useful were absent: no PCIe configuration whatsoever (and
+no ASPM control to go with it,) the CPU power saving options are not exposed and even basic
+settings like turning off Intel HD Audio aren't possible either! Upon contacting with CWWK folks I
+was informed that there is currently (2025-01-01) only this version of the firmware available.
+
+Booting into a bare-bones NixOS system off a USB stick I was measuring power consumption at idle to
+be around **22W**. The CPU cores were properly entering the deepest C10 C-state, but the package
+couldn't go below C2, unfortunately. Out of these 22W, the fans are consuming 3W. Removing the SFP+
+card and the fans would drop the idle power consumption down to 10W for the CPU and I226-V NICs.
+
+Specifying the `pcie_aspm=force pcie_aspm.policy=powersave` kernel arguments, running the `powertop
+--auto-tune` & the `enable-aspm` script for everything possible would drop the power consumption
+slightly, but the package C-state remained locked at C2. Another thing I tried was to [upgrade the
+ACPI tables during initrd][acpi-upgrade] in order to change the "ASPM not supported" flag from `1`
+to `0`, but in the end it had no effect on power consumption whatsoever.
+
+Any attempts to go around the Aptio configuration to change firmware settings would fail as well –
+the settings storage is write protected in UEFI and onwards. This left me with the only remaining
+way forward: get firmware fixed.
+
+[acpi-upgrade]: https://www.kernel.org/doc/html/latest/admin-guide/acpi/initrd_table_override.html
+
+# Modifying the firmware
+
+Turns out firmware modification for AMI systems is particularly straightforward nowadays, with
+number of tools to aid the effort. While it took me some time trying to obtain the flash contents
+in the first place (the support would not send me any “BIOS”, unfortunately,) in the end it turned out to
+be an extremely straightforward process:
+
+1. Obtain a firmware update for some other N100-based device made by CWWK. I used the most recent
+   available for their [NAS miniPC][n100-update];
+2. From this firmware update grab the fpt.efi tool and put it on a EFI partition along with the EFI
+   shell (`boot.loader.systemd-boot.edk2-uefi-shell.enable = true;` in my NixOS config was
+   sufficient, also available precompiled from the [edk project][edk-shell]);
+3. Boot into the EFI shell and dump the current firmware using `fpt.efi -d flash.bin`. I then ran
+   this command twice more to different files to make some duplicates (to avoid accidental silent
+   corruption.)
+4. Verify the dumps (sha256hash same between all copies?) and save them in a safe place;
+5. Follow the instructions in the [README of UEFI-Editor][uefi-editor-readme];
+    * On NixOS the UEFITool can be had with `nix-shell -p uefitoolPackages.old-engine` for the 0.28
+      version and `nix-shell -p uefitool` for the new version;
+    * `ifrextractor` is at `nix-shell -p ifrextractor-rs`;
+6. Inside the UEFI-Editor expose ASPM and other interesting settings by setting Access Level to
+   `05`. This has to be done recursively. So for instance to enable HD Audio configuration it is
+   necessary to set the Access Level to 05 both for the “HD Audio Configuration” page as well as
+   the “HD Audio” option (otherwise HD Audio Configuration page doesn't appear anyway due to being
+   “empty”);
+    * Touching `Suppress If` broke the Aptio Setup for me easily, requiring to go back to the
+      beginning meanwhile Access Level modifications worked without fuss;
+    * I generally found that things worked great so long as the UEFI-Editor modifications would
+      modify just the SetupData section and not the others;
+7. Once the adjusted firmware is constructed by following the UEFI-Editor instructions, flash it
+   back from the UEFI shell with `fpt.efi -f newflash.bin`.
+
+[n100-update]: https://pan.x86pi.cn/BIOS%E6%9B%B4%E6%96%B0/3.NAS%E5%AD%98%E5%82%A8%E7%B1%BB%E4%BA%A7%E5%93%81%E7%B3%BB%E5%88%97BIOS/2.%E7%AC%AC12%E4%BB%A3AlderLake-N%E5%9B%9B%E7%BD%91N100-N305-NAS-BIOS
+[edk-shell]: https://github.com/tianocore/edk/tree/master/Other/Maintained/Application/UefiShell/bin/x64
+[uefi-editor-readme]: https://github.com/BoringBoredom/UEFI-Editor/blob/master/README.md#usage-guide
+
+By modifying the firmware this way, over 20 revisions or so later, I had enabled a majority of the
+options I was after: PCI(e) settings (including ASPM), CPU power efficiency options, Si0x settings
+and such. Then I promptly enabled the power saving features, disabled the superfluous hardware and
+was happy to find that both ASPM and CPU settings were now set up correctly. Time to get Linux take
+advantage of all this.
+
+# Enabling everything power-saving on Linux
+
+As far as ASPM is concerned, most of the hardware had ASPM enabled by the firmware. The only
+exception being the 82599ES SFP+ board. For 82599ES I have historically found that although the
+chip does not advertise supporting the L1 ASPM state, it nevertheless will work well with it
+forcibly enabled through its PCI registers. To do this I set up a couple of udev rules:
+
+```udev
+# Enable L1 and L0s for 82599ES devices
+ACTION=="add", SUBSYSTEM=="pci", ENV{PCI_ID}=="8086:10FB", RUN+="setpci -s $kernel B0.b=3:3"
+# Enable L1 and L0s for all pcieports
+ACTION=="add", DRIVER=="pcieport", ENV{PCI_ID}=="8086:54B8", RUN+="setpci -s $kernel 50.b=3:3"
+```
+
+**NOTE**: `PCI_ID`s or `setpci` commands might need changing for you, you can find out the `PCI_ID`
+with `udevadm info /sys/class/net/enp1s0f1/device/` and `udevadm info /sys/bus/pci/devices/*` for
+entries with `DRIVER=pcieport`. I derived the `setpci` commands from the `enable-aspm` script.
+
+In addition, the following rules implement most of the `powertop --auto-tune`:
+
+```udev
+# The following rule is IMPORTANT!
+SUBSYSTEM=="pci", ATTR{power/control}="auto"
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
+```
+
+Finally add the following options to the kernel command line (`pcie_aspm=force` is no longer
+necessary):
+
+```
+pcie_aspm.policy=powersave nmi_watchdog=0 i915.disable_display=1 xe.disable_display=1
+```
+
+I found that setting `pcie_aspm=powersupersave` would increase latencies to over `1ms` and affect
+mdev significantly as well, while at the same time saving very little in terms of power
+consumption. Meanwhile `pcie_aspm=powersave` has almost no efffect.
+
+# I226-V hangs
+
+Applying aggressive PCIe link power saving has caused some issues with the I226-V NICs for me. In
+particular in one out of three boots the NICs would refuse to link up with the peer anymore. Some
+of the issues with I225 and I226 series of NICs are somewhat documented on the internet, with the
+usual suggestion being to disable any power saving settings. Fortunately in my case I quickly found
+out that a simple `rmmod igc; modprobe igc` would bring the NIC back to life and keep it rock
+stable afterwards. However this will kill all 4 ports for a brief while, making this way bigger of
+a cannon for the small target standing a feet away than it needs to be. After reading through the
+`igc` driver source code I found [another way to reset the netdevs individually][eee_reset] –
+toggle the [Energy Efficient Ethernet](https://en.wikipedia.org/wiki/Energy-Efficient_Ethernet)
+option for the netdev.
+
+[eee_reset]: https://github.com/torvalds/linux/blob/63676eefb7a026d04b51dcb7aaf54f358517a2ec/drivers/net/ethernet/intel/igc/igc_ethtool.c#L1734-L1782
+
+Setting up the following script and systemd unit solved this problem for good (and probably
+achieved further power savings to boot):
+
+```bash
+#!/usr/bin/env bash
+set -e
+for path in /sys/module/igc/drivers/pci:igc/*/net/; do
+    for dev in "$(ls $path)"; do
+        if cat "/sys/class/net/$dev/operstate" | grep up > /dev/null; then
+            ethtool --set-eee "$dev" eee on
+        else
+            ethtool --set-eee "$dev" eee off
+            ethtool --set-eee "$dev" eee on
+        fi
+    done
+done
+```
+
+```ini
+[Unit]
+Description=Check that i226 managed to link up, reset netdev otherwise
+
+[Service]
+ExecStart=/nix/store/fqq3s50g8n2j4mqppjxzk5x63pn55ky9-unit-script-igc-check-start/bin/igc-check-start
+Restart=always
+RestartMode=direct
+RestartSec=30s
+Type=exec
+```
+
+# Evaluation and Future Improvement
+
+With these changes I have managed to get the CPU package drop all the way down to the C8 state. Not
+quite C10 that is achievable without the SFP card plugged in, but the package power consumption
+difference between the two states seems to be minimal. Even at C8 the CPU reports just 0.15~0.20
+watts for the package at idle which is a big improvement over 2.5 PkgWatt at C2!
+
+```
+$ turbostat -s 'POLL%,C1E%,C6%,C8%,C10%,CPU%c1,CPU%c6,CPU%c7,Pkg%pc2,Pkg%pc3,Pkg%pc6,Pkg%pc8,Pkg%pc10,PkgWatt,CorWatt'
+<snip>
+POLL%  C1E%  C6%   C8%   C10%   CPU%c1  CPU%c6  CPU%c7  Pkg%pc2  Pkg%pc3  Pkg%pc6  Pkg%pc8  PkgWatt  CorWatt
+0.00   0.24  0.14  0.04  99.25  0.24    0.21    99.92   2.70     0.01     0.03     94.96    0.16     0.01
+0.00   0.84  0.02  0.14  98.76  0.83    0.11    99.48   2.70     0.01     0.03     94.96    0.16     0.01
+0.00   0.06  0.19  0.00  99.46  0.06    0.23    100.13
+0.00   0.04  0.34  0.04  99.11  0.04    0.43    99.72
+0.00   0.02  0.02  0.00  99.69  0.02    0.09    100.33
+```
+
+Measuring at the wall the device consumes just 11W, and goes down to as low as 6W with the SFP card
+removed. Not quite 5W you can get with RB5009, but still pretty darn good! And much better than
+e.g. the numbers reported for QOTOM model in the STH review (20W); though I wouldn't be surprised
+if Patrick from STH doesn't spend 2~3 days hacking at BIOS and coercing Linux to do unusual things.
+
+In terms of NIC performance, the SFP board is somewhat limited by the PCIe 2.0 4x link. I was able
+to measure it maxing out at 24Gbps total throughput handling bidirectional traffic across both
+ports. I find this measurement somewhat weird as it is more than what the PCIe link is supposed to
+be able to handle – maybe the NIC isn't sending the full packet up to the CPU? Either way this is
+good enough for me for the time being. The copper NICs work as you'd expect. The added latency
+averages at around 0.5ms. The CPU cores are reaching about 50% utilization handling some very basic
+firewall rules at maximum throughput.
+
+Once I have added my own SSD (15€) and memory (50€), the total price of the device comes out to
+roughly 450€. Substantially more compared to RB5009 or the N100 mini PCs. However for this price I
+got a redundant power supply and a 1U enclosure, and I was well cognizant of there being a rack
+tax when evaluating my options. I wish I didn't need to fiddle for a few days to get the
+power consumption down to acceptable levels, especially when it involves modifications to the
+low-level firmware. This is reasonably fixable by CWWK through releasing a firmware update, though,
+and I hope they go through getting it out sooner rather than later.
+
+Adding a fan controller for the fans (~30€ shipped) would be another significant addition to this
+device I wish I didn't have to make. Adding one such has a good chance of making the device passive
+most of the time and further reductions to power consumption are enticing. That said I am holding
+off for a purchase of a 3D printer. Among many other projects I have in mind, I feel it should be
+possible to print some airflow guides and use a PWM 120mm fan installed sideways to generate enough
+airflow to cool the components well – at a much lower price. This is another instance where CWWK
+could probably have achieved a per-unit BOM reduction at a slight additional engineering time
+expense.
+
+With that said, I'm quite satisfied with my choice and this product. Maybe one of the other devices
+considered would have given me more ports (that I don't need & at a power overhead) or better
+hardware. But to me this CWWK model is exactly the right amount of networking for a hard-to-beat
+price and hard to complain about power efficiency.
