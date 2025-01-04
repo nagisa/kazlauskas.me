@@ -365,3 +365,11 @@ With that said, I'm quite satisfied with my choice and this product. Maybe one o
 considered would have given me more ports (that I don't need & at a power overhead) or better
 hardware. But to me this CWWK model is exactly the right amount of networking for a hard-to-beat
 price and hard to complain about power efficiency.
+
+# Other useful notes
+
+[This hard-to-find thread on L1T][l1t_pmc_ignore] was a particularly useful dump of information
+about ASPM, LTR and similar topics as well as has given me a hint to look into
+`/sys/kernel/debug/pmc_core/`.
+
+[l1t_pmc_ignore]: https://forum.level1techs.com/t/asrock-rack-w680d4id-2t-g5-x550-c-states-aspm-problem/221103/17
